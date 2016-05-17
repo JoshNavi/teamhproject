@@ -2,18 +2,16 @@
   margin: 1em 0;
 }
 
-.mdl-cell--10-col {
-  background-color: #FFFFFF
-}
-
-.mdl-cell--2-col {
-  background-color: #FFFFFF
-}
-
 .mdl-layout__tab-bar-container {
   display: inline-block !important;
   position: relative !important;
   left: 65% !important;
+}
+
+.mdl-card__title {
+  text-align: center !important;
+  color: white;
+  background-color: #3f51b5 !important;
 }
 
 .sidebar-card {
@@ -32,5 +30,5 @@
 }
 
 body {
-  background-color: #D2D6EA
+  /*background-color: #D2D6EA*/
 }
