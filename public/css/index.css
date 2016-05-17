@@ -1,5 +1,32 @@
 .page-content {
-  margin: 1em 10%;
+  margin: 1em 0;
+}
+
+.mdl-cell--10-col {
+  background-color: #FFFFFF
+}
+
+.mdl-cell--2-col {
+  background-color: #FFFFFF
+}
+
+.mdl-layout__tab-bar {
+  float: right !important;
+}
+
+.sidebar-card {
+  display: inline-block;
+  float: left;
+  margin: 1em;
+  width: 27%;
+  height: 450px;
+}
+
+.content {
+  display: inline-block;
+  background-color: white;
+  margin-top: 1em;
+  width: 65%;
 }
 
 body {
