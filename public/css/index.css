@@ -10,8 +10,10 @@
   background-color: #FFFFFF
 }
 
-.mdl-layout__tab-bar {
-  float: right !important;
+.mdl-layout__tab-bar-container {
+  display: inline-block !important;
+  position: relative !important;
+  left: 65% !important;
 }
 
 .sidebar-card {
