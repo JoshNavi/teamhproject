@@ -33,19 +33,16 @@ app.get('/', function(req, res){
 });
 
 //routes
-app.get('/agencies/:id', function(req, res){
+app.get('/mood/total', function(req, res){
   pg.connect(conString, function(err, client, done) {
 
     if(err) {
     return console.error('error fetching client from pool', err);
     }
 
-    var q = 'SELECT c.charge_description, COUNT(*) AS total \
-    FROM cogs121_16_raw.arjis_crimes c \
-    WHERE c.agency LIKE \'' + req.params.id + '\' \
-    GROUP BY c.charge_description \
-    ORDER BY total DESC \
-    LIMIT 5';
+    var q = 'SELECT SUM(cast("Hospitalization No." as float)) AS total \
+              FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" <> "§" AND "Hospitalization Rate" <> "‐‐‐" ';
 
     client.query( q, function(err, result) {
     //call `done()` to release the client back to the pool
@@ -62,21 +59,17 @@ app.get('/agencies/:id', function(req, res){
   return { delphidata: "No data found" };
 });
 
-/* Gets the top five crimes.
- *
- */
-app.get('/agencycrimes', function (req, res) {
+app.get('/mood/years', function(req, res){
   pg.connect(conString, function(err, client, done) {
 
     if(err) {
     return console.error('error fetching client from pool', err);
     }
 
-    var q = 'SELECT c.agency, COUNT(*) AS total \
-      FROM cogs121_16_raw.arjis_crimes c \
-      WHERE c.agency NOT IN (\'SAN DIEGO\', \'SHERIFF\') \
-      GROUP BY c.agency \
-      ORDER BY total ASC';
+    var q = 'SELECT "Year", SUM(cast("Hospitalization No." as float)) AS total \
+              FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" <> "§" AND "Hospitalization Rate" <> "‐‐‐" \
+              GROUP BY "Year"';
 
     client.query( q, function(err, result) {
     //call `done()` to release the client back to the pool
@@ -93,18 +86,19 @@ app.get('/agencycrimes', function (req, res) {
   return { delphidata: "No data found" };
 });
 
-app.get('/communities', function (req, res) {
+
+app.get('/mood/race', function(req, res){
   pg.connect(conString, function(err, client, done) {
 
     if(err) {
     return console.error('error fetching client from pool', err);
     }
 
-    var q = 'SELECT c.community, COUNT(*) AS total \
-      FROM cogs121_16_raw.arjis_crimes c \
-      WHERE c.community <> \'\' \
-      GROUP BY c.community \
-      ORDER BY total ASC';
+    var q = 'SELECT "Year" AS year, "Race" AS race, AVG(cast("Hospitalization Rate" as float)) AS rate \
+              FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" <> "§" AND "Hospitalization Rate" <> "‐‐‐" \
+              GROUP BY "Year", "Race" \
+              ORDER BY "Year" ASC, "Race" ASC';
 
     client.query( q, function(err, result) {
     //call `done()` to release the client back to the pool
@@ -112,65 +106,6 @@ app.get('/communities', function (req, res) {
 
       if(err) {
         return console.error('error running query', err);
-      }
-      res.json(result.rows);
-      client.end();
-      return { delphidata: result };
-    });
-  });
-  return { delphidata: "No data found" };
-});
-
-app.get('/communities/:id', function(req, res){
-  pg.connect(conString, function(err, client, done) {
-
-    if(err) {
-    return console.error('error fetching client from pool', err);
-    }
-
-    var q = 'SELECT c.charge_description, COUNT(*) AS total \
-    FROM cogs121_16_raw.arjis_crimes c \
-    WHERE c.community LIKE \'' + req.params.id + '\' \
-    GROUP BY c.charge_description \
-    ORDER BY total DESC \
-    LIMIT 5';
-
-    client.query( q, function(err, result) {
-    //call `done()` to release the client back to the pool
-      done();
-
-      if(err) {
-        return console.error('error running query', err);
-      }
-      res.json(result.rows);
-      client.end();
-      return { delphidata: result };
-    });
-  });
-  return { delphidata: "No data found" };
-});
-
-/* Gets the top five crimes.
- *
- */
-app.get('/timeofcrimes', function (req, res) {
-  pg.connect(conString, function(err, client, done) {
-
-    if(err) {
-    return console.error('error fetching client from pool', err);
-    }
-
-    var q = 'SELECT EXTRACT(HOUR FROM c.activity_date) AS hour, Count(*) \
-             FROM cogs121_16_raw.arjis_crimes c \
-             GROUP BY hour \
-             ORDER BY hour ASC';
-
-    client.query( q, function(err, result) {
-    //call `done()` to release the client back to the pool
-      done();
-
-      if(err) {
-        return console.error('error running time query', err);
       }
       res.json(result.rows);
       client.end();
