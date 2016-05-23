@@ -1,3 +1,30 @@
-.navbar-inverse .navbar-collapse {
-  border-color: red;
+/* change navbar color */
+.navbar-inverse {
+  background-color: white;
+  border-bottom: none;
+  font-size: 17px;
+  font-weight: medium;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+  color: #4c4c4c;
+}
+/* change hover tab color */
+.navbar-inverse .navbar-nav>li>a:hover {
+  color: #007ac2;
+  border-bottom: 4px solid #007ac2; /* or whatever colour you'd prefer */
+}
+
+.navbar-inverse .navbar-brand {
+    color: #4c4c4c;
+}
+
+.navbar-inverse .navbar-brand:hover {
+    color: #4c4c4c;
+}
+
+.nav>li>a {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: 20px;
 }
