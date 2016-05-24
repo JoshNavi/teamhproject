@@ -42,7 +42,7 @@ app.get('/mood/total', function(req, res){
 
     var q = 'SELECT SUM(cast("Hospitalization No." as float)) AS total \
               FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
-              WHERE "Hospitalization Rate" <> "§" AND "Hospitalization Rate" <> "‐‐‐" ';
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\'';
 
     client.query( q, function(err, result) {
     //call `done()` to release the client back to the pool
@@ -68,7 +68,7 @@ app.get('/mood/years', function(req, res){
 
     var q = 'SELECT "Year", SUM(cast("Hospitalization No." as float)) AS total \
               FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
-              WHERE "Hospitalization Rate" <> "§" AND "Hospitalization Rate" <> "‐‐‐" \
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' \
               GROUP BY "Year"';
 
     client.query( q, function(err, result) {
@@ -96,7 +96,7 @@ app.get('/mood/race', function(req, res){
 
     var q = 'SELECT "Year" AS year, "Race" AS race, AVG(cast("Hospitalization Rate" as float)) AS rate \
               FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
-              WHERE "Hospitalization Rate" <> "§" AND "Hospitalization Rate" <> "‐‐‐" \
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' \
               GROUP BY "Year", "Race" \
               ORDER BY "Year" ASC, "Race" ASC';
 
@@ -114,6 +114,35 @@ app.get('/mood/race', function(req, res){
   });
   return { delphidata: "No data found" };
 });
+
+app.get('/race', function(req, res){
+  pg.connect(conString, function(err, client, done) {
+
+    if(err) {
+    return console.error('error fetching client from pool', err);
+    }
+
+    var q = 'SELECT "Area" AS area, "Race" AS race, SUM("Population") AS population \
+              FROM cogs121_16_raw.hhsa_san_diego_demographics_county_popul_by_race_2012_norm \
+              GROUP BY "Area", "Race" \
+              ORDER BY "Area" ASC, "Race" ASC';
+
+    client.query( q, function(err, result) {
+    //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      res.json(result.rows);
+      client.end();
+      return { delphidata: result };
+    });
+  });
+  return { delphidata: "No data found" };
+});
+
+
 
 
 http.createServer(app).listen(app.get('port'), function() {
