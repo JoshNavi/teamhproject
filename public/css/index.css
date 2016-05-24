@@ -78,7 +78,7 @@ body {
 #section1 {
   background-color: #1b2125;
   padding-top: 5%;
-  padding-bottom: 10%;
+  padding-bottom: 5%;
   color: white;
 }
 
@@ -126,13 +126,6 @@ td
   box-shadow: 0 0 10px darkgrey;
 }
 
-#t2 {
-  box-shadow: 0 0 10px darkgrey;
-}
-
-#t3 {
-  box-shadow: 0 0 10px darkgrey;
-}
 
 /* remove border from table */
 table {
