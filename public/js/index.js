@@ -21,21 +21,22 @@
 
 
 getColor = function(d) {
+  var c20 = d3.scale.category20().domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
   if(d.race == "API"){
-    return "Yellow";
+    return c20(0);
   }
   if(d.race == "White"){
-    return "Grey";
+    return c20(2);
   }
   if(d.race == "Black"){
-    return "Black";
+    return c20(4);
   }
   if(d.race == "Hispanic"){
-    return "Red";
+    return c20(6);
   }
 
-  return "Blue";
+  return c20(8);
 }
 
 makeRaceChart = function(data) {
