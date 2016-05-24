@@ -9,13 +9,13 @@
     makeRaceChart(data);
   });
 
-  // d3.json("/race", function(err, data) {
-  //   if (err) {
-  //     console.log(err);
-  //     return;
-  //   }
-  //   makeRaceGeographyChart(data);
-  // });
+  d3.json("/race", function(err, data) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    makeRaceGeographyChart(data);
+  });
 
 })(d3);
 
@@ -114,8 +114,8 @@ getGeographyColor = function(d) {
 }
 
 makeRaceGeographyChart = function(data) {
-  var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = window.innerWidth - margin.left - margin.right,
+  var margin = {top: 20, right: 30, bottom: 150, left: 70},
+    width = window.innerWidth - margin.left - margin.right - 30,
     height = 500 - margin.top - margin.bottom;
 
   var x = d3.scale.ordinal()
@@ -139,15 +139,22 @@ makeRaceGeographyChart = function(data) {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  x.domain(data.map(function(d) { return d.area + ", " + d.race; }));
-  y.domain([0, d3.max(data, function(d) { return d.population; })]);
+  x.domain(data.map(function(d) { return d.area; }));
+  y.domain([0, d3.max(data, function(d) { return d.population/1; })]);
 
   console.log(y(10000));
 
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
+      .call(xAxis)
+      .selectAll("text")
+          .style("text-anchor", "end")
+          .attr("dx", "-.8em")
+          .attr("dy", ".15em")
+          .attr("transform", function(d) {
+              return "rotate(-65)"
+              });
 
   svg.append("g")
       .attr("class", "y axis")
@@ -157,16 +164,16 @@ makeRaceGeographyChart = function(data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Hospitalization Rate");
+      .text("Population");
 
   svg.selectAll(".bar")
       .data(data)
       .enter().append("rect")
       .attr("class", "bar")
-      .attr("x", function(d) {return x(d.area + ", " + d.race); })
+      .attr("x", function(d) {return x(d.area); })
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.population); })
-      .attr("height", function(d) {return height - y(d.population); })
-      .style("fill", function(d) { return getGeographyColor(d); });
+      .attr("y", function(d) { return y(d.population/1); })
+      .attr("height", function(d) {return height - y(d.population/1); })
+      .style("fill", function(d) { return getColor(d); });
 
 }
