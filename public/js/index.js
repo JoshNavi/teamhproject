@@ -9,13 +9,13 @@
     makeRaceChart(data);
   });
 
-  d3.json("/race", function(err, data) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    makeRaceGeographyChart(data);
-  });
+  // d3.json("/race", function(err, data) {
+  //   if (err) {
+  //     console.log(err);
+  //     return;
+  //   }
+  //   makeRaceGeographyChart(data);
+  // });
 
 })(d3);
 
@@ -129,8 +129,8 @@ makeRaceGeographyChart = function(data) {
 
   var yAxis = d3.svg.axis()
       .scale(y)
-      .orient("left");
-      // .ticks(10, "%");
+      .orient("left")
+      .ticks(5);
 
   var svg = d3.select("body").append("svg")
       .attr("width", width + margin.left + margin.right)
@@ -140,6 +140,8 @@ makeRaceGeographyChart = function(data) {
 
   x.domain(data.map(function(d) { return d.area + ", " + d.race; }));
   y.domain([0, d3.max(data, function(d) { return d.population; })]);
+
+  console.log(y(10000));
 
   svg.append("g")
       .attr("class", "x axis")
@@ -163,7 +165,7 @@ makeRaceGeographyChart = function(data) {
       .attr("x", function(d) {return x(d.area + ", " + d.race); })
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.population); })
-      .attr("height", function(d) { console.log( d.population + "  " + y(d.population)); return height - y(d.population); })
+      .attr("height", function(d) {return height - y(d.population); })
       .style("fill", function(d) { return getGeographyColor(d); });
 
 }
