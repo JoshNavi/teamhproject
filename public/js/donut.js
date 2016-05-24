@@ -1,4 +1,4 @@
-var dataset = {things: [93.3, 6.7],};
+var dataset = {things: [90.5, 9.5],};
 var width = 315;
 var height = 315;
 var radius = Math.min(width, height) / 2;
@@ -32,4 +32,4 @@ svg.append("svg:text")
     .attr("style","font-family: 'Roboto', sans-serif")
     .attr("font-size","40")
     .attr("fill","#007ac2")
-    .text("6.7%");
+    .text("9.5%");
