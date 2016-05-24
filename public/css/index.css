@@ -1,21 +1,22 @@
 body {
   font-family: 'Roboto', sans-serif;
   font-weight: lighter;
+  padding-top: 10px !important;
 }
 
 /* change navbar color */
 .navbar-inverse {
   background-color: white;
   border-bottom: none;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: medium;
-  padding-top: 8px;
-  margin-bottom: 0px;
-  position: fixed;
+  margin-bottom: 1px;
+  padding-top: 0%;
 }
 
 .navbar-inverse .navbar-nav>li>a {
   color: #4c4c4c;
+  border-bottom: 4px solid transparent;
 }
 /* change hover tab color */
 .navbar-inverse .navbar-nav>li>a:hover {
@@ -23,9 +24,12 @@ body {
   border-bottom: 4px solid #007ac2; /* or whatever colour you'd prefer */
 }
 
+
+
 .navbar-inverse .navbar-brand {
     color: #4c4c4c;
     font-size: 17px;
+    margin-bottom: 8px;
 }
 
 .navbar-inverse .navbar-brand:hover {
@@ -36,12 +40,14 @@ body {
     color: #4c4c4c;
 }
 
+
 .nav>li>a {
   padding-left: 0px;
   padding-right: 0px;
   margin-left: 20px;
   padding-bottom: 20px;
 }
+
 
 .navbar-toggle.collapsed {
   background-color: #5B5B5B;
