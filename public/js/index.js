@@ -164,7 +164,7 @@ makeRaceGeographyChart = function(data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Population " + data[0].race);
+      .text("Population");
 
   svg.selectAll(".bar")
       .data(data)
