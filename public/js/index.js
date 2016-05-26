@@ -39,6 +39,15 @@ getColor = function(d) {
   return c20(8);
 }
 
+makeHospitalizationArc = function(data) {
+  var margin = {top:0, right: 20, bottom: 20, left: 20},
+    width widow.innerWidth - margin.left - margin.right,
+    height = 1000 - margin.top - margin.bottom;
+
+  
+}
+
+
 makeRaceChart = function(data) {
   var margin = {top: 20, right: 20, bottom: 30, left: 80},
     width = window.innerWidth - margin.left - margin.right - 50,
