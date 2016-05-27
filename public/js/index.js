@@ -208,20 +208,60 @@ makeRaceGeographyChart = function(data) {
 
 
 makeHospitalizationArc = function(data) {
-  var margin = {top:0, right: 20, bottom: 20, left: 20},
-    width = window.innerWidth - margin.left - margin.right,
-    height = 1000 - margin.top - margin.bottom;
+  var width = 1200,
+      height = 600,
+      radius = Math.min(width, height) / 2;
+
+  var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
+  var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
+
+  var color = d3.scale.category20b();
+
+/*
+  var color = d3.scale.ordinal()
+    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+*/
+   var remove = d3
+    .select(".chart2")
+    .select("svg")
+    .remove()
 
   var arc = d3.svg.arc()
-    .innerRadius(180)
-    .outerRadius(240)
-    .startAngle(90)
-    .endAngle(2 * Math.PI);
+    .innerRadius(radius - 125)
+    .outerRadius(radius - 50);
 
-  var svg = d3.select("body").append("svg")
+  var pie = d3.layout.pie()
+    .sort(null)
+    .startAngle( 1 * Math.PI)
+    .endAngle(2.0 * Math.PI)
+    .value(function(d) { return d.total; });
+
+  var chart = d3.select("#finalChart")
+    .append("svg")
     .attr("width", width)
     .attr("height", height)
-    .append("g");
+    .append("g")
+    .attr("transform", "translate(" + width / 4 + "," + (radius)  + ")");
+
+  var g = chart
+    .selectAll(".arc")
+    .data( pie(data) )
+    .enter()
+    .append("g")
+    .attr("class", "arc");
+
+  g.append("path")
+    .attr("d", arc)
+    .style("fill", function(d, i) { return color(i); })
+    .transition()
+      .ease("exp")
+      .duration(1000)
+      .attrTween("d", tweenPie);
+
+  function tweenPie(b) {
+    var i = d3.interpolate({startAngle: 1.1 * Math.PI, endAngle: 1.1 * Math.PI}, b);
+    return function(t) { return arc(i(t));};
+  }
 
 
 
