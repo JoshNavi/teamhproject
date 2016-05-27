@@ -17,6 +17,14 @@
     makeRaceGeographyChart(data);
   });
 
+  d3.json("/mood/total", function(err, data) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    makeHospitalizationArc(data);
+  });
+
 })(d3);
 
 
@@ -37,14 +45,6 @@ getColor = function(d) {
   }
 
   return c20(8);
-}
-
-makeHospitalizationArc = function(data) {
-  var margin = {top:0, right: 20, bottom: 20, left: 20},
-    width widow.innerWidth - margin.left - margin.right,
-    height = 1000 - margin.top - margin.bottom;
-
-  
 }
 
 
@@ -121,6 +121,24 @@ getGeographyColor = function(d) {
 
   return "Blue";
 }
+
+makeHospitalizationArc = function(data) {
+  var margin = {top:0, right: 20, bottom: 20, left: 20},
+    outerWidth = window.innerWidth - margin.left - margin.right,
+    outerHeight = 1000 - margin.top - margin.bottom;
+
+  var rMin;
+  var rMax;
+  var xCol;
+  
+  var svg = d3.select("body").append("div")
+    .classed("svg-container", true)
+    .append("svg")
+    .attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox", " 0 0 ");
+  
+}
+
 
 makeRaceGeographyChart = function(data) {
   var margin = {top: 20, right: 30, bottom: 150, left: 70},
