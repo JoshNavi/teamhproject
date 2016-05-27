@@ -204,3 +204,27 @@ makeRaceGeographyChart = function(data) {
       .style("fill", function(d) { return getColor(d); });
 
 }
+
+
+
+makeHospitalizationArc = function(data) {
+  var margin = {top:0, right: 20, bottom: 20, left: 20},
+    width = window.innerWidth - margin.left - margin.right,
+    height = 1000 - margin.top - margin.bottom;
+
+  var arc = d3.svg.arc()
+    .innerRadius(180)
+    .outerRadius(240)
+    .startAngle(90)
+    .endAngle(2 * Math.PI);
+
+  var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g");
+
+
+
+
+  
+}
