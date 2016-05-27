@@ -208,13 +208,18 @@ makeRaceGeographyChart = function(data) {
 
 
 makeHospitalizationArc = function(data) {
-  var margin = {top: 20, right: 20, bottom: 30, left: 80},
-    width = window.innerWidth - margin.left - margin.right - 50,
+  var margin = {top: 0, right: 20, bottom: 0, left: 20},
+    width = window.innerWidth - margin.left - margin.right,
     height = 700 - margin.top - margin.bottom;
 
   // var width = 1400,
   //     height = 600,
   //     radius = Math.min(width, height);
+  var dataset = [
+          { label: 'Mood Disorders', total: 2 }, 
+          { label: 'Schizophrenia', total: 2 },
+          { label: 'Anxiety Disorders', total: 2 }
+        ];
 
   var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
   var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
@@ -225,14 +230,10 @@ makeHospitalizationArc = function(data) {
   var color = d3.scale.ordinal()
     .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 */
-   var remove = d3
-    .select(".chart2")
-    .select("svg")
-    .remove()
-
+ 
   var arc = d3.svg.arc()
-    .innerRadius(radius - 125)
-    .outerRadius(radius - 50);
+    .innerRadius(radius + 100)
+    .outerRadius(radius + 300);
 
   var pie = d3.layout.pie()
     .sort(null)
@@ -249,7 +250,7 @@ makeHospitalizationArc = function(data) {
 
   var g = chart
     .selectAll(".arc")
-    .data( pie(data) )
+    .data( pie(dataset) )
     .enter()
     .append("g")
     .attr("class", "arc");
@@ -263,7 +264,7 @@ makeHospitalizationArc = function(data) {
       .attrTween("d", tweenPie);
 
   function tweenPie(b) {
-    var i = d3.interpolate({startAngle: 1.1 * Math.PI, endAngle: 1.1 * Math.PI}, b);
+    var i = d3.interpolate({startAngle: 1 * Math.PI, endAngle: 1 * Math.PI}, b);
     return function(t) { return arc(i(t));};
   }
 
