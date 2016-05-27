@@ -208,9 +208,13 @@ makeRaceGeographyChart = function(data) {
 
 
 makeHospitalizationArc = function(data) {
-  var width = 1200,
-      height = 600,
-      radius = Math.min(width, height) / 2;
+  var margin = {top: 20, right: 20, bottom: 30, left: 80},
+    width = window.innerWidth - margin.left - margin.right - 50,
+    height = 700 - margin.top - margin.bottom;
+
+  // var width = 1400,
+  //     height = 600,
+  //     radius = Math.min(width, height);
 
   var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
   var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
@@ -232,8 +236,8 @@ makeHospitalizationArc = function(data) {
 
   var pie = d3.layout.pie()
     .sort(null)
-    .startAngle( 1 * Math.PI)
-    .endAngle(2.0 * Math.PI)
+    .startAngle(0.5 * Math.PI)
+    .endAngle(1.5 * Math.PI)
     .value(function(d) { return d.total; });
 
   var chart = d3.select("#finalChart")
@@ -241,7 +245,7 @@ makeHospitalizationArc = function(data) {
     .attr("width", width)
     .attr("height", height)
     .append("g")
-    .attr("transform", "translate(" + width / 4 + "," + (radius)  + ")");
+    .attr("transform", "translate(" + width / 2 + ")");
 
   var g = chart
     .selectAll(".arc")
