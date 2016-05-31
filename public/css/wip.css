@@ -1,0 +1,76 @@
+body{
+  background-color:#2b255d;
+  margin-top:15vh;
+  font-family: 'Dosis', sans-serif;
+  color:#ffffff;
+  font-size:100%;
+}
+#titletext{
+  font-family: 'Dosis', sans-serif;
+  color:#ffffff;
+  font-size:5em;
+}
+.bigtext{
+  font-size:3em;
+}
+
+.mediumtext{
+  font-size:1.5em;
+}
+
+.continue, .continue:hover, .continue:focus, .continue:active, .continue:focus:active{
+  background:none;
+  border: 2px solid #ffffff;
+  border-radius:5px;
+  color:#ffffff;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.continueb, .continueb:hover, .continueb:focus, .continueb:active, .continueb:focus:active{
+  background:none;
+  border: 2px solid #000000;
+  border-radius:5px;
+  color:#000000;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+#navtop td{
+  text-align:center;
+  font-size:2em;
+}
+#abouttext, #otherinfo{
+  font-size:2em;
+  font-family: 'Dosis', sans-serif;
+}
+button.link {
+  background:none;
+  border:none;
+  font-size:1em;
+  font-family: 'Dosis', sans-serif;
+  font-weight:300;
+  display: inline-block;
+  position:relative;
+  padding-bottom:2px;
+}
+button.link:after {
+	content: '';
+	display: block;
+	margin: auto;
+	height: 1px;
+	width: 0px;
+	background: transparent;
+	transition: width .5s ease, background-color .5s ease;
+}
+button.link:hover:after {
+	width: 100%;
+	background: white;
+}
+#otherinfo td {
+  font-size:1em;
+  padding:1%;
+}
+.section{
+  margin-bottom:10%;
+}

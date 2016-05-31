@@ -32,6 +32,10 @@ app.get('/', function(req, res){
   res.render('index');
 });
 
+app.get('/wip', function(req, res){
+  res.render('wip');
+});
+
 //routes
 app.get('/mood/total', function(req, res){
   pg.connect(conString, function(err, client, done) {
