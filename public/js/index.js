@@ -51,7 +51,7 @@ getColor = function(d) {
 makeRaceChart = function(data) {
   var margin = {top: 20, right: 20, bottom: 30, left: 80},
     width = window.innerWidth - margin.left - margin.right - 50,
-    height = 700 - margin.top - margin.bottom;
+    height = 500 - margin.top - margin.bottom;
 
   var x = d3.scale.ordinal()
       .rangeRoundBands([0, width], .1);
@@ -68,7 +68,8 @@ makeRaceChart = function(data) {
       .orient("left");
       // .ticks(10, "%");
 
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select(".chart2")
+      .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -104,46 +105,14 @@ makeRaceChart = function(data) {
 
 }
 
-getGeographyColor = function(d) {
-
-  if(d.race == "API"){
-    return "Yellow";
-  }
-  if(d.race == "White"){
-    return "Grey";
-  }
-  if(d.race == "Black"){
-    return "Black";
-  }
-  if(d.race == "Hispanic"){
-    return "Red";
-  }
-
-  return "Blue";
-}
-
-makeHospitalizationArc = function(data) {
-  var margin = {top:0, right: 20, bottom: 20, left: 20},
-    outerWidth = window.innerWidth - margin.left - margin.right,
-    outerHeight = 1000 - margin.top - margin.bottom;
-
-  var rMin;
-  var rMax;
-  var xCol;
-  
-  var svg = d3.select("body").append("div")
-    .classed("svg-container", true)
-    .append("svg")
-    .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox", " 0 0 ");
-  
-}
-
+/*********** STACKED BAR CHART ***********/
 
 makeRaceGeographyChart = function(data) {
-  var margin = {top: 20, right: 30, bottom: 150, left: 70},
-    width = window.innerWidth - margin.left - margin.right - 30,
-    height = 500 - margin.top - margin.bottom;
+  var margin = {top: 20, right: 30, bottom: 150, left: 40},
+    width = window.innerWidth - margin.left - margin.right - 90,
+    height = 600 - margin.top - margin.bottom;
+
+    console.log(data);
 
   var x = d3.scale.ordinal()
       .rangeRoundBands([0, width], .1);
@@ -158,18 +127,18 @@ makeRaceGeographyChart = function(data) {
   var yAxis = d3.svg.axis()
       .scale(y)
       .orient("left")
-      .ticks(5);
+      .tickFormat(d3.format(".2s"));
 
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select(".chart1")
+      .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+/* correct */
   x.domain(data.map(function(d) { return d.area; }));
   y.domain([0, d3.max(data, function(d) { return d.population/1; })]);
-
-  console.log(y(10000));
 
   svg.append("g")
       .attr("class", "x axis")
@@ -202,10 +171,44 @@ makeRaceGeographyChart = function(data) {
       .attr("y", function(d) { return y(d.population/1); })
       .attr("height", function(d) {return height - y(d.population/1); })
       .style("fill", function(d) { return getColor(d); });
-
 }
 
 
+
+getGeographyColor = function(d) {
+
+  if(d.race == "API"){
+    return "Yellow";
+  }
+  if(d.race == "White"){
+    return "Grey";
+  }
+  if(d.race == "Black"){
+    return "Black";
+  }
+  if(d.race == "Hispanic"){
+    return "Red";
+  }
+
+  return "Blue";
+}
+
+makeHospitalizationArc = function(data) {
+  var margin = {top:0, right: 20, bottom: 20, left: 20},
+    outerWidth = window.innerWidth - margin.left - margin.right,
+    outerHeight = 1000 - margin.top - margin.bottom;
+
+  var rMin;
+  var rMax;
+  var xCol;
+
+  var svg = d3.select("body").append("div")
+    .classed("svg-container", true)
+    .append("svg")
+    .attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox", " 0 0 ");
+
+}
 
 makeHospitalizationArc = function(data) {
   var margin = {top: 0, right: 20, bottom: 0, left: 20},
@@ -216,7 +219,7 @@ makeHospitalizationArc = function(data) {
   //     height = 600,
   //     radius = Math.min(width, height);
   var dataset = [
-          { label: 'Mood Disorders', total: 2 }, 
+          { label: 'Mood Disorders', total: 2 },
           { label: 'Schizophrenia', total: 2 },
           { label: 'Anxiety Disorders', total: 2 }
         ]; // ADD IN data.whatever later
@@ -229,7 +232,7 @@ makeHospitalizationArc = function(data) {
 /*
   var color = d3.scale.ordinal()
     .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-*/ 
+*/
   var arc = d3.svg.arc()
     .innerRadius(radius + 100)
     .outerRadius(radius + 300);
@@ -326,5 +329,5 @@ makeHospitalizationArc = function(data) {
   }
 
 
-  
+
 }

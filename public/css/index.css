@@ -104,7 +104,7 @@ body {
 }
 
 #section2 h1 {
-  font-weight: lighter;
+  font-weight: 300;
   line-height: 50px;
   margin-bottom: 50px;
   padding-left: 20%;
@@ -135,4 +135,42 @@ table {
   border: none;
   width: 50%;
   height: 50%;
+}
+
+/*********** SECTION 3 ***********/
+
+#section3 {
+  background-color: white;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  color: #4c4c4c;
+}
+
+#section3 h1 {
+  font-weight: 300;
+  line-height: 50px;
+  margin-bottom: 50px;
+  padding-left: 20%;
+  padding-right: 20%;
+}
+/*********** STACKED BAR CHART ***********/
+
+.axis path,
+.axis line{
+  fill: none;
+  stroke: black;
+}
+
+.line{
+  fill: none;
+  stroke: blue;
+  stroke-width: 2px;
+}
+
+.tick text{
+  font-size: 12px;
+}
+
+.tick line{
+  opacity: 0.2;
 }

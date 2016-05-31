@@ -236,9 +236,10 @@ app.get('/race', function(req, res){
 
     var q = 'SELECT "Area" AS area, "Race" AS race, SUM("Population") AS population \
               FROM cogs121_16_raw.hhsa_san_diego_demographics_county_popul_by_race_2012_norm \
-              WHERE "Area" NOT LIKE \'%Total%\' \
+              WHERE "Area" <> \'County Total\' \
               GROUP BY "Area", "Race" \
-              ORDER BY "Race" ASC, "Area" ASC LIMIT 47 OFFSET 47';
+              ORDER BY "Area" ASC, "Race" ASC';
+
 
     client.query( q, function(err, result) {
     //call `done()` to release the client back to the pool
