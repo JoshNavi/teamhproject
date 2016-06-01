@@ -352,7 +352,68 @@ makeMoodPie = function(data) {
       Black: 0,
       White: 0,
       Other: 0
+    };
+
+    for(var i = 0; i < data.length; i++)
+    {
+      console.log("test");
+      console.log(data[i].race);
+      if(data[i].race == "API")
+      {
+        totalRace.API += data[i].rate;
+      }
+
+      if(data[i].race == "Hispanic")
+      {
+        totalRace.Hispanic += data[i].rate;
+      }
+
+      if(data[i].race == "Black")
+      {
+        totalRace.Black += data[i].rate;
+      }
+
+      if(data[i].race == "White")
+      {
+        totalRace.White += data[i].rate;
+      }
+
+      if(data[i].race == "Other")
+      {
+        totalRace.Other += data[i].rate;
+      }
+
     }
+
+    console.log(totalRace.API);
+
+    var pieData = [
+      {
+        race: "API",
+        total: totalRace.API
+      },
+
+      {
+        race: "Hispanic",
+        total: totalRace.Hispanic
+      },
+
+      {
+        race: "Black",
+        total: totalRace.Black
+
+      },
+
+      {
+        race: "White",
+        total: totalRace.White
+      },
+
+      {
+        race: "Other",
+        total: totalRace.Other
+      }
+    ];
 
     var chart = d3.select("#expandedChart")
       .select("svg")
@@ -366,7 +427,6 @@ makeMoodPie = function(data) {
     // var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
 
     var arc = d3.svg.arc()
-      .innerRadius(0)
       .outerRadius(250)
       .startAngle(0)
       .endAngle(2*Math.PI);
@@ -377,14 +437,18 @@ makeMoodPie = function(data) {
     //   .endAngle(2 * Math.PI)
     //   .value(function(d) { return d.total; });
 
-    
+    var colors = d3.scale.category20c();
 
     svg = d3.select("#expandedChart")
       .append("svg")
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")");
+      .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")")
+      .selectAll('path').data(pie(pieData))
+      .enter().append('path')
+        .attr('fill', function(d, i){ return colors(d, i); })
+        .attr('d', arc);
 
     // var g = svg
     //   .selectAll(".arc")
@@ -393,9 +457,9 @@ makeMoodPie = function(data) {
     //   .append("g")
     //   .attr("class", "arc");
 
-    svg.append("path")
-      .attr("d", arc)
-      .style("fill", function(data) { return getColor(data); });
+    //svg.append("path")
+     // .attr("d", arc);
+      //.style("fill", function(d) { return getColor(); });
      //  .transition().delay(function(d, i) { return i * 500; }).duration(500)
      //  .attrTween('d', function(d) {
      //   var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
