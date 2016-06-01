@@ -265,13 +265,13 @@ makeHospitalizationArc = function(data) {
     .on("click", function(d,i){return arcExpand(d,i);})
     .transition()
       .ease("exp")
-      .duration(1000)
+      .duration(1800)
       .attrTween("d", tweenPie);
 
   arcs.append("svg:text")
       .attr("transform", function(d) { //set the label's origin to the center of the arc
         //we have to make sure to set these before calling arc.centroid
-        d.outerRadius = radius + 50; // Set Outer Coordinate
+        d.outerRadius = radius + 30; // Set Outer Coordinate
         d.innerRadius = radius + 45; // Set Inner Coordinate
         return "translate(" + arc.centroid(d) + ")";
       })
