@@ -36,6 +36,42 @@ app.get('/wip', function(req, res){
   res.render('wip');
 });
 
+app.get('/all/total', function(req, res){
+  pg.connect(conString, function(err, client, done) {
+
+    if(err) {
+    return console.error('error fetching client from pool', err);
+    }
+
+    var q = 'SELECT \'Mood\' as disease, SUM(cast("Hospitalization No." as float)) AS total \
+              FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' \
+              UNION \
+              SELECT \'Schizophrenia\' as disease, SUM(cast("2010 Hospitalization No." as float)) + SUM(cast("2011 Hospitalization No." as float)) + SUM(cast("2012 Hospitalization No." as float)) AS total \
+              FROM cogs121_16_raw.hhsa_schizophrenia_and_other_psychotic_disorders_2010_2012 \
+              WHERE "2010 Hospitalization Rate" <> \'§\' AND "2010 Hospitalization Rate" <> \'‐‐‐\' \
+              AND "2011 Hospitalization Rate" <> \'§\' AND "2011 Hospitalization Rate" <> \'‐‐‐\' \
+              AND "2012 Hospitalization Rate" <> \'§\' AND "2012 Hospitalization Rate" <> \'‐‐‐\' \
+              UNION \
+              SELECT \'Anxiety\' as disease, SUM(cast("Hospitalization No." as float)) AS total \
+              FROM cogs121_16_raw.hhsa_anxiety_disorder_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" <> \'§\' AND "Hospitalization Rate" <> \'‐‐‐\'';
+
+    client.query( q, function(err, result) {
+    //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      res.json(result.rows);
+      client.end();
+      return { delphidata: result };
+    });
+  });
+  return { delphidata: "No data found" };
+});
+
 //routes
 app.get('/mood/total', function(req, res){
   pg.connect(conString, function(err, client, done) {
