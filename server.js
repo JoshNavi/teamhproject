@@ -98,7 +98,7 @@ app.get('/mood/race', function(req, res){
     return console.error('error fetching client from pool', err);
     }
 
-    var q = 'SELECT "Year" AS year, "Race" AS race, AVG(cast("Hospitalization Rate" as float)) AS rate \
+    var q = 'SELECT "Year" AS year, "Race" AS race, SUM(cast("Hospitalization No." as float)) AS rate \
               FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
               WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' \
               GROUP BY "Year", "Race" \
@@ -126,7 +126,7 @@ app.get('/anxiety/race', function(req, res){
     return console.error('error fetching client from pool', err);
     }
 
-    var q = 'SELECT "Year" AS year, "Race" AS race, AVG(cast("Hospitalization Rate" as float)) AS rate \
+    var q = 'SELECT "Year" AS year, "Race" AS race, SUM(cast("Hospitalization No." as float)) AS rate \
       FROM cogs121_16_raw.hhsa_anxiety_disorder_by_race_2010_2012 \
       WHERE "Hospitalization Rate" <> \'§\' AND "Hospitalization Rate" <> \'‐‐‐\' \
       GROUP BY "Year", "Race" \
