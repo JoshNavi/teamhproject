@@ -69,10 +69,11 @@ body {
 #section0 {
   width: 100%;
   height: 100%;
-  background-image: url(/images/splash-photo.jpg);
+  /* background-image: url(/images/brains.png); */
   background-repeat: no-repeat;
   background-size: 100%;
   margin-bottom: -70px; /* temporary fix to the picture resizes */
+  background-color: lightblue;
 }
 
 #section1 {

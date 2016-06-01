@@ -413,7 +413,6 @@ makeMoodPie = function(data) {
       }
     ];
 
-    console.log(pieData);
 
     var chart = d3.select("#expandedChart")
       .select("svg")
@@ -422,6 +421,9 @@ makeMoodPie = function(data) {
     var margin = {top: 0, right: 20, bottom: 0, left: 20},
     width = window.innerWidth - margin.left - margin.right,
     height = 1300 - margin.top - margin.bottom;
+
+    var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
+    var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
 
     var pie = d3.layout.pie()
       .value(function(d) {
@@ -438,12 +440,49 @@ makeMoodPie = function(data) {
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      // .attr("transform", "translate(" + width / 2 + ", " + height / 4 + ")");
-      .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")")
-      .selectAll('path').data(pie(pieData))
-      .enter().append('path')
+      .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")");
+
+    var g = chart.selectAll('path').data(pie(pieData))
+        .enter().append('path')
         .attr('fill', function(d, i){ return colors(i); })
         .attr('d', arc);
+
+  var xCoor = -60;
+  var yCoor = 20;
+
+  var legendRectSize = 50;
+  var legendSpacing = 4;
+
+  var legend = chart.selectAll('.legend')
+    .data( pieData )
+    /*(function(d){ console.log(d); return d.crimes_description; }) )*/
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      var offset =  height * color.domain().length / 2;
+      var horz = 6 * legendRectSize;
+      var vert = i * height - offset - 150;
+      return 'translate(' + horz + ',' + vert + ')';
+    })
+    .style('float', 'right');
+
+
+    legend.append('rect')                                     // NEW
+      .attr('width', legendRectSize)                          // NEW
+      .attr('height', legendRectSize)                         // NEW
+      .style('fill', function(d, i) { return colors(i); })                                   // NEW
+      .style('stroke', color);                               // NEW
+
+    legend.append('text')                                     // NEW
+      .attr('x', legendRectSize + legendSpacing)              // NEW
+      .attr('y', legendRectSize - legendSpacing)              // NEW
+      .text(function(d) { return pieData; })
+      .attr("transform", "translate(" + 10 + "," + -15  + ")");
+
+
+
 
 
     
@@ -497,5 +536,6 @@ makeMoodPie = function(data) {
       //   .ease("exp")
       //   .duration(1000)
       //   .attrTween("d", tweenPie);
+
 
   }
