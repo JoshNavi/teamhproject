@@ -390,34 +390,35 @@ makeMoodPie = function(data) {
     var pieData = [
       {
         race: "API",
-        total: totalRace.API
+        value: totalRace.API
       },
 
       {
         race: "Hispanic",
-        total: totalRace.Hispanic
+        value: totalRace.Hispanic
       },
 
       {
         race: "Black",
-        total: totalRace.Black
+        value: totalRace.Black
 
       },
 
       {
         race: "White",
-        total: totalRace.White
+        value: totalRace.White
       },
 
       {
         race: "Other",
-        total: totalRace.Other
+        value: totalRace.Other
       }
     ];
 
-    var chart = d3.select("#expandedChart")
-      .select("svg")
-      .remove("svg");
+    console.log(pieData);
+    //var chart = d3.select("#expandedChart")
+      //.select("svg")
+      //.remove("svg");
 
     var margin = {top: 0, right: 20, bottom: 0, left: 20},
     width = window.innerWidth - margin.left - margin.right,
@@ -426,10 +427,13 @@ makeMoodPie = function(data) {
     // var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
     // var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
 
+    var pie = d3.layout.pie()
+      .value(function(d) {
+        return d.value;
+      });
+
     var arc = d3.svg.arc()
-      .outerRadius(250)
-      .startAngle(0)
-      .endAngle(2*Math.PI);
+      .outerRadius(250);
 
     // var pie = d3.layout.pie()
     //   .sort(null)
@@ -439,7 +443,7 @@ makeMoodPie = function(data) {
 
     var colors = d3.scale.category20c();
 
-    svg = d3.select("#expandedChart")
+    var chart = d3.select("#expandedChart")
       .append("svg")
       .attr("width", width)
       .attr("height", height)
@@ -447,7 +451,7 @@ makeMoodPie = function(data) {
       .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")")
       .selectAll('path').data(pie(pieData))
       .enter().append('path')
-        .attr('fill', function(d, i){ return colors(d, i); })
+        .attr('fill', function(d, i){ return colors(i); })
         .attr('d', arc);
 
     // var g = svg
