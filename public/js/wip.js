@@ -22,6 +22,7 @@
       console.log(err);
       return;
     }
+    // console.log(data);
     makeHospitalizationArc(data);
   });
 
@@ -216,7 +217,7 @@ makeHospitalizationArc = function(data) {
   //     height = 600,
   //     radius = Math.min(width, height);
   var dataset = [
-          { label: 'Mood Disorders', total: 2 },
+          { label: 'Mood Disorders', total: 2},
           { label: 'Schizophrenia', total: 2 },
           { label: 'Anxiety Disorders', total: 2 }
         ]; // ADD IN data.whatever later
@@ -230,8 +231,20 @@ makeHospitalizationArc = function(data) {
   var color = d3.scale.ordinal()
     .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 */
+  
+
+  
+
+  var chart = d3.select("#finalChart")
+    .append("svg")
+    .data([dataset])
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + ")");
+
   var arc = d3.svg.arc()
-    .innerRadius(radius + 100)
+    .innerRadius(radius + 50)
     .outerRadius(radius + 300);
 
   var pie = d3.layout.pie()
@@ -240,32 +253,49 @@ makeHospitalizationArc = function(data) {
     .endAngle(1.5 * Math.PI)
     .value(function(d) { return d.total; });
 
-  // var piecenter = d3.layout.pie()
-  //   .sort(null)
-  //   .startAngle(0)
-  //   .endAngle(2*Math.PI);
-  var chart = d3.select("#finalChart")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .append("g")
-    .attr("transform", "translate(" + width / 2 + ")");
+  var arcs = chart.selectAll("g.slice")
+  .data(pie)
+  .enter()
+  .append("g")
+  .attr("class","slice");
 
-  var g = chart
-    .selectAll(".arc")
-    .data( pie(dataset) )
-    .enter()
-    .append("g")
-    .attr("class", "arc");
-
-  g.append("path")
-    .attr("d", arc)
-    .style("fill", function(d, i) { return color(i); })
+  arcs.append("path")
+  .attr("d",arc)
+  .style("fill", function(d, i) { return color(i); })
     .on("click", function(d,i){return arcExpand(d,i);})
     .transition()
       .ease("exp")
       .duration(1000)
       .attrTween("d", tweenPie);
+
+  arcs.append("svg:text")
+      .attr("transform", function(d) { //set the label's origin to the center of the arc
+        //we have to make sure to set these before calling arc.centroid
+        d.outerRadius = radius + 50; // Set Outer Coordinate
+        d.innerRadius = radius + 45; // Set Inner Coordinate
+        return "translate(" + arc.centroid(d) + ")";
+      })
+      .attr("text-anchor", "middle") //center the text on it's origin
+      .style("fill", "White")
+      .style("font", "bold 30px Arial")
+      .text(function(d,i){ return dataset[i].label; });
+    
+
+  // var g = chart
+  //   .selectAll(".arc")
+  //   .data( pie(dataset) )
+  //   .enter()
+  //   .append("g")
+  //   .attr("class", "arc");
+
+  // g.append("path")
+  //   .attr("d", arc)
+  //   .style("fill", function(d, i) { return color(i); })
+  //   .on("click", function(d,i){return arcExpand(d,i);})
+  //   .transition()
+  //     .ease("exp")
+  //     .duration(1000)
+  //     .attrTween("d", tweenPie);
 
   function tweenPie(b) {
     var i = d3.interpolate({startAngle: 1 * Math.PI, endAngle: 1 * Math.PI}, b);
@@ -276,52 +306,64 @@ makeHospitalizationArc = function(data) {
     console.log("ArchExpand");
     console.log(d);
 
-    var margin = {top: 0, right: 20, bottom: 0, left: 20},
-    width = window.innerWidth - margin.left - margin.right,
-    height = 1300 - margin.top - margin.bottom;
-
-    var radius = 20;
-
-    var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
-    var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
-
-    var color = d3.scale.category20b();
-    var arc = d3.svg.arc()
-      .innerRadius(radius)
-      .outerRadius(100);
-
-    var pie = d3.layout.pie()
-      .sort(null)
-      .startAngle(0 * Math.PI)
-      .endAngle(2 * Math.PI)
-      .value(function(d) { return d.total; });
-
     var chart = d3.select("#expandedChart")
       .select("svg")
       .remove("svg");
 
-    chart = d3.select("#expandedChart")
+    var margin = {top: 0, right: 20, bottom: 0, left: 20},
+    width = window.innerWidth - margin.left - margin.right,
+    height = 1300 - margin.top - margin.bottom;
+
+    // var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
+    // var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
+
+    var color = d3.scale.category20c();
+    var arc = d3.svg.arc()
+      .innerRadius(0)
+      .outerRadius(250)
+      .startAngle(0)
+      .endAngle(2*Math.PI);
+
+    // var pie = d3.layout.pie()
+    //   .sort(null)
+    //   .startAngle(0 * Math.PI)
+    //   .endAngle(2 * Math.PI)
+    //   .value(function(d) { return d.total; });
+
+    
+
+    svg = d3.select("#expandedChart")
       .append("svg")
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      .attr("transform", "translate(" + width / 2 + ", " + height / 2 + ")");
+      .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")");
 
-    var g = chart
-      .selectAll(".arc")
-      .data( pie(dataset) )
-      .enter()
-      .append("g")
-      .attr("class", "arc");
+    // var g = svg
+    //   .selectAll(".arc")
+    //   .data( pie(dataset) )
+    //   .enter()
+    //   .append("g")
+    //   .attr("class", "arc");
 
-    g.append("path")
+    svg.append("path")
       .attr("d", arc)
       .style("fill", function(d, i) { return color(i); })
-      .on("click", function(d,i){return arcExpand(d,i);})
-      .transition()
-        .ease("exp")
-        .duration(1000)
-        .attrTween("d", tweenPie);
+     //  .transition().delay(function(d, i) { return i * 500; }).duration(500)
+     //  .attrTween('d', function(d) {
+     //   var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
+     //    return function(t) {
+     //       d.endAngle = i(t);
+     //     return arc(d);
+     //   }
+     // });
+
+
+
+      // .transition()
+      //   .ease("exp")
+      //   .duration(1000)
+      //   .attrTween("d", tweenPie);
 
   }
 
