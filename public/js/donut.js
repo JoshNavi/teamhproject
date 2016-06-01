@@ -1,7 +1,7 @@
 var dataset = {things: [90.5, 9.5],};
-var width = 315;
-var height = 315;
-var radius = Math.min(width, height) / 2;
+var width = 403.66;
+var height = 198.66;
+var radius = Math.min(width, height)/1.2;
 var color = d3.scale.category20();
 var pie = d3.layout.pie().sort(null);
 var arc = d3.svg.arc()
@@ -13,13 +13,14 @@ var svg = d3.select("#donut")
     .attr("height", 264)
     .append("g")
     .attr("transform", "translate("
-        + width / 2.090 + ","
-        + height / 2.38  + ")");
+        + width / 2 + ","
+        + height / 1.5  + ")");
 var path = svg.selectAll("path")
     .data(pie(dataset.things))
     .enter().append("path")
     .attr("fill", function(d, i) { return getColors(i); })
     .attr("d", arc);
+
 
 function getColors (i) {
   var colorArray = ['#E5E5E5','#007ac2'];
@@ -33,3 +34,4 @@ svg.append("svg:text")
     .attr("font-size","40")
     .attr("fill","#007ac2")
     .text("9.5%");
+

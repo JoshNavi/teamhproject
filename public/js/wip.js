@@ -211,7 +211,7 @@ makeRaceGeographyChart = function(data) {
 makeHospitalizationArc = function(data) {
   var margin = {top: 0, right: 20, bottom: 0, left: 20},
     width = window.innerWidth - margin.left - margin.right,
-    height = 460 - margin.top - margin.bottom;
+    height = 480 - margin.top - margin.bottom;
 
   // var width = 1400,
   //     height = 600,
@@ -262,7 +262,7 @@ makeHospitalizationArc = function(data) {
   arcs.append("path")
   .attr("d",arc)
   .style("fill", function(d, i) { return color(i); })
-    .on("click", function(d,i){return arcExpand(d,i);})
+    .on("click", function(d,i){return expandGraph(d);})
     .transition()
       .ease("exp")
       .duration(1800)
@@ -302,10 +302,120 @@ makeHospitalizationArc = function(data) {
     return function(t) { return arc(i(t));};
   }
 
-  function arcExpand(d,i) {
-    console.log("ArchExpand");
-    console.log(d);
 
+}
+
+expandGraph = function(d, i) {
+  console.log(d);
+
+  if(d.data.label == "Anxiety Disorders")
+  {
+    d3.json("/anxiety/race", function(err, data) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      makeAnxietyPie(data);
+    });
+  }
+
+  if(d.data.label == "Mood Disorders")
+  {
+    d3.json("/mood/race", function(err, data) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      makeMoodPie(data);
+    });
+  }
+
+  if(d.data.label == "Schizophrenia")
+  {
+    d3.json("/schizophrenia/race", function(err, data) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      makeSchizPie(data);
+    });
+  }
+}
+
+makeMoodPie = function(data) {
+    console.log("ArchExpand blah blah blah");
+    console.log(data);
+
+    var totalRace = {
+      API: 0,
+      Hispanic: 0,
+      Black: 0,
+      White: 0,
+      Other: 0
+    };
+
+    for(var i = 0; i < data.length; i++)
+    {
+      console.log("test");
+      console.log(data[i].race);
+      if(data[i].race == "API")
+      {
+        totalRace.API += data[i].rate;
+      }
+
+      if(data[i].race == "Hispanic")
+      {
+        totalRace.Hispanic += data[i].rate;
+      }
+
+      if(data[i].race == "Black")
+      {
+        totalRace.Black += data[i].rate;
+      }
+
+      if(data[i].race == "White")
+      {
+        totalRace.White += data[i].rate;
+      }
+
+      if(data[i].race == "Other")
+      {
+        totalRace.Other += data[i].rate;
+      }
+
+    }
+
+    console.log(totalRace.API);
+
+    var pieData = [
+      {
+        race: "API",
+        value: totalRace.API
+      },
+
+      {
+        race: "Hispanic",
+        value: totalRace.Hispanic
+      },
+
+      {
+        race: "Black",
+        value: totalRace.Black
+
+      },
+
+      {
+        race: "White",
+        value: totalRace.White
+      },
+
+      {
+        race: "Other",
+        value: totalRace.Other
+      }
+    ];
+
+    console.log(pieData);
     var chart = d3.select("#expandedChart")
       .select("svg")
       .remove("svg");
@@ -314,60 +424,53 @@ makeHospitalizationArc = function(data) {
     width = window.innerWidth - margin.left - margin.right,
     height = 1300 - margin.top - margin.bottom;
 
-    // var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
-    // var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
+    var pie = d3.layout.pie()
+      .value(function(d) {
+        return d.value;
+      });
 
-    var color = d3.scale.category20c();
     var arc = d3.svg.arc()
-      .innerRadius(0)
-      .outerRadius(250)
-      .startAngle(0)
-      .endAngle(2*Math.PI);
+      .outerRadius(250);
 
-    // var pie = d3.layout.pie()
-    //   .sort(null)
-    //   .startAngle(0 * Math.PI)
-    //   .endAngle(2 * Math.PI)
-    //   .value(function(d) { return d.total; });
 
-    
+    var colors = d3.scale.category20c();
 
-    svg = d3.select("#expandedChart")
+    var chart = d3.select("#expandedChart")
       .append("svg")
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")");
+      // .attr("transform", "translate(" + width / 2 + ", " + height / 4 + ")");
+      .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")")
+      .selectAll('path').data(pie(pieData))
+      .enter().append('path')
+        .attr('fill', function(d, i){ return colors(i); })
+        .attr('d', arc);
+        
+    var g = svg.selectAll(".arc")
+                .data(pie(data))
+                .enter().append("g")
+                .attr("class", "arc");
 
-    // var g = svg
-    //   .selectAll(".arc")
-    //   .data( pie(dataset) )
-    //   .enter()
-    //   .append("g")
-    //   .attr("class", "arc");
+            g.append("path")
+                .attr("d", arc)
+                .style("fill", function(d,i) {
+                    return color(i);
+                });
 
-    svg.append("path")
-      .attr("d", arc)
-      .style("fill", function(d, i) { return color(i); })
-     //  .transition().delay(function(d, i) { return i * 500; }).duration(500)
-     //  .attrTween('d', function(d) {
-     //   var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
-     //    return function(t) {
-     //       d.endAngle = i(t);
-     //     return arc(d);
-     //   }
-     // });
+            g.append("text")
+                .attr("transform", function(d) {
+                    return "translate(" + arc.centroid(d) + ")";
+                })
+                .attr("dy", ".35em")
+                .style("text-anchor", "middle")
+                .text(function(d) {
+                  console.log("d is", d);
+                    return percentageFormat(d.data.percentage);
+                });
+
+      
 
 
-
-      // .transition()
-      //   .ease("exp")
-      //   .duration(1000)
-      //   .attrTween("d", tweenPie);
 
   }
-
-
-
-
-}
