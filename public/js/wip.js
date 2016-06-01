@@ -262,7 +262,7 @@ makeHospitalizationArc = function(data) {
   arcs.append("path")
   .attr("d",arc)
   .style("fill", function(d, i) { return color(i); })
-    .on("click", function(d,i){return arcExpand(d,i);})
+    .on("click", function(d,i){return expandGraph(d);})
     .transition()
       .ease("exp")
       .duration(1800)
@@ -302,9 +302,57 @@ makeHospitalizationArc = function(data) {
     return function(t) { return arc(i(t));};
   }
 
-  function arcExpand(d,i) {
-    console.log("ArchExpand");
-    console.log(d);
+
+}
+
+expandGraph = function(d, i) {
+  console.log(d);
+
+  if(d.data.label == "Anxiety Disorders")
+  {
+    d3.json("/anxiety/race", function(err, data) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      makeAnxietyPie(data);
+    });
+  }
+
+  if(d.data.label == "Mood Disorders")
+  {
+    d3.json("/mood/race", function(err, data) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      makeMoodPie(data);
+    });
+  }
+
+  if(d.data.label == "Schizophrenia")
+  {
+    d3.json("/schizophrenia/race", function(err, data) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      makeSchizPie(data);
+    });
+  }
+}
+
+makeMoodPie = function(data) {
+    console.log("ArchExpand blah blah blah");
+    console.log(data);
+
+    var totalRace = {
+      API: 0,
+      Hispanic: 0,
+      Black: 0,
+      White: 0,
+      Other: 0
+    }
 
     var chart = d3.select("#expandedChart")
       .select("svg")
@@ -317,7 +365,6 @@ makeHospitalizationArc = function(data) {
     // var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
     // var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
 
-    var color = d3.scale.category20c();
     var arc = d3.svg.arc()
       .innerRadius(0)
       .outerRadius(250)
@@ -348,7 +395,7 @@ makeHospitalizationArc = function(data) {
 
     svg.append("path")
       .attr("d", arc)
-      .style("fill", function(d, i) { return color(i); })
+      .style("fill", function(data) { return getColor(data); });
      //  .transition().delay(function(d, i) { return i * 500; }).duration(500)
      //  .attrTween('d', function(d) {
      //   var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
@@ -366,8 +413,3 @@ makeHospitalizationArc = function(data) {
       //   .attrTween("d", tweenPie);
 
   }
-
-
-
-
-}
