@@ -343,8 +343,8 @@ expandGraph = function(d, i) {
 }
 
 makeMoodPie = function(data) {
-    console.log("ArchExpand blah blah blah");
-    console.log(data);
+    // console.log("ArchExpand blah blah blah");
+    // console.log(data);
 
     var totalRace = {
       API: 0,
@@ -356,8 +356,8 @@ makeMoodPie = function(data) {
 
     for(var i = 0; i < data.length; i++)
     {
-      console.log("test");
-      console.log(data[i].race);
+      // console.log("test");
+      // console.log(data[i].race);
       if(data[i].race == "API")
       {
         totalRace.API += data[i].rate;
@@ -385,7 +385,7 @@ makeMoodPie = function(data) {
 
     }
 
-    console.log(totalRace.API);
+    // console.log(totalRace.API);
 
     var pieData = [
       {
