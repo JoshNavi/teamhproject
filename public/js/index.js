@@ -120,6 +120,9 @@ makeRaceGeographyChart = function(data) {
   var y = d3.scale.linear()
       .range([height, 0]);
 
+  var color = d3.scale.ordinal()
+      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"]);
+
   var xAxis = d3.svg.axis()
       .scale(x)
       .orient("bottom");
@@ -136,44 +139,139 @@ makeRaceGeographyChart = function(data) {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-/* correct */
-  x.domain(data.map(function(d) { return d.area; }));
-  y.domain([0, d3.max(data, function(d) { return d.population/1; })]);
+/* messing around with data */
+  var csvData = [];
+  var areaDict = {};
+  data.map(function (elem) {
+    if (elem.race.indexOf('Any') == 0) return;
 
+    if (!areaDict[elem.area]) {
+      areaDict[elem.area] = {};
+      // areaDict = {
+      //   'alpine': {}
+      // }
+    }
+    areaDict[elem.area][elem.race] = elem.population;
+    // areaDict = {
+    //   'alpine': {
+    //     'black': 999
+    //   }
+    // }
+
+    return;
+  });
+  for (key in areaDict) {
+    var row = {}
+    row.Area = key; // name whatever that column
+    for (race in areaDict[key]) {
+      row[race] = areaDict[key][race];
+    }
+    csvData.push(row);
+  }
+
+  console.log(csvData);
+
+
+  color.domain(d3.keys(csvData[0]).filter(function(key) { return key !== "Area"; }));
+  csvData.forEach(function(d) {
+    var y0 = 0;
+    d.races = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+    d.total = d.races[d.races.length - 1].y1;
+  });
+  csvData.sort(function(a, b) { return b.total - a.total; });
+  x.domain(csvData.map(function(d) { return d.Area; }));
+  y.domain([0, d3.max(csvData, function(d) { return d.total; })]);
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
       .selectAll("text")
-          .style("text-anchor", "end")
-          .attr("dx", "-.8em")
-          .attr("dy", ".15em")
-          .attr("transform", function(d) {
-              return "rotate(-65)"
-              });
-
+              .style("text-anchor", "end")
+              .attr("dx", "-.8em")
+              .attr("dy", ".15em")
+              .attr("transform", function(d) {
+                  return "rotate(-65)"
+                  });
   svg.append("g")
       .attr("class", "y axis")
       .call(yAxis)
-      .append("text")
+    .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
       .text("Population");
-
-  svg.selectAll(".bar")
-      .data(data)
-      .enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", function(d) {return x(d.area); })
+  var state = svg.selectAll(".state")
+      .data(csvData)
+    .enter().append("g")
+      .attr("class", "g")
+      .attr("transform", function(d) { return "translate(" + x(d.Area) + ",0)"; });
+  state.selectAll("rect")
+      .data(function(d) { return d.races; })
+    .enter().append("rect")
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.population/1); })
-      .attr("height", function(d) {return height - y(d.population/1); })
-      .style("fill", function(d) { return getColor(d); });
+      .attr("y", function(d) { return y(d.y1); })
+      .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+      .style("fill", function(d) { return color(d.name); });
+  var legend = svg.selectAll(".legend")
+      .data(color.domain().slice().reverse())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+  legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+
+
+
+
+/* correct */
+  //
+  // x.domain(data.map(function(d) { return d.area; }));
+  // y.domain([0, d3.max(data, function(d) { return d.population/1; })]);
+  //
+  // svg.append("g")
+  //     .attr("class", "x axis")
+  //     .attr("transform", "translate(0," + height + ")")
+  //     .call(xAxis)
+  //     .selectAll("text")
+  //         .style("text-anchor", "end")
+  //         .attr("dx", "-.8em")
+  //         .attr("dy", ".15em")
+  //         .attr("transform", function(d) {
+  //             return "rotate(-65)"
+  //             });
+  //
+  // svg.append("g")
+  //     .attr("class", "y axis")
+  //     .call(yAxis)
+  //     .append("text")
+  //     .attr("transform", "rotate(-90)")
+  //     .attr("y", 6)
+  //     .attr("dy", ".71em")
+  //     .style("text-anchor", "end")
+  //     .text("Population");
+  //
+  // svg.selectAll(".bar")
+  //     .data(data)
+  //     .enter().append("rect")
+  //     .attr("class", "bar")
+  //     .attr("x", function(d) {return x(d.area); })
+  //     .attr("width", x.rangeBand())
+  //     .attr("y", function(d) { return y(d.population/1); })
+  //     .attr("height", function(d) {return height - y(d.population/1); })
+  //     .style("fill", function(d) { return getColor(d); });
 }
 
-
+/*********************************************/
 
 getGeographyColor = function(d) {
 
