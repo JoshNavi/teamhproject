@@ -424,6 +424,9 @@ makeMoodPie = function(data) {
     width = window.innerWidth - margin.left - margin.right,
     height = 1300 - margin.top - margin.bottom;
 
+    var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
+    var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
+
     var pie = d3.layout.pie()
       .value(function(d) {
         return d.value;
@@ -432,7 +435,6 @@ makeMoodPie = function(data) {
     var arc = d3.svg.arc()
       .outerRadius(250);
 
-
     var colors = d3.scale.category20c();
 
     var chart = d3.select("#expandedChart")
@@ -440,37 +442,10 @@ makeMoodPie = function(data) {
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      // .attr("transform", "translate(" + width / 2 + ", " + height / 4 + ")");
       .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")")
       .selectAll('path').data(pie(pieData))
       .enter().append('path')
         .attr('fill', function(d, i){ return colors(i); })
         .attr('d', arc);
-        
-    var g = svg.selectAll(".arc")
-                .data(pie(data))
-                .enter().append("g")
-                .attr("class", "arc");
-
-            g.append("path")
-                .attr("d", arc)
-                .style("fill", function(d,i) {
-                    return color(i);
-                });
-
-            g.append("text")
-                .attr("transform", function(d) {
-                    return "translate(" + arc.centroid(d) + ")";
-                })
-                .attr("dy", ".35em")
-                .style("text-anchor", "middle")
-                .text(function(d) {
-                  console.log("d is", d);
-                    return percentageFormat(d.data.percentage);
-                });
-
-      
-
-
 
   }
