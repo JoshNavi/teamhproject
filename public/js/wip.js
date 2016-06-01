@@ -1,7 +1,7 @@
 (function(d3) {
   "use strict";
 
-  d3.json("/mood/race", function(err, data) {
+  /*d3.json("/mood/race", function(err, data) {
     if (err) {
       console.log(err);
       return;
@@ -15,7 +15,7 @@
       return;
     }
     makeRaceGeographyChart(data);
-  });
+  });*/
 
   d3.json("/mood/total", function(err, data) {
     if (err) {
@@ -343,8 +343,9 @@ expandGraph = function(d, i) {
 }
 
 makeMoodPie = function(data) {
-    console.log("ArchExpand blah blah blah");
-    console.log(data);
+
+    console.log("Mood Pie Working");
+
 
     var totalRace = {
       API: 0,
@@ -356,8 +357,6 @@ makeMoodPie = function(data) {
 
     for(var i = 0; i < data.length; i++)
     {
-      console.log("test");
-      console.log(data[i].race);
       if(data[i].race == "API")
       {
         totalRace.API += data[i].rate;
@@ -385,7 +384,6 @@ makeMoodPie = function(data) {
 
     }
 
-    console.log(totalRace.API);
 
     var pieData = [
       {
@@ -415,10 +413,10 @@ makeMoodPie = function(data) {
       }
     ];
 
-    console.log(pieData);
-    //var chart = d3.select("#expandedChart")
-      //.select("svg")
-      //.remove("svg");
+
+    var chart = d3.select("#expandedChart")
+      .select("svg")
+      .remove("svg");
 
     var margin = {top: 0, right: 20, bottom: 0, left: 20},
     width = window.innerWidth - margin.left - margin.right,
@@ -454,6 +452,8 @@ makeMoodPie = function(data) {
       .enter().append('path')
         .attr('fill', function(d, i){ return colors(i); })
         .attr('d', arc);
+
+
 
     // var g = svg
     //   .selectAll(".arc")
