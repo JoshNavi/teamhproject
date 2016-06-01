@@ -416,16 +416,13 @@ makeMoodPie = function(data) {
     ];
 
     console.log(pieData);
-    //var chart = d3.select("#expandedChart")
-      //.select("svg")
-      //.remove("svg");
+    var chart = d3.select("#expandedChart")
+      .select("svg")
+      .remove("svg");
 
     var margin = {top: 0, right: 20, bottom: 0, left: 20},
     width = window.innerWidth - margin.left - margin.right,
     height = 1300 - margin.top - margin.bottom;
-
-    // var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
-    // var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
 
     var pie = d3.layout.pie()
       .value(function(d) {
@@ -435,11 +432,6 @@ makeMoodPie = function(data) {
     var arc = d3.svg.arc()
       .outerRadius(250);
 
-    // var pie = d3.layout.pie()
-    //   .sort(null)
-    //   .startAngle(0 * Math.PI)
-    //   .endAngle(2 * Math.PI)
-    //   .value(function(d) { return d.total; });
 
     var colors = d3.scale.category20c();
 
@@ -454,31 +446,31 @@ makeMoodPie = function(data) {
       .enter().append('path')
         .attr('fill', function(d, i){ return colors(i); })
         .attr('d', arc);
+        
+    var g = svg.selectAll(".arc")
+                .data(pie(data))
+                .enter().append("g")
+                .attr("class", "arc");
 
-    // var g = svg
-    //   .selectAll(".arc")
-    //   .data( pie(dataset) )
-    //   .enter()
-    //   .append("g")
-    //   .attr("class", "arc");
+            g.append("path")
+                .attr("d", arc)
+                .style("fill", function(d,i) {
+                    return color(i);
+                });
 
-    //svg.append("path")
-     // .attr("d", arc);
-      //.style("fill", function(d) { return getColor(); });
-     //  .transition().delay(function(d, i) { return i * 500; }).duration(500)
-     //  .attrTween('d', function(d) {
-     //   var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
-     //    return function(t) {
-     //       d.endAngle = i(t);
-     //     return arc(d);
-     //   }
-     // });
+            g.append("text")
+                .attr("transform", function(d) {
+                    return "translate(" + arc.centroid(d) + ")";
+                })
+                .attr("dy", ".35em")
+                .style("text-anchor", "middle")
+                .text(function(d) {
+                  console.log("d is", d);
+                    return percentageFormat(d.data.percentage);
+                });
+
+      
 
 
-
-      // .transition()
-      //   .ease("exp")
-      //   .duration(1000)
-      //   .attrTween("d", tweenPie);
 
   }
