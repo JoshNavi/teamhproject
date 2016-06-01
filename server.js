@@ -29,11 +29,11 @@ app.set('port', process.env.PORT || 3000);
 
 //routes
 app.get('/', function(req, res){
-  res.render('index');
+  res.render('wip');
 });
 
 app.get('/wip', function(req, res){
-  res.render('wip');
+  res.render('index');
 });
 
 //routes

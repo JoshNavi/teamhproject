@@ -211,7 +211,7 @@ makeRaceGeographyChart = function(data) {
 makeHospitalizationArc = function(data) {
   var margin = {top: 0, right: 20, bottom: 0, left: 20},
     width = window.innerWidth - margin.left - margin.right,
-    height = 460 - margin.top - margin.bottom;
+    height = 480 - margin.top - margin.bottom;
 
   // var width = 1400,
   //     height = 600,
@@ -337,7 +337,7 @@ makeHospitalizationArc = function(data) {
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")");
+      .attr("transform", "translate(" + width / 2 + ", " + height / 4 + ")");
 
     // var g = svg
     //   .selectAll(".arc")
