@@ -242,7 +242,7 @@ makeHospitalizationArc = function(data) {
     .attr("height", height)
     .append("g")
     .attr("transform", "translate(" + width / 2 + ")");
-
+    
   var arc = d3.svg.arc()
     .innerRadius(radius + 50)
     .outerRadius(radius + 300);
@@ -468,9 +468,5 @@ makeMoodPie = function(data) {
                   console.log("d is", d);
                     return percentageFormat(d.data.percentage);
                 });
-
-
-
-
 
   }
