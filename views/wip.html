@@ -136,8 +136,8 @@
       </button>
     </div>
     <!--<div class = "divider" style="width:100%;background-color:#453A49; height:2vh; margin-top:2vh; margin-bottom:2vh" ></div>-->
-    <div id="link3info" class="section" style="background-color:#ffffff; width:100%; height:300vh; padding-top:0">
-
+    <div id="link3info" class="section" style="background-color:#ffffff; width:100%; padding-top:0">
+      <img src = "/images/clicktextimg.png" id="arrow" style="position:absolute; left:0; width:150px">
       <div class="chart">
       </div>
 
@@ -205,6 +205,8 @@
 
     });*/
     $(function(){
+      var arrowpos = ($(window).width() - 930)/2 - 155;
+      $('#arrow').css({left: arrowpos});
       var center1 = $('#cell1').offset().left + $('#cell1').width()/2;
       var center2 = $('#cell2').offset().left + $('#cell2').width()/2;
       var center3 = $('#cell3').offset().left + $('#cell3').width()/2;
