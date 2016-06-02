@@ -459,15 +459,6 @@ makeMoodPie = function(data) {
     var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
     var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
 
-    var pie = d3.layout.pie()
-      .value(function(d) {
-        return d.value;
-      });
-
-    var arc = d3.svg.arc()
-      .outerRadius(250);
-    
-
     var colors = d3.scale.category20c();
 
     var chart = d3.select("#expandedChart")
@@ -477,32 +468,38 @@ makeMoodPie = function(data) {
       .append("g")
       .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")");
 
-    var g = chart.selectAll('path').data(pie(pieData))
-        .enter().append('path')
-        .attr('fill', function(d, i){ return colors(i); })
-        .attr('d', arc);
+    var arc = d3.svg.arc()
+      .outerRadius(250);
 
-    var arcs = g.selectAll("g.slice")
-      .data(pieData)
-      .enter()
-      .append("g")
-      .attr("class", "slice");
+    var pie = d3.layout.pie()
+      .value(function(d) {
+        return d.value;
+      });
 
+    var arcs = chart.selectAll('g.slice').data(pie(pieData))
+        .enter().append('g')
+        .attr("class", "booty");
 
-
-  // arcs.append("svg:text")
-  //     .attr("transform", function(d, i) { //set the label's origin to the center of the arc
-  //       //we have to make sure to set these before calling arc.centroid
-  //       d.outerRadius = radius + 50; // Set Outer Coordinate
-  //       d.innerRadius = radius + 30; // Set Inner Coordinate
-  //       return "translate(" + arc.centroid(d) + ")";
-  //     })
-  //     .attr("text-anchor", "middle") //center the text on it's origin
-  //     .style("fill", "White")
-  //     .style("font", "bold 30px Arial")
-  //     .text(function(d,i){ return d; });
+    arcs.append("path")
+      .attr('d', arc)
+      .attr('fill', function(d, i){ return colors(i); });
 
 
+
+   //console.log(pieData[1].value);
+   arcs.append("svg:text")
+       .attr("transform", function(d) { //set the label's origin to the center of the arc
+         //we have to make sure to set these before calling arc.centroid
+         d.outerRadius = radius + 50; // Set Outer Coordinate
+         d.innerRadius = radius + 30; // Set Inner Coordinate
+         return "translate(" + arc.centroid(d) + ")";
+       })
+       .attr("text-anchor", "middle") //center the text on it's origin
+       .style("fill", "Black")
+       .style("font", "bold 30px Arial")
+       .text(function(d, i){ 
+        console.log(pieData[i].value);
+        return pieData[i].value; });
 
 
 
