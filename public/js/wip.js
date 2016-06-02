@@ -231,7 +231,7 @@ makeHospitalizationArc = function(data) {
   var color = d3.scale.ordinal()
     .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 */
-  
+
 
   
 
@@ -303,10 +303,12 @@ makeHospitalizationArc = function(data) {
   }
 
 
+
+
 }
 
 expandGraph = function(d, i) {
-  console.log(d);
+  // console.log(d);
 
   if(d.data.label == "Anxiety Disorders")
   {
@@ -343,8 +345,10 @@ expandGraph = function(d, i) {
 }
 
 makeMoodPie = function(data) {
+    // console.log("ArchExpand blah blah blah");
+    // console.log(data);
 
-    console.log("Mood Pie Working");
+    // console.log("Mood Pie Working");
 
 
     var totalRace = {
@@ -357,6 +361,8 @@ makeMoodPie = function(data) {
 
     for(var i = 0; i < data.length; i++)
     {
+      // console.log("test");
+      // console.log(data[i].race);
       if(data[i].race == "API")
       {
         totalRace.API += data[i].rate;
@@ -383,6 +389,8 @@ makeMoodPie = function(data) {
       }
 
     }
+
+    // console.log(totalRace.API);
 
 
     var pieData = [
@@ -458,6 +466,7 @@ makeMoodPie = function(data) {
 
     var arc = d3.svg.arc()
       .outerRadius(250);
+    
 
     var colors = d3.scale.category20c();
 
@@ -473,6 +482,36 @@ makeMoodPie = function(data) {
         .attr('fill', function(d, i){ return colors(i); })
         .attr('d', arc);
 
+    var arcs = g.selectAll("g.slice")
+      .data(pieData)
+      .enter()
+      .append("g")
+      .attr("class", "slice");
+
+
+
+  // arcs.append("svg:text")
+  //     .attr("transform", function(d, i) { //set the label's origin to the center of the arc
+  //       //we have to make sure to set these before calling arc.centroid
+  //       d.outerRadius = radius + 50; // Set Outer Coordinate
+  //       d.innerRadius = radius + 30; // Set Inner Coordinate
+  //       return "translate(" + arc.centroid(d) + ")";
+  //     })
+  //     .attr("text-anchor", "middle") //center the text on it's origin
+  //     .style("fill", "White")
+  //     .style("font", "bold 30px Arial")
+  //     .text(function(d,i){ return d; });
+
+
+
+
+
+    // Computes the angle of an arc, converting from radians to degrees.
+    function angle(d) {
+      var a = (d.startAngle + d.endAngle) * 90 / Math.PI - 90;
+      return a > 90 ? a - 180 : a;
+    }
+
   var xCoor = -60;
   var yCoor = 20;
 
@@ -481,7 +520,6 @@ makeMoodPie = function(data) {
 
   var legend = chart.selectAll('.legend')
     .data( pieData )
-    /*(function(d){ console.log(d); return d.crimes_description; }) )*/
     .enter()
     .append('g')
     .attr('class', 'legend')
@@ -504,64 +542,14 @@ makeMoodPie = function(data) {
     legend.append('text')                                     // NEW
       .attr('x', legendRectSize + legendSpacing)              // NEW
       .attr('y', legendRectSize - legendSpacing)              // NEW
-      .text(function(d) { return pieData; })
-      .attr("transform", "translate(" + 10 + "," + -15  + ")");
+      .text(function(d,i) { return d.race; })
+      .attr("transform", "translate(" + 10 + "," + -15  + ")")
+      .style("font", "18px Arial");
 
 
 
 
 
-    
-    /*
-    var g = svg.selectAll(".arc")
-                .data(pie(data))
-                .enter().append("g")
-                .attr("class", "arc");
-
-            g.append("path")
-                .attr("d", arc)
-                .style("fill", function(d,i) {
-                    return color(i);
-                });
-
-            g.append("text")
-                .attr("transform", function(d) {
-                    return "translate(" + arc.centroid(d) + ")";
-                })
-                .attr("dy", ".35em")
-                .style("text-anchor", "middle")
-                .text(function(d) {
-                  console.log("d is", d);
-                    return percentageFormat(d.data.percentage);
-                });
-*/
-
-
-    // var g = svg
-    //   .selectAll(".arc")
-    //   .data( pie(dataset) )
-    //   .enter()
-    //   .append("g")
-    //   .attr("class", "arc");
-
-    //svg.append("path")
-     // .attr("d", arc);
-      //.style("fill", function(d) { return getColor(); });
-     //  .transition().delay(function(d, i) { return i * 500; }).duration(500)
-     //  .attrTween('d', function(d) {
-     //   var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
-     //    return function(t) {
-     //       d.endAngle = i(t);
-     //     return arc(d);
-     //   }
-     // });
-
-
-
-      // .transition()
-      //   .ease("exp")
-      //   .duration(1000)
-      //   .attrTween("d", tweenPie);
 
 
   }
