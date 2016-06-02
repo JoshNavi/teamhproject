@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <link href='https://fonts.googleapis.com/css?family=Raleway:400,600|Oswald:300,400|Dosis|Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,600|Oswald:300,400|Dosis' rel='stylesheet' type='text/css'>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,9 +58,9 @@
     <div id = "section1" class="section" style="width:100%; padding-top:0; color:#ffffff">
       <div class = "container" style="width:40%">
         <div id = "braincontainer" >
-          <img src="/images/brains.png" style="width:60%"><br>
-            <!--<a href="http://www.freepik.com/free-photos-vectors/brain">Brain vector designed by Freepik</a>-->
-        </div><br>
+          <img src="/images/brains.png" style="width:60%">
+
+        </div>
         <div id = "abouttext">
             RACE.ME is an interactive web application that visually displays evidence for mental health and mental health care disparities in San Diego, comparing them
              to patterns in health. Strategies for addressing disparities in health care, such as improving access
@@ -68,7 +68,6 @@
 
 
             We hope that you learn something new by exploring our interactive visualizations created with D3.js. <br><br>
-
              <button class = "btn continue mediumtext link2">
                <span class="glyphicon glyphicon-chevron-down "></span>
              </button>
@@ -136,8 +135,8 @@
       </button>
     </div>
     <!--<div class = "divider" style="width:100%;background-color:#453A49; height:2vh; margin-top:2vh; margin-bottom:2vh" ></div>-->
-    <div id="link3info" class="section" style="background-color:#ffffff; width:100%; padding-top:0">
-      <img src = "/images/clicktextimg.png" id="arrow" style="position:absolute; left:0; width:150px">
+    <div id="link3info" class="section" style="background-color:#ffffff; width:100%; height:300vh; padding-top:0">
+
       <div class="chart">
       </div>
 
@@ -205,11 +204,6 @@
 
     });*/
     $(function(){
-      var arrowpos = ($(window).width() - 930)/2 - 155;
-      console.log(arrowpos);
-      $('#arrow').css({left: arrowpos});
-
-      console.log("hi" + $('#link3info').offset().top);
       var center1 = $('#cell1').offset().left + $('#cell1').width()/2;
       var center2 = $('#cell2').offset().left + $('#cell2').width()/2;
       var center3 = $('#cell3').offset().left + $('#cell3').width()/2;
@@ -233,10 +227,6 @@
   		});
       $('.link4').click(function(){
   			$('#link3info').scrollView();
-  		});
-      $('.slice').on('click', function(){
-        console.log("sup");
-  			$('#expandedChart').scrollView();
   		});
       $(window).scroll(function (event) {
         var scroll = $(window).scrollTop();
@@ -280,7 +270,6 @@
         // Do something
       });
   	});
-
 
   </script>
 </body>

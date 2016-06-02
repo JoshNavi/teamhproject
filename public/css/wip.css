@@ -45,11 +45,6 @@ body{
   font-size:2em;
   font-family: 'Dosis', sans-serif;
 }
-#section1 a, #section1 a:hover, #section1 a:visited, #section1 a:active{
-  color:#ffffff;
-  border:none;
-  text-decoration: none;
-}
 button.link {
   background:none;
   border:none;
