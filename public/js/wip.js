@@ -413,6 +413,32 @@ makeMoodPie = function(data) {
       }
     ];
 
+    var line1 = d3.select("#line1")
+      .select("svg")
+      .remove("svg");
+
+    var w = 1000;
+    var h = 300;
+
+    var lsvg = d3.select("#line1")
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h)
+      .attr("id", "theLine");
+
+    var line1 = lsvg.append("line")
+      .style("stroke", "steelblue")
+      .attr("stroke-width", "5");
+
+    line1
+      .attr("x1", 500)
+      .attr("y1", 0)
+      .attr("x2", 500)
+      .attr("y2", 300)
+      .transition()
+        .duration(3000)
+        .ease("linear")
+        .attr("stroke-dashoffset", 0);
 
     var chart = d3.select("#expandedChart")
       .select("svg")
