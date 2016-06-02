@@ -1,3 +1,5 @@
+
+
 (function(d3) {
   "use strict";
 
@@ -116,7 +118,6 @@ makeRaceChart = function(data) {
 
 makeRaceGeographyChart = function(data) {
 
-  console.log("fuck you");
   var margin = {top: 20, right: 30, bottom: 150, left: 40},
     width = window.innerWidth - margin.left - margin.right - 90,
     height = 600 - margin.top - margin.bottom;
