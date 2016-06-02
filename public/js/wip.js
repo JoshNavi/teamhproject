@@ -231,9 +231,9 @@ makeHospitalizationArc = function(data) {
   var color = d3.scale.ordinal()
     .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 */
-  
 
-  
+
+
 
   var chart = d3.select("#finalChart")
     .append("svg")
@@ -279,7 +279,7 @@ makeHospitalizationArc = function(data) {
       .style("fill", "White")
       .style("font", "bold 30px Arial")
       .text(function(d,i){ return dataset[i].label; });
-    
+
 
   // var g = chart
   //   .selectAll(".arc")
@@ -446,7 +446,7 @@ makeMoodPie = function(data) {
       .enter().append('path')
         .attr('fill', function(d, i){ return colors(i); })
         .attr('d', arc);
-        
+
     var g = svg.selectAll(".arc")
                 .data(pie(data))
                 .enter().append("g")
@@ -469,7 +469,7 @@ makeMoodPie = function(data) {
                     return percentageFormat(d.data.percentage);
                 });
 
-      
+
 
 
 

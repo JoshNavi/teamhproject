@@ -134,11 +134,10 @@ app.get('/mood/race', function(req, res){
     return console.error('error fetching client from pool', err);
     }
 
-    var q = 'SELECT "Year" AS year, "Race" AS race, SUM(cast("Hospitalization No." as float)) AS rate \
-              FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
-              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' \
-              GROUP BY "Year", "Race" \
-              ORDER BY "Year" ASC, "Race" ASC';
+    var q = 'SELECT "Geography" as geography, "Year" as year, "Race" as race, "Hospitalization Rate" as rate\
+            FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
+            WHERE "Race" = \'Black\' AND "Hospitalization Rate" <> \'§\' AND "Hospitalization Rate" <> \'---\' \
+            AND "Geography" <> \'Unknown\'';
 
     client.query( q, function(err, result) {
     //call `done()` to release the client back to the pool
