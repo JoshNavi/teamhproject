@@ -155,6 +155,32 @@ app.get('/mood/race', function(req, res){
   return { delphidata: "No data found" };
 });
 
+app.get('/moodbyrace/race', function(req, res){
+  pg.connect(conString, function(err, client, done) {
+
+    if(err) {
+    return console.error('error fetching client from pool', err);
+    }
+
+    var q = 'SELECT "Year" AS year, "Race" AS race, "Hospitalization Rate" AS rate, "Geography" as geography \
+              FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' AND "Geography" <> \'Unknown\'';
+
+    client.query( q, function(err, result) {
+    //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      res.json(result.rows);
+      client.end();
+      return { delphidata: result };
+    });
+  });
+  return { delphidata: "No data found" };
+});
+
 app.get('/anxiety/race', function(req, res){
   pg.connect(conString, function(err, client, done) {
 

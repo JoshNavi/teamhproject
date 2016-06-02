@@ -1,5 +1,5 @@
 body{
-  background-color:#2b255d;
+  background-color:#55828B;
   margin-top:15vh;
   font-family: 'Dosis', sans-serif;
   color:#ffffff;
@@ -20,7 +20,7 @@ body{
 
 .continue, .continue:hover, .continue:focus, .continue:active, .continue:focus:active{
   background:none;
-  border: 2px solid #ffffff;
+  border: 0px solid #ffffff;
   border-radius:5px;
   color:#ffffff;
   -webkit-box-shadow: none;
@@ -39,6 +39,7 @@ body{
 #navtop td{
   text-align:center;
   font-size:2em;
+  color:#364958;
 }
 #abouttext, #otherinfo{
   font-size:2em;
@@ -65,14 +66,40 @@ button.link:after {
 }
 button.link:hover:after {
 	width: 100%;
-	background: white;
+	background: #000000;
 }
 #otherinfo td {
   font-size:1em;
   padding:1%;
 }
 .section{
-  margin-bottom:10%;
+  padding:10vh 0 7vh 0;
+}
+#nav{
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+#whitebaropaque{
+  transition: width 0.5s ease;
 }
 
+/*********** STACKED BAR CHART ***********/
 
+.axis path,
+.axis line{
+  fill: none;
+  stroke: black;
+}
+
+.line{
+  fill: none;
+  stroke: blue;
+  stroke-width: 2px;
+}
+
+.tick text{
+  font-size: 12px;
+}
+
+.tick line{
+  opacity: 0.2;
+}
