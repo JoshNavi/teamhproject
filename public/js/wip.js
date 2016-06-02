@@ -1,7 +1,7 @@
 (function(d3) {
   "use strict";
 
-  d3.json("/mood/race", function(err, data) {
+  /*d3.json("/mood/race", function(err, data) {
     if (err) {
       console.log(err);
       return;
@@ -15,7 +15,7 @@
       return;
     }
     makeRaceGeographyChart(data);
-  });
+  });*/
 
   d3.json("/mood/total", function(err, data) {
     if (err) {
@@ -346,6 +346,9 @@ makeMoodPie = function(data) {
     // console.log("ArchExpand blah blah blah");
     // console.log(data);
 
+    // console.log("Mood Pie Working");
+
+
     var totalRace = {
       API: 0,
       Hispanic: 0,
@@ -387,6 +390,7 @@ makeMoodPie = function(data) {
 
     // console.log(totalRace.API);
 
+
     var pieData = [
       {
         race: "API",
@@ -415,7 +419,7 @@ makeMoodPie = function(data) {
       }
     ];
 
-    console.log(pieData);
+
     var chart = d3.select("#expandedChart")
       .select("svg")
       .remove("svg");
@@ -442,10 +446,102 @@ makeMoodPie = function(data) {
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")")
-      .selectAll('path').data(pie(pieData))
-      .enter().append('path')
+      .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")");
+
+    var g = chart.selectAll('path').data(pie(pieData))
+        .enter().append('path')
         .attr('fill', function(d, i){ return colors(i); })
         .attr('d', arc);
+
+  var xCoor = -60;
+  var yCoor = 20;
+
+  var legendRectSize = 50;
+  var legendSpacing = 4;
+
+  var legend = chart.selectAll('.legend')
+    .data( pieData )
+    /*(function(d){ console.log(d); return d.crimes_description; }) )*/
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      var offset =  height * color.domain().length / 2;
+      var horz = 6 * legendRectSize;
+      var vert = i * height - offset - 150;
+      return 'translate(' + horz + ',' + vert + ')';
+    })
+    .style('float', 'right');
+
+
+    legend.append('rect')                                     // NEW
+      .attr('width', legendRectSize)                          // NEW
+      .attr('height', legendRectSize)                         // NEW
+      .style('fill', function(d, i) { return colors(i); })                                   // NEW
+      .style('stroke', color);                               // NEW
+
+    legend.append('text')                                     // NEW
+      .attr('x', legendRectSize + legendSpacing)              // NEW
+      .attr('y', legendRectSize - legendSpacing)              // NEW
+      .text(function(d) { return pieData; })
+      .attr("transform", "translate(" + 10 + "," + -15  + ")");
+
+
+
+
+
+    
+    /*
+    var g = svg.selectAll(".arc")
+                .data(pie(data))
+                .enter().append("g")
+                .attr("class", "arc");
+
+            g.append("path")
+                .attr("d", arc)
+                .style("fill", function(d,i) {
+                    return color(i);
+                });
+
+            g.append("text")
+                .attr("transform", function(d) {
+                    return "translate(" + arc.centroid(d) + ")";
+                })
+                .attr("dy", ".35em")
+                .style("text-anchor", "middle")
+                .text(function(d) {
+                  console.log("d is", d);
+                    return percentageFormat(d.data.percentage);
+                });
+*/
+
+
+    // var g = svg
+    //   .selectAll(".arc")
+    //   .data( pie(dataset) )
+    //   .enter()
+    //   .append("g")
+    //   .attr("class", "arc");
+
+    //svg.append("path")
+     // .attr("d", arc);
+      //.style("fill", function(d) { return getColor(); });
+     //  .transition().delay(function(d, i) { return i * 500; }).duration(500)
+     //  .attrTween('d', function(d) {
+     //   var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
+     //    return function(t) {
+     //       d.endAngle = i(t);
+     //     return arc(d);
+     //   }
+     // });
+
+
+
+      // .transition()
+      //   .ease("exp")
+      //   .duration(1000)
+      //   .attrTween("d", tweenPie);
+
 
   }
