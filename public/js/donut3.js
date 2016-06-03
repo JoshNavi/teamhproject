@@ -29,7 +29,7 @@ function getColors (i) {
 svg.append("svg:text")
     .attr("dy", ".35em")
     .attr("text-anchor", "middle")
-    .attr("style","font-family: 'Roboto', sans-serif")
+    .attr("style","font-family: 'Dosis', sans-serif")
     .attr("font-size","40")
     .attr("fill","#FFFFFF")
     .text("18.1%");
