@@ -1,12 +1,12 @@
 body{
   background-color:#55828B;
   margin-top:15vh;
-  font-family: 'Dosis', sans-serif;
+font-family: 'Karla', sans-serif;
   color:#ffffff;
   font-size:100%;
 }
 #titletext{
-  font-family: 'Dosis', sans-serif;
+font-family: 'Karla', sans-serif;
   color:#ffffff;
   font-size:5em;
 }
@@ -38,18 +38,18 @@ body{
 
 #navtop td{
   text-align:center;
-  font-size:2em;
+  font-size:1.5em;
   color:#364958;
 }
 #abouttext, #otherinfo{
-  font-size:2em;
-  font-family: 'Dosis', sans-serif;
+  font-size:1.5em;
+  font-family: 'Karla', sans-serif;
 }
 button.link {
   background:none;
   border:none;
   font-size:1em;
-  font-family: 'Dosis', sans-serif;
+  font-family: 'Karla', sans-serif;
   font-weight:300;
   display: inline-block;
   position:relative;
