@@ -1292,7 +1292,7 @@ makeSchizPie = function(data) {
 
     if(d.data.race == "Black")
     {
-      d3.json("/anxiety/race/black", function(err, data) {
+      d3.json("/mood/race/black", function(err, data) {
         if (err) {
           console.log(err);
           return;
@@ -1303,7 +1303,7 @@ makeSchizPie = function(data) {
 
     if(d.data.race == "White")
     {
-      d3.json("/anxiety/race/white", function(err, data) {
+      d3.json("/mood/race/white", function(err, data) {
         if (err) {
           console.log(err);
           return;
@@ -1314,7 +1314,7 @@ makeSchizPie = function(data) {
 
     if(d.data.race == "Hispanic")
     {
-      d3.json("/anxiety/race/hispanic", function(err, data) {
+      d3.json("/mood/race/hispanic", function(err, data) {
         if (err) {
           console.log(err);
           return;
@@ -1325,7 +1325,7 @@ makeSchizPie = function(data) {
 
     if(d.data.race == "API")
     {
-      d3.json("/anxiety/race/api", function(err, data) {
+      d3.json("/mood/race/api", function(err, data) {
         if (err) {
           console.log(err);
           return;
@@ -1336,7 +1336,7 @@ makeSchizPie = function(data) {
 
     if(d.data.race == "Other")
     {
-      d3.json("/anxiety/race/other", function(err, data) {
+      d3.json("/mood/race/other", function(err, data) {
         if (err) {
           console.log(err);
           return;
