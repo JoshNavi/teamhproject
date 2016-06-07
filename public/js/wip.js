@@ -479,11 +479,6 @@ makeHospitalizationArc = function(data) {
    .select("path")
    .style("opacity", "1");
 })
-.on("click", function() {
- d3.select(this)
-   .select("path")
-   .style("fill-opacity", "0.7");
-})
 ;
 
   arcs.append("svg:text")
