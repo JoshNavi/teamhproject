@@ -96,16 +96,8 @@ makeRaceGeographyChart = function(data) {
 
     if (!areaDict[elem.area]) {
       areaDict[elem.area] = {};
-      // areaDict = {
-      //   'alpine': {}
-      // }
     }
     areaDict[elem.area][elem.race] = elem.population;
-    // areaDict = {
-    //   'alpine': {
-    //     'black': 999
-    //   }
-    // }
 
     return;
   });
@@ -198,8 +190,7 @@ makeRaceGeographyChart = function(data) {
 
 /* MOOD BAR CHART:
  * This fucntion creates the grouped bar chart (chart2)
-*/
-
+ */
 
 makeRaceChart = function(data) {
 
@@ -231,7 +222,6 @@ makeRaceChart = function(data) {
        .attr("stroke-linecap", "round")
        .attr("stroke-dasharray", "1, 15")
 
-
   var svg = d3.select("#chart2")
      .select("svg")
      .remove("svg");
@@ -252,10 +242,12 @@ makeRaceChart = function(data) {
       .scale(x0)
       .orient("bottom");
 
-  var yAxis = d3.svg.axis()
-      .scale(y)
-      .orient("left")
-      .ticks(10, "%");
+
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left")
+          .tickFormat(d3.format(".2s"));
+
 
   var svg = d3.select("#chart2")
       .append("svg")
@@ -476,7 +468,13 @@ makeHospitalizationArc = function(data) {
  d3.select(this)
    .select("path")
    .style("opacity", "1");
-});
+})
+.on("click", function() {
+ d3.select(this)
+   .select("path")
+   .style("fill-opacity", "0.7");
+})
+;
 
   arcs.append("svg:text")
       .attr("transform", function(d) { //set the label's origin to the center of the arc
