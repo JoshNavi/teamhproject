@@ -1054,10 +1054,11 @@ expandGraph = function(d, i) {
                   .style("font", "15px Open Sans Condensed")
                   .attr('x', -600)
                   .attr('y', -20)
-                  .attr('fill', '#52524c')    textinfo.append("text")
-                              .text(' bipolar disorder), and SAD (seasonal affective disorder).')
-                                            .style("font", "15px Open Sans Condensed")
-                                            .attr('x', -600)
+                  .attr('fill', '#52524c')
+        textinfo.append("text")
+                  .text(' bipolar disorder), and SAD (seasonal affective disorder).')
+                  .style("font", "15px Open Sans Condensed")
+                 .attr('x', -600)
                                             .attr('y', 40)
                                             .attr('fill', '#52524c')
 
@@ -1079,11 +1080,18 @@ expandGraph = function(d, i) {
 
 
                                           textinfo.append("text")
-                                                  .text('Alcoholism and other forms of drug dependence are also related to depression. ')
+                                                  .text('Alcoholism and other forms of drug dependence are also related')
                                                                 .style("font", "15px Open Sans Condensed")
                                                                 .attr('x', -600)
                                                                 .attr('y', 70)
                                                                 .attr('fill', '#52524c')
+
+                                                                textinfo.append("text")
+                                                                        .text('to depression. ')
+                                                                                      .style("font", "15px Open Sans Condensed")
+                                                                                      .attr('x', -600)
+                                                                                      .attr('y', 90)
+                                                                                      .attr('fill', '#52524c')
  }
 
 makeSchizPie = function(data) {
