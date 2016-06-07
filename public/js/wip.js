@@ -194,6 +194,8 @@ makeRaceGeographyChart = function(data) {
 
 makeRaceChart = function(data) {
 
+  console.log(data);
+
    var line1 = d3.select("#line2")
      .select("svg")
      .remove("svg");
@@ -226,7 +228,8 @@ makeRaceChart = function(data) {
      .select("svg")
      .remove("svg");
 
-  var margin = {top: 20, right: 20, bottom: 180, left: 80},
+
+  var margin = {top: 80, right: 20, bottom: 180, left: 60},
   width = window.innerWidth - margin.left - margin.right - 180,
   height = 500 - margin.top - margin.bottom;
 
@@ -314,6 +317,13 @@ makeRaceChart = function(data) {
   .attr("dy", ".71em")
   .style("text-anchor", "end")
   .text("Population");
+
+  svg.append("text")
+     .attr("x", (width / 2))
+     .attr("y", 0 - (margin.top / 2))
+     .attr("text-anchor", "middle")
+     .style("font", " 20px Open Sans Condensed")
+     .text(function(d, i) {return data[i].race + " Hospitilization Rates in each Region"});
 
   var state = svg.selectAll(".state")
       .data(csvData)
@@ -672,9 +682,9 @@ expandGraph = function(d, i) {
      .select("svg")
      .remove("svg");
 
-     var margin = {top: 0, right: 20, bottom: 0, left: 20},
+     var margin = {top: -30, right: 20, bottom: 0, left: 20},
      width = window.innerWidth - margin.left - margin.right,
-     height = 500 - margin.top - margin.bottom;
+     height = 450 - margin.top - margin.bottom;
 
    var max = d3.max( pieData.map(function(d, i){ return pieData[i].value; }) );
    var sum = d3.sum( pieData.map(function(d, i){ return pieData[i].value; }) );
@@ -779,7 +789,14 @@ expandGraph = function(d, i) {
             .text('Anxiety Disorders')
             .style("font", "30px Karla")
             .attr('x', -600)
-            .attr('y', -100)
+            .attr('y', -130)
+            .attr('fill', '#52524c')
+
+    textinfo.append("text")
+            .text('Choose a race from the pie chart.')
+            .style("font", "20px Open Sans Condensed")
+            .attr('x', -600)
+            .attr('y', -90)
             .attr('fill', '#52524c')
 
     textinfo.append("text")
@@ -924,9 +941,9 @@ expandGraph = function(d, i) {
      .select("svg")
      .remove("svg");
 
-   var margin = {top: 0, right: 20, bottom: 0, left: 20},
+   var margin = {top: -30, right: 20, bottom: 0, left: 20},
    width = window.innerWidth - margin.left - margin.right,
-   height = 500 - margin.top - margin.bottom;
+   height = 450 - margin.top - margin.bottom;
 
    var max = d3.max( pieData.map(function(d, i){ return pieData[i].value; }) );
    var sum = d3.sum( pieData.map(function(d, i){ return pieData[i].value; }) );
@@ -1028,12 +1045,19 @@ expandGraph = function(d, i) {
                   .attr('class', 'textinfo')
                   .attr("transform", function(d, i) { return "translate(0," * 40 + ")"; })
 
-          textinfo.append("text")
-                  .text('Mood Disorders')
-                  .style("font", "30px Karla")
-                  .attr('x', -600)
-                  .attr('y', -100)
-                  .attr('fill', '#52524c')
+                  textinfo.append("text")
+                          .text('Mood Disorders')
+                          .style("font", "30px Karla")
+                          .attr('x', -600)
+                          .attr('y', -130)
+                          .attr('fill', '#52524c')
+
+                  textinfo.append("text")
+                          .text('Choose a race from the pie chart.')
+                          .style("font", "20px Open Sans Condensed")
+                          .attr('x', -600)
+                          .attr('y', -90)
+                          .attr('fill', '#52524c')
 
           textinfo.append("text")
                   .text('An illness under mood disorders include: major depressive disorder, ')
@@ -1194,9 +1218,9 @@ makeSchizPie = function(data) {
     .select("svg")
     .remove("svg");
 
-  var margin = {top: 0, right: 20, bottom: 0, left: 20},
+  var margin = {top: -30, right: 20, bottom: 0, left: 20},
   width = window.innerWidth - margin.left - margin.right,
-  height = 500 - margin.top - margin.bottom;
+  height = 450 - margin.top - margin.bottom;
 
   var max = d3.max( pieData.map(function(d, i){ return pieData[i].value; }) );
   var sum = d3.sum( pieData.map(function(d, i){ return pieData[i].value; }) );
@@ -1300,12 +1324,19 @@ makeSchizPie = function(data) {
                      .attr('class', 'textinfo')
                      .attr("transform", function(d, i) { return "translate(0," * 40 + ")"; })
 
-             textinfo.append("text")
-                     .text('Schizophrenia')
-                     .style("font", "30px Karla")
-                     .attr('x', -600)
-                     .attr('y', -100)
-                     .attr('fill', '#52524c')
+                     textinfo.append("text")
+                             .text('Schizophrenia')
+                             .style("font", "30px Karla")
+                             .attr('x', -600)
+                             .attr('y', -130)
+                             .attr('fill', '#52524c')
+
+                     textinfo.append("text")
+                             .text('Choose a race from the pie chart.')
+                             .style("font", "20px Open Sans Condensed")
+                             .attr('x', -600)
+                             .attr('y', -90)
+                             .attr('fill', '#52524c')
 
              textinfo.append("text")
                      .text('Studies indicate that people receiving treatment for schizophrenia')
