@@ -88,9 +88,6 @@ button.link:hover:after {
   text-align: center;
 }
 
-table {
-  height: 40% !important;
-}
 /*********** STACKED BAR CHART ***********/
 
 .axis path,
@@ -111,4 +108,8 @@ table {
 
 .tick line{
   opacity: 0.2;
+}
+
+h1 {
+  margin-bottom: 0% !important;
 }

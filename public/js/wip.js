@@ -60,7 +60,7 @@ makeRaceGeographyChart = function(data) {
   //console.log("fuck you");
   var margin = {top: 20, right: 30, bottom: 150, left: 40},
     width = window.innerWidth - margin.left - margin.right - 180,
-    height = 500 - margin.top - margin.bottom;
+    height = 590 - margin.top - margin.bottom;
 
     //console.log(data);
 
@@ -203,12 +203,14 @@ makeRaceGeographyChart = function(data) {
 
 makeRaceChart = function(data) {
 
+  console.log(data);
+
    var line1 = d3.select("#line2")
      .select("svg")
      .remove("svg");
 
    var w = 1000;
-   var h = 100;
+   var h = 70;
 
    var lsvg = d3.select("#line2")
      .append("svg")
@@ -217,8 +219,8 @@ makeRaceChart = function(data) {
      .attr("id", "theLine");
 
    var line1 = lsvg.append("line")
-     .style("stroke", "steelblue")
-     .attr("stroke-width", "5");
+   .style("stroke", "#52524c")
+   .attr("stroke-width", "6");
 
    line1
      .attr("x1", 500)
@@ -228,7 +230,10 @@ makeRaceChart = function(data) {
      .transition()
        .duration(3000)
        .ease("linear")
-       .attr("stroke-dashoffset", 0);
+       .attr("stroke-linecap", "round")
+       .attr("stroke-dasharray", "1, 15")
+
+       line1
 
 console.log("whatup");
 
@@ -410,8 +415,8 @@ makeHospitalizationArc = function(data) {
 
 makeHospitalizationArc = function(data) {
   var margin = {top: 0, right: 20, bottom: 0, left: 20},
-    width = window.innerWidth - margin.left - margin.right,
-    height = 480 - margin.top - margin.bottom;
+    width = window.innerWidth - margin.left - margin.right - 500,
+    height = 300 - margin.top - margin.bottom;
 
   // var width = 1400,
   //     height = 600,
@@ -444,8 +449,8 @@ makeHospitalizationArc = function(data) {
     .attr("transform", "translate(" + width / 2 + ")");
 
   var arc = d3.svg.arc()
-    .innerRadius(radius + 50)
-    .outerRadius(radius + 300);
+  .outerRadius(radius + 110)
+  .innerRadius(0);
 
   var pie = d3.layout.pie()
     .sort(null)
@@ -481,13 +486,13 @@ makeHospitalizationArc = function(data) {
   arcs.append("svg:text")
       .attr("transform", function(d) { //set the label's origin to the center of the arc
         //we have to make sure to set these before calling arc.centroid
-        d.outerRadius = radius + 30; // Set Outer Coordinate
-        d.innerRadius = radius + 45; // Set Inner Coordinate
+        d.outerRadius = radius + 0; // Set Outer Coordinate
+        d.innerRadius = radius + 90; // Set Inner Coordinate
         return "translate(" + arc.centroid(d) + ")";
       })
       .attr("text-anchor", "middle") //center the text on it's origin
       .style("fill", "White")
-      .style("font", "bold 30px Dosis")
+      .style("font", " 25px Open Sans Condensed")
       .text(function(d,i){ return dataset[i].label; });
 
 
@@ -647,7 +652,7 @@ expandGraph = function(d, i) {
      .remove("svg");
 
    var w = 1000;
-   var h = 100;
+   var h = 70;
 
    var lsvg = d3.select("#line1")
      .append("svg")
@@ -656,8 +661,8 @@ expandGraph = function(d, i) {
      .attr("id", "theLine");
 
    var line1 = lsvg.append("line")
-     .style("stroke", "black")
-     .attr("stroke-width", "5");
+   .style("stroke", "#52524c")
+   .attr("stroke-width", "6");
 
    line1
      .attr("x1", 500)
@@ -667,15 +672,16 @@ expandGraph = function(d, i) {
      .transition()
        .duration(3000)
        .ease("linear")
-       .attr("stroke-dashoffset", 0);
+             .attr("stroke-linecap", "round")
+             .attr("stroke-dasharray", "1, 15");
 
    var chart = d3.select("#expandedChart")
      .select("svg")
      .remove("svg");
 
-   var margin = {top: 0, right: 20, bottom: 0, left: 20},
+   var margin = {top: 0, right: 20, bottom: 10, left: 20},
    width = window.innerWidth - margin.left - margin.right,
-   height = 550 - margin.top - margin.bottom;
+   height = 500 - margin.top - margin.bottom;
 
    var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
    var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
@@ -684,9 +690,6 @@ expandGraph = function(d, i) {
      .value(function(d) {
        return d.value;
      });
-
-   var arc = d3.svg.arc()
-     .outerRadius(250);
 
    var colors = d3.scale.category20c();
 
@@ -698,7 +701,7 @@ expandGraph = function(d, i) {
      .attr("transform", "translate(" + width / 2 + ", " + height / 2 + ")");
 
    var arc = d3.svg.arc()
-     .outerRadius(250);
+     .outerRadius(200);
 
    var pie = d3.layout.pie()
      .value(function(d) {
@@ -728,13 +731,13 @@ expandGraph = function(d, i) {
   //console.log(pieData[1].value);
   arcs.append("svg:text")
       .attr("transform", function(d) { //set the label's origin to the center of the arc
-        d.outerRadius = radius - 50; // Set Outer Coordinate
-        d.innerRadius = radius + 125; // Set Inner Coordinate
-        return "translate(" + (arc.centroid(d)[0] + 10) + ", " + (arc.centroid(d)[1] + 20) + ")";
+      d.outerRadius = radius - 50; // Set Outer Coordinate
+      d.innerRadius = radius + 110; // Set Inner Coordinate
+      return "translate(" + (arc.centroid(d)[0]) + ", " + (arc.centroid(d)[1] + 20) + ")";
       })
       .attr("text-anchor", "middle") //center the text on it's origin
       .style("fill", "Black")
-      .style("font", "bold 30px Arial")
+      .style("font", " 25px Open Sans Condensed")
       .text(function(d, i){
        return pieData[i].value; });
 
@@ -777,7 +780,7 @@ expandGraph = function(d, i) {
      .attr('y', legendRectSize - legendSpacing)              // NEW
      .text(function(d,i) { return d.race; })
      .attr("transform", "translate(" + 10 + "," + -15  + ")")
-     .style("font", "18px Arial");
+          .style("font", " 20px Open Sans Condensed")
 
  }
 
@@ -857,7 +860,7 @@ expandGraph = function(d, i) {
      .remove("svg");
 
    var w = 1000;
-   var h = 100;
+   var h = 70;
 
    var lsvg = d3.select("#line1")
      .append("svg")
@@ -866,8 +869,8 @@ expandGraph = function(d, i) {
      .attr("id", "theLine");
 
    var line1 = lsvg.append("line")
-     .style("stroke", "black")
-     .attr("stroke-width", "5");
+   .style("stroke", "#52524c")
+   .attr("stroke-width", "6");
 
    line1
      .attr("x1", 500)
@@ -877,7 +880,8 @@ expandGraph = function(d, i) {
      .transition()
        .duration(3000)
        .ease("linear")
-       .attr("stroke-dashoffset", 0);
+       .attr("stroke-linecap", "round")
+       .attr("stroke-dasharray", "1, 15");
 
    var chart = d3.select("#expandedChart")
      .select("svg")
@@ -885,7 +889,7 @@ expandGraph = function(d, i) {
 
    var margin = {top: 0, right: 20, bottom: 0, left: 20},
    width = window.innerWidth - margin.left - margin.right,
-   height = 550 - margin.top - margin.bottom;
+   height = 500 - margin.top - margin.bottom;
 
    var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
    var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
@@ -896,7 +900,7 @@ expandGraph = function(d, i) {
      });
 
    var arc = d3.svg.arc()
-     .outerRadius(250);
+     .outerRadius(200);
 
    var colors = d3.scale.category20c();
 
@@ -908,7 +912,7 @@ expandGraph = function(d, i) {
      .attr("transform", "translate(" + width / 2 + ", " + height / 2 + ")");
 
    var arc = d3.svg.arc()
-     .outerRadius(250);
+     .outerRadius(200);
 
    var pie = d3.layout.pie()
      .value(function(d) {
@@ -937,13 +941,13 @@ expandGraph = function(d, i) {
   //console.log(pieData[1].value);
   arcs.append("svg:text")
       .attr("transform", function(d) { //set the label's origin to the center of the arc
-        d.outerRadius = radius - 50; // Set Outer Coordinate
-        d.innerRadius = radius + 125; // Set Inner Coordinate
-        return "translate(" + (arc.centroid(d)[0] + 10) + ", " + (arc.centroid(d)[1] + 20) + ")";
+      d.outerRadius = radius - 50; // Set Outer Coordinate
+      d.innerRadius = radius + 110; // Set Inner Coordinate
+      return "translate(" + (arc.centroid(d)[0]) + ", " + (arc.centroid(d)[1] + 20) + ")";
       })
       .attr("text-anchor", "middle") //center the text on it's origin
       .style("fill", "Black")
-      .style("font", "bold 30px Arial")
+          .style("font", " 25px Open Sans Condensed")
       .text(function(d, i){
        return pieData[i].value; });
 
@@ -986,7 +990,7 @@ expandGraph = function(d, i) {
      .attr('y', legendRectSize - legendSpacing)              // NEW
      .text(function(d,i) { return d.race; })
      .attr("transform", "translate(" + 10 + "," + -15  + ")")
-     .style("font", "18px Arial");
+     .style("font", " 20px Open Sans Condensed")
 
  }
 
@@ -1066,7 +1070,7 @@ makeSchizPie = function(data) {
     .remove("svg");
 
   var w = 1000;
-  var h = 100;
+  var h = 70;
 
   var lsvg = d3.select("#line1")
     .append("svg")
@@ -1075,8 +1079,8 @@ makeSchizPie = function(data) {
     .attr("id", "theLine");
 
   var line1 = lsvg.append("line")
-    .style("stroke", "black")
-    .attr("stroke-width", "5");
+    .style("stroke", "#52524c")
+    .attr("stroke-width", "6");
 
   line1
     .attr("x1", 500)
@@ -1086,7 +1090,8 @@ makeSchizPie = function(data) {
     .transition()
       .duration(3000)
       .ease("linear")
-      .attr("stroke-dashoffset", 0);
+      .attr("stroke-linecap", "round")
+      .attr("stroke-dasharray", "1, 15");
 
   var chart = d3.select("#expandedChart")
     .select("svg")
@@ -1094,7 +1099,7 @@ makeSchizPie = function(data) {
 
   var margin = {top: 0, right: 20, bottom: 0, left: 20},
   width = window.innerWidth - margin.left - margin.right,
-  height = 550 - margin.top - margin.bottom;
+  height = 500 - margin.top - margin.bottom;
 
   var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
   var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
@@ -1105,7 +1110,7 @@ makeSchizPie = function(data) {
     });
 
   var arc = d3.svg.arc()
-    .outerRadius(250);
+    .outerRadius(200);
 
   var colors = d3.scale.category20c();
 
@@ -1117,7 +1122,7 @@ makeSchizPie = function(data) {
     .attr("transform", "translate(" + width / 2 + ", " + height / 2 + ")");
 
   var arc = d3.svg.arc()
-    .outerRadius(250);
+    .outerRadius(200);
 
   var pie = d3.layout.pie()
     .value(function(d) {
@@ -1141,19 +1146,20 @@ makeSchizPie = function(data) {
  d3.select(this)
    .select("path")
    .style("opacity", "1");
-});
+})
+;
 
 
  //console.log(pieData[1].value);
  arcs.append("svg:text")
      .attr("transform", function(d) { //set the label's origin to the center of the arc
        d.outerRadius = radius - 50; // Set Outer Coordinate
-       d.innerRadius = radius + 125; // Set Inner Coordinate
-       return "translate(" + (arc.centroid(d)[0] + 10) + ", " + (arc.centroid(d)[1] + 20) + ")";
+       d.innerRadius = radius + 110; // Set Inner Coordinate
+       return "translate(" + (arc.centroid(d)[0]) + ", " + (arc.centroid(d)[1] + 20) + ")";
      })
      .attr("text-anchor", "middle") //center the text on it's origin
      .style("fill", "Black")
-     .style("font", "bold 30px; font-family: 'Open Sans Condensed', sans-serif;")
+         .style("font", " 25px Open Sans Condensed")
      .text(function(d, i){
       return pieData[i].value; });
 
@@ -1167,7 +1173,7 @@ makeSchizPie = function(data) {
   var xCoor = -60;
   var yCoor = 20;
 
-  var legendRectSize = 50;
+  var legendRectSize = 30;
   var legendSpacing = 4;
 
   var legend = chart.selectAll('.legend')
@@ -1195,7 +1201,7 @@ makeSchizPie = function(data) {
     .attr('y', legendRectSize - legendSpacing)              // NEW
     .text(function(d,i) { return d.race; })
     .attr("transform", "translate(" + 10 + "," + -15  + ")")
-    .style("font", "18px Arial");
+         .style("font", " 20px Open Sans Condensed")
 
 }
 
@@ -1268,7 +1274,7 @@ makeSchizPie = function(data) {
 
     if(d.data.race == "Black")
     {
-      d3.json("/anxiety/race/black", function(err, data) {
+      d3.json("/data/datablack.json", function(err, data) {
         if (err) {
           console.log(err);
           return;
@@ -1279,7 +1285,7 @@ makeSchizPie = function(data) {
 
     if(d.data.race == "White")
     {
-      d3.json("/anxiety/race/white", function(err, data) {
+      d3.json("/data/datawhite.json", function(err, data) {
         if (err) {
           console.log(err);
           return;
@@ -1290,7 +1296,7 @@ makeSchizPie = function(data) {
 
     if(d.data.race == "Hispanic")
     {
-      d3.json("/anxiety/race/hispanic", function(err, data) {
+      d3.json("/data/datahispanic.json", function(err, data) {
         if (err) {
           console.log(err);
           return;
@@ -1301,7 +1307,7 @@ makeSchizPie = function(data) {
 
     if(d.data.race == "API")
     {
-      d3.json("/anxiety/race/api", function(err, data) {
+      d3.json("/data/dataapi.json", function(err, data) {
         if (err) {
           console.log(err);
           return;
@@ -1312,7 +1318,7 @@ makeSchizPie = function(data) {
 
     if(d.data.race == "Other")
     {
-      d3.json("/anxiety/race/other", function(err, data) {
+      d3.json("/data/dataother.json", function(err, data) {
         if (err) {
           console.log(err);
           return;
