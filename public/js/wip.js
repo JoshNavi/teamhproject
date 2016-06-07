@@ -524,7 +524,6 @@ makeMoodPie = function(data) {
 
     // console.log("Mood Pie Working");
 
-    console.log(data);
 
     var totalRace = {
       API: 0,
@@ -651,7 +650,7 @@ makeMoodPie = function(data) {
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")");
+      .attr("transform", "translate(" + width / 2 + ", " + height / 4 + ")");
 
     var arc = d3.svg.arc()
       .outerRadius(250);
@@ -675,16 +674,14 @@ makeMoodPie = function(data) {
    //console.log(pieData[1].value);
    arcs.append("svg:text")
        .attr("transform", function(d) { //set the label's origin to the center of the arc
-         //we have to make sure to set these before calling arc.centroid
-         d.outerRadius = radius + 50; // Set Outer Coordinate
-         d.innerRadius = radius + 30; // Set Inner Coordinate
-         return "translate(" + arc.centroid(d) + ")";
+         d.outerRadius = radius - 50; // Set Outer Coordinate
+         d.innerRadius = radius + 125; // Set Inner Coordinate
+         return "translate(" + (arc.centroid(d)[0] + 10) + ", " + (arc.centroid(d)[1] + 20) + ")";
        })
        .attr("text-anchor", "middle") //center the text on it's origin
        .style("fill", "Black")
        .style("font", "bold 30px Arial")
        .text(function(d, i){
-        //console.log(pieData[i].value);
         return pieData[i].value; });
 
 
@@ -709,8 +706,8 @@ makeMoodPie = function(data) {
     .attr('transform', function(d, i) {
       var height = legendRectSize + legendSpacing;
       var offset =  height * color.domain().length / 2;
-      var horz = 6 * legendRectSize;
-      var vert = i * height - offset - 150;
+      var horz = 6 * legendRectSize + 20;
+      var vert = i * height - offset - 75;
       return 'translate(' + horz + ',' + vert + ')';
     })
     .style('float', 'right');
@@ -731,10 +728,423 @@ makeMoodPie = function(data) {
 
   }
 
+<<<<<<< HEAD
 /*
  * When this functino is called, the grouped bar graph will appear depending
  * on which race on the pie graph is clicked
  */
+=======
+  makeAnxietyPie = function(data) {
+      // console.log("ArchExpand blah blah blah");
+      // console.log(data);
+
+      // console.log("Mood Pie Working");
+
+
+      var totalRace = {
+        API: 0,
+        Hispanic: 0,
+        Black: 0,
+        White: 0,
+        Other: 0
+      };
+
+      for(var i = 0; i < data.length; i++)
+      {
+        // console.log("test");
+        // console.log(data[i].race);
+        if(data[i].race == "API")
+        {
+          totalRace.API += data[i].rate;
+        }
+
+        if(data[i].race == "Hispanic")
+        {
+          totalRace.Hispanic += data[i].rate;
+        }
+
+        if(data[i].race == "Black")
+        {
+          totalRace.Black += data[i].rate;
+        }
+
+        if(data[i].race == "White")
+        {
+          totalRace.White += data[i].rate;
+        }
+
+        if(data[i].race == "Other")
+        {
+          totalRace.Other += data[i].rate;
+        }
+
+      }
+
+      // console.log(totalRace.API);
+
+
+      var pieData = [
+        {
+          race: "API",
+          value: totalRace.API
+        },
+
+        {
+          race: "Hispanic",
+          value: totalRace.Hispanic
+        },
+
+        {
+          race: "Black",
+          value: totalRace.Black
+
+        },
+
+        {
+          race: "White",
+          value: totalRace.White
+        },
+
+        {
+          race: "Other",
+          value: totalRace.Other
+        }
+      ];
+
+      var line1 = d3.select("#line1")
+        .select("svg")
+        .remove("svg");
+
+      var w = 1000;
+      var h = 300;
+
+      var lsvg = d3.select("#line1")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h)
+        .attr("id", "theLine");
+
+      var line1 = lsvg.append("line")
+        .style("stroke", "steelblue")
+        .attr("stroke-width", "5");
+
+      line1
+        .attr("x1", 500)
+        .attr("y1", 0)
+        .attr("x2", 500)
+        .attr("y2", 300)
+        .transition()
+          .duration(3000)
+          .ease("linear")
+          .attr("stroke-dashoffset", 0);
+
+      var chart = d3.select("#expandedChart")
+        .select("svg")
+        .remove("svg");
+
+      var margin = {top: 0, right: 20, bottom: 0, left: 20},
+      width = window.innerWidth - margin.left - margin.right,
+      height = 1300 - margin.top - margin.bottom;
+
+      var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
+      var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
+
+      var pie = d3.layout.pie()
+        .value(function(d) {
+          return d.value;
+        });
+
+      var arc = d3.svg.arc()
+        .outerRadius(250);
+
+
+
+      var colors = d3.scale.category20c();
+
+      var chart = d3.select("#expandedChart")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + ", " + height / 4 + ")");
+
+      var arc = d3.svg.arc()
+        .outerRadius(250);
+
+      var pie = d3.layout.pie()
+        .value(function(d) {
+          return d.value;
+        });
+
+      var arcs = chart.selectAll('g.slice').data(pie(pieData))
+          .enter().append('g')
+          .attr("class", "booty");
+
+      arcs.append("path")
+        .attr('d', arc)
+        .style('fill', function(d, i){ return colors(i); })
+          .on("click", function(d, i) { return expandRaceA(d) });
+
+
+
+     //console.log(pieData[1].value);
+     arcs.append("svg:text")
+         .attr("transform", function(d) { //set the label's origin to the center of the arc
+           d.outerRadius = radius - 50; // Set Outer Coordinate
+           d.innerRadius = radius + 125; // Set Inner Coordinate
+           return "translate(" + (arc.centroid(d)[0] + 10) + ", " + (arc.centroid(d)[1] + 20) + ")";
+         })
+         .attr("text-anchor", "middle") //center the text on it's origin
+         .style("fill", "Black")
+         .style("font", "bold 30px Arial")
+         .text(function(d, i){
+          return pieData[i].value; });
+
+
+
+      // Computes the angle of an arc, converting from radians to degrees.
+      function angle(d) {
+        var a = (d.startAngle + d.endAngle) * 90 / Math.PI - 90;
+        return a > 90 ? a - 180 : a;
+      }
+
+    var xCoor = -60;
+    var yCoor = 20;
+
+    var legendRectSize = 50;
+    var legendSpacing = 4;
+
+    var legend = chart.selectAll('.legend')
+      .data( pieData )
+      .enter()
+      .append('g')
+      .attr('class', 'legend')
+      .attr('transform', function(d, i) {
+        var height = legendRectSize + legendSpacing;
+        var offset =  height * color.domain().length / 2;
+        var horz = 6 * legendRectSize + 20;
+        var vert = i * height - offset - 75;
+        return 'translate(' + horz + ',' + vert + ')';
+      })
+      .style('float', 'right');
+
+
+      legend.append('rect')                                     // NEW
+        .attr('width', legendRectSize)                          // NEW
+        .attr('height', legendRectSize)                         // NEW
+        .style('fill', function(d, i) { return colors(i); })                                   // NEW
+        .style('stroke', color);                               // NEW
+
+      legend.append('text')                                     // NEW
+        .attr('x', legendRectSize + legendSpacing)              // NEW
+        .attr('y', legendRectSize - legendSpacing)              // NEW
+        .text(function(d,i) { return d.race; })
+        .attr("transform", "translate(" + 10 + "," + -15  + ")")
+        .style("font", "18px Arial");
+
+    }
+
+makeSchizPie = function(data) {
+  console.log(data);
+
+  var totalRace = {
+    API: 0,
+    Hispanic: 0,
+    Black: 0,
+    White: 0,
+    Other: 0
+  };
+
+  for(var i = 0; i < data.length; i++)
+  {
+    if(data[i].race == "API")
+    {
+      totalRace.API += data[i].total;
+    }
+
+    if(data[i].race == "Hispanic")
+    {
+      totalRace.Hispanic += data[i].total;
+    }
+
+    if(data[i].race == "Black")
+    {
+      totalRace.Black += data[i].total;
+    }
+
+    if(data[i].race == "White")
+    {
+      totalRace.White += data[i].total;
+    }
+
+    if(data[i].race == "Other")
+    {
+      totalRace.Other += data[i].total;
+    }
+  }
+
+  console.log(totalRace);
+
+  var pieData = [
+    {
+      race: "API",
+      value: totalRace.API
+    },
+
+    {
+      race: "Hispanic",
+      value: totalRace.Hispanic
+    },
+
+    {
+      race: "Black",
+      value: totalRace.Black
+
+    },
+
+    {
+      race: "White",
+      value: totalRace.White
+    },
+
+    {
+      race: "Other",
+      value: totalRace.Other
+    }
+  ];
+
+  console.log(pieData);
+
+  var line1 = d3.select("#line1")
+    .select("svg")
+    .remove("svg");
+
+  var w = 1000;
+  var h = 300;
+
+  var lsvg = d3.select("#line1")
+    .append("svg")
+    .attr("width", w)
+    .attr("height", h)
+    .attr("id", "theLine");
+
+  var line1 = lsvg.append("line")
+    .style("stroke", "steelblue")
+    .attr("stroke-width", "5");
+
+  line1
+    .attr("x1", 500)
+    .attr("y1", 0)
+    .attr("x2", 500)
+    .attr("y2", 300)
+    .transition()
+      .duration(3000)
+      .ease("linear")
+      .attr("stroke-dashoffset", 0);
+
+  var chart = d3.select("#expandedChart")
+    .select("svg")
+    .remove("svg");
+
+  var margin = {top: 0, right: 20, bottom: 0, left: 20},
+  width = window.innerWidth - margin.left - margin.right,
+  height = 1300 - margin.top - margin.bottom;
+
+  var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
+  var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
+
+  var pie = d3.layout.pie()
+    .value(function(d) {
+      return d.value;
+    });
+
+  var arc = d3.svg.arc()
+    .outerRadius(250);
+
+  var colors = d3.scale.category20c();
+
+  var chart = d3.select("#expandedChart")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + ", " + height / 4 + ")");
+
+  var arc = d3.svg.arc()
+    .outerRadius(250);
+
+  var pie = d3.layout.pie()
+    .value(function(d) {
+      return d.value;
+    });
+
+  var arcs = chart.selectAll('g.slice').data(pie(pieData))
+      .enter().append('g')
+      .attr("class", "booty");
+
+  arcs.append("path")
+    .attr('d', arc)
+    .style('fill', function(d, i){ return colors(i); })
+      .on("click", function(d, i) { return expandRaceA(d) });
+
+
+
+ //console.log(pieData[1].value);
+ arcs.append("svg:text")
+     .attr("transform", function(d) { //set the label's origin to the center of the arc
+       d.outerRadius = radius - 50; // Set Outer Coordinate
+       d.innerRadius = radius + 125; // Set Inner Coordinate
+       return "translate(" + (arc.centroid(d)[0] + 10) + ", " + (arc.centroid(d)[1] + 20) + ")";
+     })
+     .attr("text-anchor", "middle") //center the text on it's origin
+     .style("fill", "Black")
+     .style("font", "bold 30px Arial")
+     .text(function(d, i){
+      return pieData[i].value; });
+
+
+
+  // Computes the angle of an arc, converting from radians to degrees.
+  function angle(d) {
+    var a = (d.startAngle + d.endAngle) * 90 / Math.PI - 90;
+    return a > 90 ? a - 180 : a;
+  }
+
+  var xCoor = -60;
+  var yCoor = 20;
+
+  var legendRectSize = 50;
+  var legendSpacing = 4;
+
+  var legend = chart.selectAll('.legend')
+    .data( pieData )
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      var offset =  height * color.domain().length / 2;
+      var horz = 6 * legendRectSize + 20;
+      var vert = i * height - offset - 75;
+      return 'translate(' + horz + ',' + vert + ')';
+    })
+    .style('float', 'right');
+
+  legend.append('rect')                                     // NEW
+    .attr('width', legendRectSize)                          // NEW
+    .attr('height', legendRectSize)                         // NEW
+    .style('fill', function(d, i) { return colors(i); })                                   // NEW
+    .style('stroke', color);                               // NEW
+
+  legend.append('text')                                     // NEW
+    .attr('x', legendRectSize + legendSpacing)              // NEW
+    .attr('y', legendRectSize - legendSpacing)              // NEW
+    .text(function(d,i) { return d.race; })
+    .attr("transform", "translate(" + 10 + "," + -15  + ")")
+    .style("font", "18px Arial");
+
+}
+
 
   expand_makeRaceChart = function(d, i) {
 
