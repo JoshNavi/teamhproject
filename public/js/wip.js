@@ -63,8 +63,8 @@ makeRaceGeographyChart = function(data) {
 
   //console.log("fuck you");
   var margin = {top: 20, right: 30, bottom: 150, left: 40},
-    width = window.innerWidth - margin.left - margin.right - 90,
-    height = 600 - margin.top - margin.bottom;
+    width = window.innerWidth - margin.left - margin.right - 180,
+    height = 500 - margin.top - margin.bottom;
 
     //console.log(data);
 
@@ -173,12 +173,12 @@ makeRaceGeographyChart = function(data) {
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
   legend.append("rect")
-      .attr("x", width - 18)
+      .attr("x", width - 98)
       .attr("width", 18)
       .attr("height", 18)
       .style("fill", color);
   legend.append("text")
-      .attr("x", width - 24)
+      .attr("x", width - 104)
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
@@ -236,8 +236,8 @@ makeRaceGeographyChart = function(data) {
 makeRaceChart = function(data) {
 
   var margin = {top: 20, right: 20, bottom: 180, left: 80},
-      width = 960 - margin.left - margin.right,
-      height = 600 - margin.top - margin.bottom;
+  width = window.innerWidth - margin.left - margin.right - 180,
+  height = 500 - margin.top - margin.bottom;
 
   var x0 = d3.scale.ordinal()
       .rangeRoundBands([0, width], .1);
@@ -343,13 +343,13 @@ makeRaceChart = function(data) {
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
   legend.append("rect")
-      .attr("x", width - 18)
+      .attr("x", width - 98)
       .attr("width", 18)
       .attr("height", 18)
       .style("fill", color);
 
   legend.append("text")
-      .attr("x", width - 24)
+      .attr("x", width - 104)
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
@@ -466,7 +466,7 @@ makeHospitalizationArc = function(data) {
       })
       .attr("text-anchor", "middle") //center the text on it's origin
       .style("fill", "White")
-      .style("font", "bold 30px Arial")
+      .style("font", "bold 30px Dosis")
       .text(function(d,i){ return dataset[i].label; });
 
 

@@ -155,6 +155,8 @@ app.get('/mood/race', function(req, res){
   return { delphidata: "No data found" };
 });
 
+
+/************* BLACK MOOD DISORDER ****************/
 app.get('/moodbyrace/race', function(req, res){
   pg.connect(conString, function(err, client, done) {
 
@@ -164,7 +166,7 @@ app.get('/moodbyrace/race', function(req, res){
 
     var q = 'SELECT "Year" AS year, "Race" AS race, "Hospitalization Rate" AS rate, "Geography" as geography \
               FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
-              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' AND "Geography" <> \'Unknown\'';
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' AND "Geography" <> \'Unknown\' AND "Race" LIKE \'Black\'';
 
     client.query( q, function(err, result) {
     //call `done()` to release the client back to the pool
@@ -180,6 +182,22 @@ app.get('/moodbyrace/race', function(req, res){
   });
   return { delphidata: "No data found" };
 });
+
+/************* WHITE MOOD DISORDER ****************/
+
+/************* HISPANIC MOOD DISORDER ****************/
+
+/************* API MOOD DISORDER ****************/
+
+/************* OTHER MOOD DISORDER ****************/
+
+
+
+
+
+
+
+
 
 app.get('/anxiety/race', function(req, res){
   pg.connect(conString, function(err, client, done) {
