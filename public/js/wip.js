@@ -373,6 +373,15 @@ makeHospitalizationArc = function(data) {
 
 
 
+
+
+/*
+ * This function make the half pie chart (mood disorders, schizophrenia, and
+ * anxiety disorders)
+ *
+ */
+
+
 makeHospitalizationArc = function(data) {
   var margin = {top: 0, right: 20, bottom: 0, left: 20},
     width = window.innerWidth - margin.left - margin.right,
@@ -466,15 +475,16 @@ makeHospitalizationArc = function(data) {
     var i = d3.interpolate({startAngle: 1 * Math.PI, endAngle: 1 * Math.PI}, b);
     return function(t) { return arc(i(t));};
   }
-
-
-
-
 }
 
+
+
+
+
+
 /*
- * When this function is called, a particular pie chart will appear that
- * corresponds to the selected mental disorder (schizophrenia, mood disorder,
+ * When this function is called, a pie chart will appear depending on the
+ * selected mental disorder (schizophrenia, mood disorder,
  * anxiety disorder)
  */
 
@@ -518,12 +528,16 @@ expandGraph = function(d, i) {
 
 
 
+
+
+
+/*
+ * This function makes the pie chart by race for the mental disorder
+ * that is selected
+ */
+
+
 makeMoodPie = function(data) {
-    // console.log("ArchExpand blah blah blah");
-    // console.log(data);
-
-    // console.log("Mood Pie Working");
-
 
     var totalRace = {
       API: 0,
@@ -616,7 +630,7 @@ makeMoodPie = function(data) {
       .attr("x1", 500)
       .attr("y1", 0)
       .attr("x2", 500)
-      .attr("y2", 300)
+      .attr("y2", 100)
       .transition()
         .duration(3000)
         .ease("linear")
@@ -640,8 +654,6 @@ makeMoodPie = function(data) {
 
     var arc = d3.svg.arc()
       .outerRadius(250);
-
-
 
     var colors = d3.scale.category20c();
 
@@ -728,12 +740,11 @@ makeMoodPie = function(data) {
 
   }
 
-<<<<<<< HEAD
 /*
  * When this functino is called, the grouped bar graph will appear depending
  * on which race on the pie graph is clicked
  */
-=======
+
   makeAnxietyPie = function(data) {
       // console.log("ArchExpand blah blah blah");
       // console.log(data);
@@ -816,7 +827,7 @@ makeMoodPie = function(data) {
         .remove("svg");
 
       var w = 1000;
-      var h = 300;
+      var h = 100;
 
       var lsvg = d3.select("#line1")
         .append("svg")
@@ -832,7 +843,7 @@ makeMoodPie = function(data) {
         .attr("x1", 500)
         .attr("y1", 0)
         .attr("x2", 500)
-        .attr("y2", 300)
+        .attr("y2", 200)
         .transition()
           .duration(3000)
           .ease("linear")
@@ -1020,7 +1031,7 @@ makeSchizPie = function(data) {
     .remove("svg");
 
   var w = 1000;
-  var h = 300;
+  var h = 100;
 
   var lsvg = d3.select("#line1")
     .append("svg")
@@ -1036,7 +1047,7 @@ makeSchizPie = function(data) {
     .attr("x1", 500)
     .attr("y1", 0)
     .attr("x2", 500)
-    .attr("y2", 300)
+    .attr("y2", 200)
     .transition()
       .duration(3000)
       .ease("linear")
@@ -1150,7 +1161,7 @@ makeSchizPie = function(data) {
 
     console.log(d.data.race);
 
-    if(d.data.label == "")
+    if(d.data.label == "moodraceblack")
     {
       d3.json("/mood/race/black", function(err, data) {
         if (err) {
@@ -1161,7 +1172,7 @@ makeSchizPie = function(data) {
       });
     }
 
-    if(d.data.label == "")
+    if(d.data.label == "moodracewhite")
     {
       d3.json("/mood/race/white", function(err, data) {
         if (err) {
@@ -1172,7 +1183,7 @@ makeSchizPie = function(data) {
       });
     }
 
-    if(d.data.label == "")
+    if(d.data.label == "moodracehispanic")
     {
       d3.json("/mood/race/hispanic", function(err, data) {
         if (err) {
@@ -1183,9 +1194,9 @@ makeSchizPie = function(data) {
       });
     }
 
-    if(d.data.label == "")
+    if(d.data.label == "moodraceapi")
     {
-      d3.json("/anxiety/race/api", function(err, data) {
+      d3.json("/mood/race/api", function(err, data) {
         if (err) {
           console.log(err);
           return;
@@ -1194,9 +1205,9 @@ makeSchizPie = function(data) {
       });
     }
 
-    if(d.data.label == "")
+    if(d.data.label == "moodraceother")
     {
-      d3.json("/anxiety/race/other", function(err, data) {
+      d3.json("/mood/race/other", function(err, data) {
         if (err) {
           console.log(err);
           return;
@@ -1206,7 +1217,7 @@ makeSchizPie = function(data) {
     }
 
 
-    if(d.data.label == "")
+    if(d.data.label == "anxietyraceblack")
     {
       d3.json("/anxiety/race/black", function(err, data) {
         if (err) {
@@ -1217,7 +1228,7 @@ makeSchizPie = function(data) {
       });
     }
 
-    if(d.data.label == "")
+    if(d.data.label == "anxietyracewhite")
     {
       d3.json("/anxiety/race/white", function(err, data) {
         if (err) {
@@ -1228,7 +1239,7 @@ makeSchizPie = function(data) {
       });
     }
 
-    if(d.data.label == "")
+    if(d.data.label == "anxietyracehispanic")
     {
       d3.json("/anxiety/race/hispanic", function(err, data) {
         if (err) {
@@ -1239,7 +1250,7 @@ makeSchizPie = function(data) {
       });
     }
 
-    if(d.data.label == "")
+    if(d.data.label == "anxietyraceapi")
     {
       d3.json("/anxiety/race/api", function(err, data) {
         if (err) {
@@ -1250,7 +1261,7 @@ makeSchizPie = function(data) {
       });
     }
 
-    if(d.data.label == "")
+    if(d.data.label == "anxietyraceother")
     {
       d3.json("/anxiety/race/other", function(err, data) {
         if (err) {
@@ -1260,7 +1271,6 @@ makeSchizPie = function(data) {
         makeRaceChart(data);
       });
     }
-
 
 
   }
