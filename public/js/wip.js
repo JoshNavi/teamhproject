@@ -468,6 +468,16 @@ makeHospitalizationArc = function(data) {
       .duration(1800)
       .attrTween("d", tweenPie);
 
+      arcs.on("mouseover", function() {
+ d3.select(this)
+   .select("path")
+   .style("opacity", ".7");
+}).on("mouseout", function() {
+ d3.select(this)
+   .select("path")
+   .style("opacity", "1");
+});
+
   arcs.append("svg:text")
       .attr("transform", function(d) { //set the label's origin to the center of the arc
         //we have to make sure to set these before calling arc.centroid
@@ -646,7 +656,7 @@ expandGraph = function(d, i) {
      .attr("id", "theLine");
 
    var line1 = lsvg.append("line")
-     .style("stroke", "steelblue")
+     .style("stroke", "black")
      .attr("stroke-width", "5");
 
    line1
@@ -704,6 +714,16 @@ expandGraph = function(d, i) {
      .style('fill', function(d, i){ return colors(i); })
        .on("click", function(d, i) { return expand_makeAnxietyRaceChart(d) });
 
+
+       arcs.on("mouseover", function() {
+  d3.select(this)
+    .select("path")
+    .style("opacity", ".7");
+}).on("mouseout", function() {
+  d3.select(this)
+    .select("path")
+    .style("opacity", "1");
+});
 
   //console.log(pieData[1].value);
   arcs.append("svg:text")
@@ -846,7 +866,7 @@ expandGraph = function(d, i) {
      .attr("id", "theLine");
 
    var line1 = lsvg.append("line")
-     .style("stroke", "steelblue")
+     .style("stroke", "black")
      .attr("stroke-width", "5");
 
    line1
@@ -904,6 +924,15 @@ expandGraph = function(d, i) {
      .style('fill', function(d, i){ return colors(i); })
        .on("click", function(d, i) { return expand_makeMoodRaceChart(d) });
 
+       arcs.on("mouseover", function() {
+  d3.select(this)
+    .select("path")
+    .style("opacity", ".7");
+}).on("mouseout", function() {
+  d3.select(this)
+    .select("path")
+    .style("opacity", "1");
+});
 
   //console.log(pieData[1].value);
   arcs.append("svg:text")
@@ -1046,7 +1075,7 @@ makeSchizPie = function(data) {
     .attr("id", "theLine");
 
   var line1 = lsvg.append("line")
-    .style("stroke", "steelblue")
+    .style("stroke", "black")
     .attr("stroke-width", "5");
 
   line1
@@ -1104,6 +1133,16 @@ makeSchizPie = function(data) {
     .style('fill', function(d, i){ return colors(i); })
       .on("click", function(d, i) { return expand_makeSchizRaceChart(d) });
 
+      arcs.on("mouseover", function() {
+ d3.select(this)
+   .select("path")
+   .style("opacity", ".7");
+}).on("mouseout", function() {
+ d3.select(this)
+   .select("path")
+   .style("opacity", "1");
+});
+
 
  //console.log(pieData[1].value);
  arcs.append("svg:text")
@@ -1114,10 +1153,9 @@ makeSchizPie = function(data) {
      })
      .attr("text-anchor", "middle") //center the text on it's origin
      .style("fill", "Black")
-     .style("font", "bold 30px Arial")
+     .style("font", "bold 30px; font-family: 'Open Sans Condensed', sans-serif;")
      .text(function(d, i){
       return pieData[i].value; });
-
 
 
   // Computes the angle of an arc, converting from radians to degrees.
