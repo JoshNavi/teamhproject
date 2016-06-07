@@ -70,9 +70,12 @@ makeRaceGeographyChart = function(data) {
   var y = d3.scale.linear()
       .range([height, 0]);
 
-  var color = d3.scale.ordinal()
-      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"]);
+  // var color = d3.scale.ordinal()
+  //     .range(["#27598c", "#091F92", "#32127A", "#4E5180", "#1D2951"]);
 
+
+
+   var color = d3.scale.category20c();
   var xAxis = d3.svg.axis()
       .scale(x)
       .orient("bottom");
@@ -296,6 +299,9 @@ makeRaceChart = function(data) {
   x1.domain(yearNames).rangeRoundBands([0, x0.rangeBand()]);
   y.domain([0, d3.max(csvData, function(d) { return d3.max(d.rates, function(d) { return d.value; }); })]);
 
+  var color = d3.scale.ordinal()
+       .range(["#9ECAE1", "#1F77B4", "#E6550D"]);
+
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
@@ -427,7 +433,7 @@ makeHospitalizationArc = function(data) {
   var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
   var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
 
-  var color = d3.scale.category20b();
+  var color = d3.scale.category20c();
 
 /*
   var color = d3.scale.ordinal()
@@ -481,13 +487,17 @@ makeHospitalizationArc = function(data) {
 })
 ;
 
+console.log("This is the radius: " + radius);
+
   arcs.append("svg:text")
       .attr("transform", function(d) { //set the label's origin to the center of the arc
         //we have to make sure to set these before calling arc.centroid
-        d.outerRadius = radius + 0; // Set Outer Coordinate
-        d.innerRadius = radius + 90; // Set Inner Coordinate
-        return "translate(" + arc.centroid(d) + ")";
+        d.outerRadius = radius + 500; // Set Outer Coordinate
+        d.innerRadius = radius + 500; // Set Inner Coordinate
+        return "translate(" + arc.centroid(d) + 1000 + ")";
       })
+
+
       .attr("text-anchor", "middle") //center the text on it's origin
       .style("fill", "White")
       .style("font", " 25px Open Sans Condensed")

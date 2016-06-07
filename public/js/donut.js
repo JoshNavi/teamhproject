@@ -23,7 +23,7 @@ var path = svg.selectAll("path")
 
 
 function getColors (i) {
-  var colorArray = ['#F1F2F3','#27598c'];
+  var colorArray = ['#F1F2F3','#3182BD'];
   return colorArray[i];
 }
 
@@ -32,5 +32,5 @@ svg.append("svg:text")
     .attr("text-anchor", "middle")
     .attr("style","font-family: 'Open Sans Condensed', sans-serif")
     .attr("font-size","40")
-    .attr("fill","#52524c")
+    .attr("fill","#3182BD")
     .text("9.5%");
