@@ -1,13 +1,6 @@
 (function(d3) {
   "use strict";
 
-  d3.json("/mood/race/black", function(err, data) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    makeRaceChart(data);
-  });
 
 /*
   d3.json("/race", function(err, data) {
@@ -209,6 +202,39 @@ makeRaceGeographyChart = function(data) {
 
 
 makeRaceChart = function(data) {
+/*
+   var line1 = d3.select("#line2")
+     .select("svg")
+     .remove("svg");
+
+   var w = 1000;
+   var h = 100;
+
+   var lsvg = d3.select("#line2")
+     .append("svg")
+     .attr("width", w)
+     .attr("height", h)
+     .attr("id", "theLine");
+
+   var line1 = lsvg.append("line")
+     .style("stroke", "steelblue")
+     .attr("stroke-width", "5");
+
+   line1
+     .attr("x1", 500)
+     .attr("y1", -100)
+     .attr("x2", 500)
+     .attr("y2", 500)
+     .transition()
+       .duration(3000)
+       .ease("linear")
+       .attr("stroke-dashoffset", 0);
+*/
+console.log("whatup");
+
+  var svg = d3.select("#chart2")
+     .select("svg")
+     .remove("svg");
 
   var margin = {top: 20, right: 20, bottom: 180, left: 80},
   width = window.innerWidth - margin.left - margin.right - 180,
@@ -257,12 +283,12 @@ makeRaceChart = function(data) {
         csvData.push(row);
       }
 
-  console.log("hello world");
-  console.log(csvData);
+  //console.log("hello world");
+  //console.log(csvData);
 
   var yearNames = d3.keys(csvData
     [0]).filter(function(key) { return key !== "Geography"; });
-  console.log(yearNames);
+  //console.log(yearNames);
 
 
 
@@ -676,7 +702,7 @@ expandGraph = function(d, i) {
    arcs.append("path")
      .attr('d', arc)
      .style('fill', function(d, i){ return colors(i); })
-       .on("click", function(d, i) { return expandRaceA(d) });
+       .on("click", function(d, i) { return expand_makeAnxietyRaceChart(d) });
 
 
   //console.log(pieData[1].value);
@@ -876,7 +902,7 @@ expandGraph = function(d, i) {
    arcs.append("path")
      .attr('d', arc)
      .style('fill', function(d, i){ return colors(i); })
-       .on("click", function(d, i) { return expandRaceA(d) });
+       .on("click", function(d, i) { return expand_makeMoodRaceChart(d) });
 
 
   //console.log(pieData[1].value);
@@ -1076,7 +1102,7 @@ makeSchizPie = function(data) {
   arcs.append("path")
     .attr('d', arc)
     .style('fill', function(d, i){ return colors(i); })
-      .on("click", function(d, i) { return expandRaceA(d) });
+      .on("click", function(d, i) { return expand_makeSchizRaceChart(d) });
 
 
  //console.log(pieData[1].value);
@@ -1136,67 +1162,11 @@ makeSchizPie = function(data) {
 }
 
 
-  expand_makeRaceChart = function(d, i) {
+  expand_makeAnxietyRaceChart = function(d, i) {
 
     console.log(d.data.race);
 
-    if(d.data.label == "moodraceblack")
-    {
-      d3.json("/mood/race/black", function(err, data) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        makeRaceChart(data);
-      });
-    }
-
-    if(d.data.label == "moodracewhite")
-    {
-      d3.json("/mood/race/white", function(err, data) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        makeRaceChart(data);
-      });
-    }
-
-    if(d.data.label == "moodracehispanic")
-    {
-      d3.json("/mood/race/hispanic", function(err, data) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        makeRaceChart(data);
-      });
-    }
-
-    if(d.data.label == "moodraceapi")
-    {
-      d3.json("/mood/race/api", function(err, data) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        makeRaceChart(data);
-      });
-    }
-
-    if(d.data.label == "moodraceother")
-    {
-      d3.json("/mood/race/other", function(err, data) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        makeRaceChart(data);
-      });
-    }
-
-
-    if(d.data.label == "anxietyraceblack")
+    if(d.data.race == "Black")
     {
       d3.json("/anxiety/race/black", function(err, data) {
         if (err) {
@@ -1207,7 +1177,7 @@ makeSchizPie = function(data) {
       });
     }
 
-    if(d.data.label == "anxietyracewhite")
+    if(d.data.race == "White")
     {
       d3.json("/anxiety/race/white", function(err, data) {
         if (err) {
@@ -1218,7 +1188,7 @@ makeSchizPie = function(data) {
       });
     }
 
-    if(d.data.label == "anxietyracehispanic")
+    if(d.data.race == "Hispanic")
     {
       d3.json("/anxiety/race/hispanic", function(err, data) {
         if (err) {
@@ -1229,7 +1199,7 @@ makeSchizPie = function(data) {
       });
     }
 
-    if(d.data.label == "anxietyraceapi")
+    if(d.data.race == "API")
     {
       d3.json("/anxiety/race/api", function(err, data) {
         if (err) {
@@ -1240,7 +1210,131 @@ makeSchizPie = function(data) {
       });
     }
 
-    if(d.data.label == "anxietyraceother")
+    if(d.data.race == "Other")
+    {
+      d3.json("/anxiety/race/other", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+
+  }
+
+  expand_makeSchizRaceChart = function(d, i) {
+
+    console.log(d.data.race);
+
+    if(d.data.race == "Black")
+    {
+      d3.json("/anxiety/race/black", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.race == "White")
+    {
+      d3.json("/anxiety/race/white", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.race == "Hispanic")
+    {
+      d3.json("/anxiety/race/hispanic", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.race == "API")
+    {
+      d3.json("/anxiety/race/api", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.race == "Other")
+    {
+      d3.json("/anxiety/race/other", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+
+  }
+
+  expand_makeMoodRaceChart = function(d, i) {
+
+    console.log(d.data.race);
+
+    if(d.data.race == "Black")
+    {
+      d3.json("/anxiety/race/black", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.race == "White")
+    {
+      d3.json("/anxiety/race/white", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.race == "Hispanic")
+    {
+      d3.json("/anxiety/race/hispanic", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.race == "API")
+    {
+      d3.json("/anxiety/race/api", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.race == "Other")
     {
       d3.json("/anxiety/race/other", function(err, data) {
         if (err) {
