@@ -1,7 +1,7 @@
 (function(d3) {
   "use strict";
 
-  d3.json("/moodbyrace/race", function(err, data) {
+  d3.json("/mood/race/black", function(err, data) {
     if (err) {
       console.log(err);
       return;
@@ -57,7 +57,10 @@ getColor = function(d) {
   return c20(8);
 }
 
-/*********** STACKED BAR CHART ***********/
+/*
+ * This function creates the stacked bar chart (chart1)
+ *
+ */
 
 makeRaceGeographyChart = function(data) {
 
@@ -93,7 +96,6 @@ makeRaceGeographyChart = function(data) {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-/* messing around with data */
   var csvData = [];
   var areaDict = {};
   data.map(function (elem) {
@@ -122,9 +124,6 @@ makeRaceGeographyChart = function(data) {
     }
     csvData.push(row);
   }
-
-  //console.log(csvData);
-
 
   color.domain(d3.keys(csvData[0]).filter(function(key) { return key !== "Area"; }));
   csvData.forEach(function(d) {
@@ -155,18 +154,36 @@ makeRaceGeographyChart = function(data) {
       .attr("dy", ".71em")
       .style("text-anchor", "end")
       .text("Population");
+
   var state = svg.selectAll(".state")
       .data(csvData)
     .enter().append("g")
       .attr("class", "g")
       .attr("transform", function(d) { return "translate(" + x(d.Area) + ",0)"; });
+
+  var tooltip = d3.select("body")
+      .append("div")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden");
+
   state.selectAll("rect")
       .data(function(d) { return d.races; })
     .enter().append("rect")
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.y1); })
       .attr("height", function(d) { return y(d.y0) - y(d.y1); })
-      .style("fill", function(d) { return color(d.name); });
+      .style("fill", function(d) { return color(d.name); })
+      .on('mouseover', function(d) {
+        return tooltip.style("visibility", "visible").text("Number");
+      })
+      .on('mouseout', function() {
+        return tooltip.style("visibility", "hidden");
+      });
+
+//+ (Number(d.y1).toFixed(2))
+
+
   var legend = svg.selectAll(".legend")
       .data(color.domain().slice().reverse())
     .enter().append("g")
@@ -184,53 +201,11 @@ makeRaceGeographyChart = function(data) {
       .style("text-anchor", "end")
       .text(function(d) { return d; });
 
+    }
 
-
-
-/* correct */
-  //
-  // x.domain(data.map(function(d) { return d.area; }));
-  // y.domain([0, d3.max(data, function(d) { return d.population/1; })]);
-  //
-  // svg.append("g")
-  //     .attr("class", "x axis")
-  //     .attr("transform", "translate(0," + height + ")")
-  //     .call(xAxis)
-  //     .selectAll("text")
-  //         .style("text-anchor", "end")
-  //         .attr("dx", "-.8em")
-  //         .attr("dy", ".15em")
-  //         .attr("transform", function(d) {
-  //             return "rotate(-65)"
-  //             });
-  //
-  // svg.append("g")
-  //     .attr("class", "y axis")
-  //     .call(yAxis)
-  //     .append("text")
-  //     .attr("transform", "rotate(-90)")
-  //     .attr("y", 6)
-  //     .attr("dy", ".71em")
-  //     .style("text-anchor", "end")
-  //     .text("Population");
-  //
-  // svg.selectAll(".bar")
-  //     .data(data)
-  //     .enter().append("rect")
-  //     .attr("class", "bar")
-  //     .attr("x", function(d) {return x(d.area); })
-  //     .attr("width", x.rangeBand())
-  //     .attr("y", function(d) { return y(d.population/1); })
-  //     .attr("height", function(d) {return height - y(d.population/1); })
-  //     .style("fill", function(d) { return getColor(d); });
-}
-
-/*********************************************/
-
-
-
-
-/*********** MOOD BAR CHART ***********/
+/* MOOD BAR CHART:
+ * This fucntion creates the grouped bar chart (chart2)
+*/
 
 
 makeRaceChart = function(data) {
@@ -256,7 +231,8 @@ makeRaceChart = function(data) {
       .orient("left")
       .ticks(10, "%");
 
-  var svg = d3.select(".chart2").append("svg")
+  var svg = d3.select("#chart2")
+      .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -397,6 +373,15 @@ makeHospitalizationArc = function(data) {
 
 
 
+
+
+/*
+ * This function make the half pie chart (mood disorders, schizophrenia, and
+ * anxiety disorders)
+ *
+ */
+
+
 makeHospitalizationArc = function(data) {
   var margin = {top: 0, right: 20, bottom: 0, left: 20},
     width = window.innerWidth - margin.left - margin.right,
@@ -490,11 +475,18 @@ makeHospitalizationArc = function(data) {
     var i = d3.interpolate({startAngle: 1 * Math.PI, endAngle: 1 * Math.PI}, b);
     return function(t) { return arc(i(t));};
   }
-
-
-
-
 }
+
+
+
+
+
+
+/*
+ * When this function is called, a pie chart will appear depending on the
+ * selected mental disorder (schizophrenia, mood disorder,
+ * anxiety disorder)
+ */
 
 expandGraph = function(d, i) {
 
@@ -543,9 +535,20 @@ makeMoodPie = function(data) {
     // console.log("ArchExpand blah blah blah");
     // console.log(data);
 
-    // console.log("Mood Pie Working");
 
-    console.log(data);
+
+
+
+
+
+
+/*
+ * This function makes the pie chart by race for the mental disorder
+ * that is selected
+ */
+
+
+makeMoodPie = function(data) {
 
     var totalRace = {
       API: 0,
@@ -622,7 +625,7 @@ makeMoodPie = function(data) {
       .remove("svg");
 
     var w = 1000;
-    var h = 300;
+    var h = 100;
 
     var lsvg = d3.select("#line1")
       .append("svg")
@@ -638,7 +641,7 @@ makeMoodPie = function(data) {
       .attr("x1", 500)
       .attr("y1", 0)
       .attr("x2", 500)
-      .attr("y2", 300)
+      .attr("y2", 100)
       .transition()
         .duration(3000)
         .ease("linear")
@@ -664,8 +667,6 @@ makeMoodPie = function(data) {
     var arc = d3.svg.arc()
       .outerRadius(250);
 
-
-
     var colors = d3.scale.category20c();
 
     var chart = d3.select("#expandedChart")
@@ -687,6 +688,7 @@ makeMoodPie = function(data) {
 //       .outerRadius(250);
 // >>>>>>> 84c295e3155467c27185173ce7780b491e96bc44
 
+
     var pie = d3.layout.pie()
       .value(function(d) {
         return d.value;
@@ -699,23 +701,21 @@ makeMoodPie = function(data) {
     arcs.append("path")
       .attr('d', arc)
       .style('fill', function(d, i){ return colors(i); })
-        .on("click", function(d, i) { return expandRaceA(d) });
+        .on("click", function(d, i) { return makeRaceChart(d) });
 
 
 
    //console.log(pieData[1].value);
    arcs.append("svg:text")
        .attr("transform", function(d) { //set the label's origin to the center of the arc
-         //we have to make sure to set these before calling arc.centroid
-         d.outerRadius = radius + 50; // Set Outer Coordinate
-         d.innerRadius = radius + 30; // Set Inner Coordinate
-         return "translate(" + arc.centroid(d) + ")";
+         d.outerRadius = radius - 50; // Set Outer Coordinate
+         d.innerRadius = radius + 125; // Set Inner Coordinate
+         return "translate(" + (arc.centroid(d)[0] + 10) + ", " + (arc.centroid(d)[1] + 20) + ")";
        })
        .attr("text-anchor", "middle") //center the text on it's origin
        .style("fill", "Black")
        .style("font", "bold 30px Arial")
        .text(function(d, i){
-        //console.log(pieData[i].value);
         return pieData[i].value; });
 
 
@@ -740,8 +740,8 @@ makeMoodPie = function(data) {
     .attr('transform', function(d, i) {
       var height = legendRectSize + legendSpacing;
       var offset =  height * color.domain().length / 2;
-      var horz = 6 * legendRectSize;
-      var vert = i * height - offset - 150;
+      var horz = 6 * legendRectSize + 20;
+      var vert = i * height - offset - 75;
       return 'translate(' + horz + ',' + vert + ')';
     })
     .style('float', 'right');
@@ -762,21 +762,537 @@ makeMoodPie = function(data) {
 
   }
 
+/*
+ * When this functino is called, the grouped bar graph will appear depending
+ * on which race on the pie graph is clicked
+ */
 
-  expandRaceA = function(d, i) {
+  makeAnxietyPie = function(data) {
+      // console.log("ArchExpand blah blah blah");
+      // console.log(data);
+
+      // console.log("Mood Pie Working");
+
+
+      var totalRace = {
+        API: 0,
+        Hispanic: 0,
+        Black: 0,
+        White: 0,
+        Other: 0
+      };
+
+      for(var i = 0; i < data.length; i++)
+      {
+        // console.log("test");
+        // console.log(data[i].race);
+        if(data[i].race == "API")
+        {
+          totalRace.API += data[i].rate;
+        }
+
+        if(data[i].race == "Hispanic")
+        {
+          totalRace.Hispanic += data[i].rate;
+        }
+
+        if(data[i].race == "Black")
+        {
+          totalRace.Black += data[i].rate;
+        }
+
+        if(data[i].race == "White")
+        {
+          totalRace.White += data[i].rate;
+        }
+
+        if(data[i].race == "Other")
+        {
+          totalRace.Other += data[i].rate;
+        }
+
+      }
+
+      // console.log(totalRace.API);
+
+
+      var pieData = [
+        {
+          race: "API",
+          value: totalRace.API
+        },
+
+        {
+          race: "Hispanic",
+          value: totalRace.Hispanic
+        },
+
+        {
+          race: "Black",
+          value: totalRace.Black
+
+        },
+
+        {
+          race: "White",
+          value: totalRace.White
+        },
+
+        {
+          race: "Other",
+          value: totalRace.Other
+        }
+      ];
+
+      var line1 = d3.select("#line1")
+        .select("svg")
+        .remove("svg");
+
+      var w = 1000;
+      var h = 100;
+
+      var lsvg = d3.select("#line1")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h)
+        .attr("id", "theLine");
+
+      var line1 = lsvg.append("line")
+        .style("stroke", "steelblue")
+        .attr("stroke-width", "5");
+
+      line1
+        .attr("x1", 500)
+        .attr("y1", 0)
+        .attr("x2", 500)
+        .attr("y2", 200)
+        .transition()
+          .duration(3000)
+          .ease("linear")
+          .attr("stroke-dashoffset", 0);
+
+      var chart = d3.select("#expandedChart")
+        .select("svg")
+        .remove("svg");
+
+      var margin = {top: 0, right: 20, bottom: 0, left: 20},
+      width = window.innerWidth - margin.left - margin.right,
+      height = 1300 - margin.top - margin.bottom;
+
+      var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
+      var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
+
+      var pie = d3.layout.pie()
+        .value(function(d) {
+          return d.value;
+        });
+
+      var arc = d3.svg.arc()
+        .outerRadius(250);
+
+
+
+      var colors = d3.scale.category20c();
+
+      var chart = d3.select("#expandedChart")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + ", " + height / 4 + ")");
+
+      var arc = d3.svg.arc()
+        .outerRadius(250);
+
+      var pie = d3.layout.pie()
+        .value(function(d) {
+          return d.value;
+        });
+
+      var arcs = chart.selectAll('g.slice').data(pie(pieData))
+          .enter().append('g')
+          .attr("class", "booty");
+
+      arcs.append("path")
+        .attr('d', arc)
+        .style('fill', function(d, i){ return colors(i); })
+          .on("click", function(d, i) { return expandRaceA(d) });
+
+
+
+     //console.log(pieData[1].value);
+     arcs.append("svg:text")
+         .attr("transform", function(d) { //set the label's origin to the center of the arc
+           d.outerRadius = radius - 50; // Set Outer Coordinate
+           d.innerRadius = radius + 125; // Set Inner Coordinate
+           return "translate(" + (arc.centroid(d)[0] + 10) + ", " + (arc.centroid(d)[1] + 20) + ")";
+         })
+         .attr("text-anchor", "middle") //center the text on it's origin
+         .style("fill", "Black")
+         .style("font", "bold 30px Arial")
+         .text(function(d, i){
+          return pieData[i].value; });
+
+
+
+      // Computes the angle of an arc, converting from radians to degrees.
+      function angle(d) {
+        var a = (d.startAngle + d.endAngle) * 90 / Math.PI - 90;
+        return a > 90 ? a - 180 : a;
+      }
+
+    var xCoor = -60;
+    var yCoor = 20;
+
+    var legendRectSize = 50;
+    var legendSpacing = 4;
+
+    var legend = chart.selectAll('.legend')
+      .data( pieData )
+      .enter()
+      .append('g')
+      .attr('class', 'legend')
+      .attr('transform', function(d, i) {
+        var height = legendRectSize + legendSpacing;
+        var offset =  height * color.domain().length / 2;
+        var horz = 6 * legendRectSize + 20;
+        var vert = i * height - offset - 75;
+        return 'translate(' + horz + ',' + vert + ')';
+      })
+      .style('float', 'right');
+
+
+      legend.append('rect')                                     // NEW
+        .attr('width', legendRectSize)                          // NEW
+        .attr('height', legendRectSize)                         // NEW
+        .style('fill', function(d, i) { return colors(i); })                                   // NEW
+        .style('stroke', color);                               // NEW
+
+      legend.append('text')                                     // NEW
+        .attr('x', legendRectSize + legendSpacing)              // NEW
+        .attr('y', legendRectSize - legendSpacing)              // NEW
+        .text(function(d,i) { return d.race; })
+        .attr("transform", "translate(" + 10 + "," + -15  + ")")
+        .style("font", "18px Arial");
+
+    }
+
+makeSchizPie = function(data) {
+  console.log(data);
+
+  var totalRace = {
+    API: 0,
+    Hispanic: 0,
+    Black: 0,
+    White: 0,
+    Other: 0
+  };
+
+  for(var i = 0; i < data.length; i++)
+  {
+    if(data[i].race == "API")
+    {
+      totalRace.API += data[i].total;
+    }
+
+    if(data[i].race == "Hispanic")
+    {
+      totalRace.Hispanic += data[i].total;
+    }
+
+    if(data[i].race == "Black")
+    {
+      totalRace.Black += data[i].total;
+    }
+
+    if(data[i].race == "White")
+    {
+      totalRace.White += data[i].total;
+    }
+
+    if(data[i].race == "Other")
+    {
+      totalRace.Other += data[i].total;
+    }
+  }
+
+  console.log(totalRace);
+
+  var pieData = [
+    {
+      race: "API",
+      value: totalRace.API
+    },
+
+    {
+      race: "Hispanic",
+      value: totalRace.Hispanic
+    },
+
+    {
+      race: "Black",
+      value: totalRace.Black
+
+    },
+
+    {
+      race: "White",
+      value: totalRace.White
+    },
+
+    {
+      race: "Other",
+      value: totalRace.Other
+    }
+  ];
+
+  console.log(pieData);
+
+  var line1 = d3.select("#line1")
+    .select("svg")
+    .remove("svg");
+
+  var w = 1000;
+  var h = 100;
+
+  var lsvg = d3.select("#line1")
+    .append("svg")
+    .attr("width", w)
+    .attr("height", h)
+    .attr("id", "theLine");
+
+  var line1 = lsvg.append("line")
+    .style("stroke", "steelblue")
+    .attr("stroke-width", "5");
+
+  line1
+    .attr("x1", 500)
+    .attr("y1", 0)
+    .attr("x2", 500)
+    .attr("y2", 200)
+    .transition()
+      .duration(3000)
+      .ease("linear")
+      .attr("stroke-dashoffset", 0);
+
+  var chart = d3.select("#expandedChart")
+    .select("svg")
+    .remove("svg");
+
+  var margin = {top: 0, right: 20, bottom: 0, left: 20},
+  width = window.innerWidth - margin.left - margin.right,
+  height = 1300 - margin.top - margin.bottom;
+
+  var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
+  var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
+
+  var pie = d3.layout.pie()
+    .value(function(d) {
+      return d.value;
+    });
+
+  var arc = d3.svg.arc()
+    .outerRadius(250);
+
+  var colors = d3.scale.category20c();
+
+  var chart = d3.select("#expandedChart")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + ", " + height / 4 + ")");
+
+  var arc = d3.svg.arc()
+    .outerRadius(250);
+
+  var pie = d3.layout.pie()
+    .value(function(d) {
+      return d.value;
+    });
+
+  var arcs = chart.selectAll('g.slice').data(pie(pieData))
+      .enter().append('g')
+      .attr("class", "booty");
+
+  arcs.append("path")
+    .attr('d', arc)
+    .style('fill', function(d, i){ return colors(i); })
+      .on("click", function(d, i) { return expandRaceA(d) });
+
+
+
+ //console.log(pieData[1].value);
+ arcs.append("svg:text")
+     .attr("transform", function(d) { //set the label's origin to the center of the arc
+       d.outerRadius = radius - 50; // Set Outer Coordinate
+       d.innerRadius = radius + 125; // Set Inner Coordinate
+       return "translate(" + (arc.centroid(d)[0] + 10) + ", " + (arc.centroid(d)[1] + 20) + ")";
+     })
+     .attr("text-anchor", "middle") //center the text on it's origin
+     .style("fill", "Black")
+     .style("font", "bold 30px Arial")
+     .text(function(d, i){
+      return pieData[i].value; });
+
+
+
+  // Computes the angle of an arc, converting from radians to degrees.
+  function angle(d) {
+    var a = (d.startAngle + d.endAngle) * 90 / Math.PI - 90;
+    return a > 90 ? a - 180 : a;
+  }
+
+  var xCoor = -60;
+  var yCoor = 20;
+
+  var legendRectSize = 50;
+  var legendSpacing = 4;
+
+  var legend = chart.selectAll('.legend')
+    .data( pieData )
+    .enter()
+    .append('g')
+    .attr('class', 'legend')
+    .attr('transform', function(d, i) {
+      var height = legendRectSize + legendSpacing;
+      var offset =  height * color.domain().length / 2;
+      var horz = 6 * legendRectSize + 20;
+      var vert = i * height - offset - 75;
+      return 'translate(' + horz + ',' + vert + ')';
+    })
+    .style('float', 'right');
+
+  legend.append('rect')                                     // NEW
+    .attr('width', legendRectSize)                          // NEW
+    .attr('height', legendRectSize)                         // NEW
+    .style('fill', function(d, i) { return colors(i); })                                   // NEW
+    .style('stroke', color);                               // NEW
+
+  legend.append('text')                                     // NEW
+    .attr('x', legendRectSize + legendSpacing)              // NEW
+    .attr('y', legendRectSize - legendSpacing)              // NEW
+    .text(function(d,i) { return d.race; })
+    .attr("transform", "translate(" + 10 + "," + -15  + ")")
+    .style("font", "18px Arial");
+
+}
+
+
+  expand_makeRaceChart = function(d, i) {
 
     console.log(d.data.race);
-    if(d.data.label == "Anxiety Disorders")
+
+    if(d.data.label == "moodraceblack")
     {
-      d3.json("/anxiety/race", function(err, data) {
+      d3.json("/mood/race/black", function(err, data) {
         if (err) {
           console.log(err);
           return;
         }
-        makeAnxietyPie(data);
+        makeRaceChart(data);
       });
     }
 
+    if(d.data.label == "moodracewhite")
+    {
+      d3.json("/mood/race/white", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "moodracehispanic")
+    {
+      d3.json("/mood/race/hispanic", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "moodraceapi")
+    {
+      d3.json("/mood/race/api", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "moodraceother")
+    {
+      d3.json("/mood/race/other", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+
+    if(d.data.label == "anxietyraceblack")
+    {
+      d3.json("/anxiety/race/black", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "anxietyracewhite")
+    {
+      d3.json("/anxiety/race/white", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "anxietyracehispanic")
+    {
+      d3.json("/anxiety/race/hispanic", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "anxietyraceapi")
+    {
+      d3.json("/anxiety/race/api", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "anxietyraceother")
+    {
+      d3.json("/anxiety/race/other", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
 
 
   }

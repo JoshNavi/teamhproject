@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <!--<link href='https://fonts.googleapis.com/css?family=Raleway:400,600|Oswald:300,400|Dosis' rel='stylesheet' type='text/css'> -->
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,600|Oswald:300,400|Dosis' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Karla:400,700' rel='stylesheet' type='text/css'>
 
     <meta charset="utf-8">
@@ -34,8 +34,8 @@
   <center>
 
     <div id = "nav" style="width:100%; position:fixed; top:0; left:0;z-index:10000; background-color:#ffffff; padding-bottom:1.5vh; color:#364958; opacity:0.92; backdrop-filter: blur(80px); -webkit-backdrop-filter: blur(80px)">
-      <div id = "whitebar" style="width:100%; height:1vh; position:absolute; top:0; left:0; background-color:#364958; opacity:1"></div>
-      <div id = "whitebaropaque" style="width:0%; height:1vh; position:absolute; top:0; left:0; background-color:#87BBA2; opacity:1"></div>
+      <div id = "whitebar" style="width:100%; height:1vh; position:absolute; top:0; left:0; background-color:white; opacity:1"></div>
+      <div id = "whitebaropaque" style="width:0%; height:1vh; position:absolute; top:0; left:0; background-color:#27598c; opacity:1"></div>
       <table style="width:100%; margin-top:3vh" id="navtop">
         <tr style="width:100%">
           <td id = "cell1" style="width:25%">
@@ -150,6 +150,8 @@
       </div>
       <div id="expandedChart">
       </div>
+      <div id="chart2">
+      </div>
 
     </div>
   </center>
@@ -210,10 +212,10 @@
     $(function(){
       var arrowpos = ($(window).width() - 930)/2 - 155;
       $('#arrow').css({left: arrowpos});
-      var center1 = $('#cell1').offset().left + $('#cell1').width()/2;
-      var center2 = $('#cell2').offset().left + $('#cell2').width()/2;
-      var center3 = $('#cell3').offset().left + $('#cell3').width()/2;
-      var center4 = $('#cell4').offset().left + $('#cell4').width()/2;
+      var center1 = $('#cell1').offset().left + $('#cell1').width();
+      var center2 = $('#cell2').offset().left + $('#cell2').width();
+      var center3 = $('#cell3').offset().left + $('#cell3').width();
+      var center4 = $('#cell4').offset().left + $('#cell4').width();
       $("#whitebaropaque").animate({ width: center1+'px' }, 500, 'swing');
   		$.fn.scrollView = function () {
   		  return this.each(function () {

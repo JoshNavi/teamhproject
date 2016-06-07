@@ -143,22 +143,13 @@ makeRaceGeographyChart = function(data) {
   var csvData = [];
   var areaDict = {};
   data.map(function (elem) {
-    if (elem.race.indexOf('Any') == 0) return;
-
+    if (elem.race.indexOf('Any') == 0)
+      return;
     if (!areaDict[elem.area]) {
       areaDict[elem.area] = {};
-      // areaDict = {
-      //   'alpine': {}
-      // }
     }
     areaDict[elem.area][elem.race] = elem.population;
-    // areaDict = {
-    //   'alpine': {
-    //     'black': 999
-    //   }
-    // }
-
-    return;
+      return;
   });
   for (key in areaDict) {
     var row = {}
@@ -170,6 +161,12 @@ makeRaceGeographyChart = function(data) {
   }
 
   console.log(csvData);
+
+  var tooltip = d3.select("body")
+   .append("div")
+   .style("position", "absolute")
+   .style("z-index", "10")
+   .style("visibility", "hidden");
 
 
   color.domain(d3.keys(csvData[0]).filter(function(key) { return key !== "Area"; }));
@@ -208,11 +205,20 @@ makeRaceGeographyChart = function(data) {
       .attr("transform", function(d) { return "translate(" + x(d.Area) + ",0)"; });
   state.selectAll("rect")
       .data(function(d) { return d.races; })
-    .enter().append("rect")
+      .enter().append("rect")
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.y1); })
       .attr("height", function(d) { return y(d.y0) - y(d.y1); })
-      .style("fill", function(d) { return color(d.name); });
+      .on('mouseover', function(d) {
+        return tooltip.style("visibility", "visible").text("Number: " + (Number(d.y1).toFixed(2)));
+      })
+      .on('mouseout', function() {
+        return tooltip.style("visibility", "hidden");
+      })
+    .style("fill", function(d) { return color(d.name); });
+
+
+
   var legend = svg.selectAll(".legend")
       .data(color.domain().slice().reverse())
     .enter().append("g")

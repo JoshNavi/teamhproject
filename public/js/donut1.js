@@ -5,8 +5,8 @@ var radius = Math.min(width, height) / 1.2;
 var color = d3.scale.category20();
 var pie = d3.layout.pie().sort(null);
 var arc = d3.svg.arc()
-    .innerRadius(radius - 85)
-    .outerRadius(radius - 50);
+    .innerRadius(radius - 95)
+    .outerRadius(radius - 60);
 var svg = d3.select("#donut1")
     .append("svg")
     .attr("width", width)
