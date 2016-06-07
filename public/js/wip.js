@@ -672,9 +672,9 @@ expandGraph = function(d, i) {
      .select("svg")
      .remove("svg");
 
-   var margin = {top: 0, right: 20, bottom: 10, left: 20},
-   width = window.innerWidth - margin.left - margin.right,
-   height = 500 - margin.top - margin.bottom;
+     var margin = {top: 0, right: 20, bottom: 0, left: 20},
+     width = window.innerWidth - margin.left - margin.right,
+     height = 500 - margin.top - margin.bottom;
 
    var max = d3.max( pieData.map(function(d, i){ return pieData[i].value; }) );
    var sum = d3.sum( pieData.map(function(d, i){ return pieData[i].value; }) );
@@ -739,38 +739,85 @@ expandGraph = function(d, i) {
      return a > 90 ? a - 180 : a;
    }
 
-   var xCoor = -60;
-   var yCoor = 20;
-
-   var legendRectSize = 50;
-   var legendSpacing = 4;
-
    var legend = chart.selectAll('.legend')
+      .append("svg")
      .data( pieData )
      .enter()
      .append('g')
      .attr('class', 'legend')
-     .attr('transform', function(d, i) {
-       var height = legendRectSize + legendSpacing;
-       var offset =  height * color.domain().length / 2;
-       var horz = 6 * legendRectSize + 20;
-       var vert = i * height - offset;
-       return 'translate(' + horz + ',' + vert + ')';
-     })
-     .style('float', 'right');
+     .attr("transform", function(d, i) { return "translate(300," + i * 40 + ")"; })
 
-   legend.append('rect')                                     // NEW
-     .attr('width', legendRectSize)                          // NEW
-     .attr('height', legendRectSize)                         // NEW
-     .style('fill', function(d, i) { return colors(i); })                                   // NEW
-     .style('stroke', color);                               // NEW
+     console.log("This is the radius: " + radius);
+
+   legend.append('rect')
+   .attr("x", 5)
+   .attr("y", -100)                               // NEW
+   .attr("width", 18)
+   .attr("height", 18)
+   .style('fill', function(d, i) { return colors(i); })                                   // NEW
+   .style('stroke', color);
+                              // NEW
 
    legend.append('text')                                     // NEW
-     .attr('x', legendRectSize + legendSpacing)              // NEW
-     .attr('y', legendRectSize - legendSpacing)              // NEW
-     .text(function(d,i) { return d.race; })
+   .attr("x", 24)
+   .attr("y", -80)
+   .attr("dy", ".35em")
+   .text(function(d) { return d.race; })
      .attr("transform", "translate(" + 10 + "," + -15  + ")")
-          .style("font", " 20px Open Sans Condensed")
+          .style("font", " 20px Open Sans Condensed");
+
+
+    var textinfo = chart.selectAll('.textinfo')
+             .append("svg")
+            .data( pieData )
+            .enter()
+            .append('g')
+            .attr('class', 'textinfo')
+            .attr("transform", function(d, i) { return "translate(0," * 40 + ")"; })
+
+    textinfo.append("text")
+            .text('Anxiety Disorders')
+            .style("font", "30px Karla")
+            .attr('x', -600)
+            .attr('y', -100)
+            .attr('fill', '#52524c')
+
+    textinfo.append("text")
+            .text('It’s normal to worry or feel anxious about some things in life.')
+            .style("font", "15px Open Sans Condensed")
+            .attr('x', -600)
+            .attr('y', -60)
+            .attr('fill', '#52524c')
+
+    textinfo.append("text")
+            .text('Anxiety disorders are the most common mental illness in the')
+            .style("font", "15px Open Sans Condensed")
+            .attr('x', -600)
+            .attr('y', -30)
+            .attr('fill', '#52524c')
+
+    textinfo.append("text")
+            .text('United States. ')
+            .style("font", "15px Open Sans Condensed")
+            .attr('x', -600)
+            .attr('y', -10)
+            .attr('fill', '#52524c')
+
+
+    textinfo.append("text")
+            .text('Anxiety can cause or exacerbate physical illnesses.')
+            .style("font", "15px Open Sans Condensed")
+            .attr('x', -600)
+            .attr('y', 15)
+            .attr('fill', '#52524c')
+
+
+                textinfo.append("text")
+                        .text('It’s normal to worry or feel anxious about some things in life.')
+                        .style("font", "15px Open Sans Condensed")
+                        .attr('x', -600)
+                        .attr('y', 45)
+                        .attr('fill', '#52524c')
 
  }
 
@@ -945,39 +992,98 @@ expandGraph = function(d, i) {
      return a > 90 ? a - 180 : a;
    }
 
-   var xCoor = -60;
-   var yCoor = 20;
-
-   var legendRectSize = 50;
-   var legendSpacing = 4;
-
    var legend = chart.selectAll('.legend')
+      .append("svg")
      .data( pieData )
      .enter()
      .append('g')
      .attr('class', 'legend')
-     .attr('transform', function(d, i) {
-       var height = legendRectSize + legendSpacing;
-       var offset =  height * color.domain().length / 2;
-       var horz = 6 * legendRectSize + 20;
-       var vert = i * height - offset;
-       return 'translate(' + horz + ',' + vert + ')';
-     })
-     .style('float', 'right');
+     .attr("transform", function(d, i) { return "translate(300," + i * 40 + ")"; })
 
-   legend.append('rect')                                     // NEW
-     .attr('width', legendRectSize)                          // NEW
-     .attr('height', legendRectSize)                         // NEW
-     .style('fill', function(d, i) { return colors(i); })                                   // NEW
-     .style('stroke', color);                               // NEW
+     console.log("This is the radius: " + radius);
+
+   legend.append('rect')
+   .attr("x", 5)
+   .attr("y", -100)                               // NEW
+   .attr("width", 18)
+   .attr("height", 18)
+   .style('fill', function(d, i) { return colors(i); })                                   // NEW
+   .style('stroke', color);
+                              // NEW
 
    legend.append('text')                                     // NEW
-     .attr('x', legendRectSize + legendSpacing)              // NEW
-     .attr('y', legendRectSize - legendSpacing)              // NEW
-     .text(function(d,i) { return d.race; })
+   .attr("x", 24)
+   .attr("y", -80)
+   .attr("dy", ".35em")
+   .text(function(d) { return d.race; })
      .attr("transform", "translate(" + 10 + "," + -15  + ")")
-     .style("font", " 20px Open Sans Condensed")
+          .style("font", " 20px Open Sans Condensed");
 
+
+          var textinfo = chart.selectAll('.textinfo')
+                   .append("svg")
+                  .data( pieData )
+                  .enter()
+                  .append('g')
+                  .attr('class', 'textinfo')
+                  .attr("transform", function(d, i) { return "translate(0," * 40 + ")"; })
+
+          textinfo.append("text")
+                  .text('Mood Disorders')
+                  .style("font", "30px Karla")
+                  .attr('x', -600)
+                  .attr('y', -100)
+                  .attr('fill', '#52524c')
+
+          textinfo.append("text")
+                  .text('An illness under mood disorders include: major depressive disorder, ')
+                  .style("font", "15px Open Sans Condensed")
+                  .attr('x', -600)
+                  .attr('y', -60)
+                  .attr('fill', '#52524c')
+
+          textinfo.append("text")
+                  .text('bipolar disorder (mania - euphoric, hyperactive, over inflated ego,')
+                  .style("font", "15px Open Sans Condensed")
+                  .attr('x', -600)
+                  .attr('y', -40)
+                  .attr('fill', '#52524c')
+
+          textinfo.append("text")
+                  .text('unrealistic optimism), persistent depressive disorder')
+                  .style("font", "15px Open Sans Condensed")
+                  .attr('x', -600)
+                  .attr('y', -20)
+                  .attr('fill', '#52524c')    textinfo.append("text")
+                              .text(' bipolar disorder), and SAD (seasonal affective disorder).')
+                                            .style("font", "15px Open Sans Condensed")
+                                            .attr('x', -600)
+                                            .attr('y', 40)
+                                            .attr('fill', '#52524c')
+
+
+        textinfo.append("text")
+                .text(' lasting low grade depression), cyclothymia (a mild form of ')
+                              .style("font", "15px Open Sans Condensed")
+                              .attr('x', -600)
+                              .attr('y', 20)
+                              .attr('fill', '#52524c')
+
+
+                    textinfo.append("text")
+                            .text(' bipolar disorder), and SAD (seasonal affective disorder).')
+                                          .style("font", "15px Open Sans Condensed")
+                                          .attr('x', -600)
+                                          .attr('y', 40)
+                                          .attr('fill', '#52524c')
+
+
+                                          textinfo.append("text")
+                                                  .text('Alcoholism and other forms of drug dependence are also related to depression. ')
+                                                                .style("font", "15px Open Sans Condensed")
+                                                                .attr('x', -600)
+                                                                .attr('y', 70)
+                                                                .attr('fill', '#52524c')
  }
 
 makeSchizPie = function(data) {
@@ -1149,38 +1255,87 @@ makeSchizPie = function(data) {
     return a > 90 ? a - 180 : a;
   }
 
-  var xCoor = -60;
-  var yCoor = 20;
-
-  var legendRectSize = 30;
-  var legendSpacing = 4;
-
   var legend = chart.selectAll('.legend')
+     .append("svg")
     .data( pieData )
     .enter()
     .append('g')
     .attr('class', 'legend')
-    .attr('transform', function(d, i) {
-      var height = legendRectSize + legendSpacing;
-      var offset =  height * color.domain().length / 2;
-      var horz = 6 * legendRectSize + 20;
-      var vert = i * height - offset;
-      return 'translate(' + horz + ',' + vert + ')';
-    })
-    .style('float', 'right');
+    .attr("transform", function(d, i) { return "translate(300," + i * 40 + ")"; })
 
-  legend.append('rect')                                     // NEW
-    .attr('width', legendRectSize)                          // NEW
-    .attr('height', legendRectSize)                         // NEW
-    .style('fill', function(d, i) { return colors(i); })                                   // NEW
-    .style('stroke', color);                               // NEW
+    console.log("This is the radius: " + radius);
+
+  legend.append('rect')
+  .attr("x", 5)
+  .attr("y", -100)                               // NEW
+  .attr("width", 18)
+  .attr("height", 18)
+  .style('fill', function(d, i) { return colors(i); })                                   // NEW
+  .style('stroke', color);
+                             // NEW
 
   legend.append('text')                                     // NEW
-    .attr('x', legendRectSize + legendSpacing)              // NEW
-    .attr('y', legendRectSize - legendSpacing)              // NEW
-    .text(function(d,i) { return d.race; })
+  .attr("x", 24)
+  .attr("y", -80)
+  .attr("dy", ".35em")
+  .text(function(d) { return d.race; })
     .attr("transform", "translate(" + 10 + "," + -15  + ")")
-         .style("font", " 20px Open Sans Condensed")
+         .style("font", " 20px Open Sans Condensed");
+
+
+
+             var textinfo = chart.selectAll('.textinfo')
+                      .append("svg")
+                     .data( pieData )
+                     .enter()
+                     .append('g')
+                     .attr('class', 'textinfo')
+                     .attr("transform", function(d, i) { return "translate(0," * 40 + ")"; })
+
+             textinfo.append("text")
+                     .text('Schizophrenia')
+                     .style("font", "30px Karla")
+                     .attr('x', -600)
+                     .attr('y', -100)
+                     .attr('fill', '#52524c')
+
+             textinfo.append("text")
+                     .text('Studies indicate that people receiving treatment for schizophrenia')
+                     .style("font", "15px Open Sans Condensed")
+                     .attr('x', -600)
+                     .attr('y', -60)
+                     .attr('fill', '#52524c')
+
+             textinfo.append("text")
+                     .text('are no more dangerous than the rest of the population.')
+                     .style("font", "15px Open Sans Condensed")
+                     .attr('x', -600)
+                     .attr('y', -40)
+                     .attr('fill', '#52524c')
+
+             textinfo.append("text")
+                     .text('Schizophrenia is not a split personality disorder.')
+                     .style("font", "15px Open Sans Condensed")
+                     .attr('x', -600)
+                     .attr('y', -10)
+                     .attr('fill', '#52524c')
+
+
+             textinfo.append("text")
+                     .text('Both genetics and environment play a role in whether someone')
+                     .style("font", "15px Open Sans Condensed")
+                     .attr('x', -600)
+                     .attr('y', 20)
+                     .attr('fill', '#52524c')
+
+
+                         textinfo.append("text")
+                                 .text('develops schizophrenia mood disorder.')
+                                 .style("font", "15px Open Sans Condensed")
+                                 .attr('x', -600)
+                                 .attr('y', 40)
+                                 .attr('fill', '#52524c')
+
 
 }
 
