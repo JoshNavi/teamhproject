@@ -1,0 +1,407 @@
+[
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 90.5,
+ "geography" : "San Diego County (Actual Rate)"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 101.8,
+ "geography" : "Central Region"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 247.1,
+ "geography" : "Central San Diego"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 84.9,
+ "geography" : "Mid‐City"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 75.400000000000006,
+ "geography" : "Southeastern San Diego"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 130.6,
+ "geography" : "East Region"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 157.6,
+ "geography" : "El Cajon"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 242.6,
+ "geography" : "Coastal"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 233.9,
+ "geography" : "Harbison Crest/El Cajon"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 288.2,
+ "geography" : "Santee"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 71.099999999999994,
+ "geography" : "North Central Region"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 47.3,
+ "geography" : "Del Mar‐Mira Mesa"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 146.30000000000001,
+ "geography" : "Kearny Mesa"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 49.7,
+ "geography" : "University"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 89.9,
+ "geography" : "North Coastal Region"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 74,
+ "geography" : "Carlsbad"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 89.8,
+ "geography" : "Oceanside"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 118.4,
+ "geography" : "San Dieguito"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 120.6,
+ "geography" : "Vista"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 74.400000000000006,
+ "geography" : "North Inland Region"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 78.3,
+ "geography" : "Escondido"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 74.099999999999994,
+ "geography" : "North San Diego"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 38.1,
+ "geography" : "Poway"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 68.599999999999994,
+ "geography" : "San Marcos"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 116,
+ "geography" : "South Region"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 265.60000000000002,
+ "geography" : "Chula Vista"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 142.30000000000001,
+ "geography" : "National City"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 137.80000000000001,
+ "geography" : "South Bay"
+}
+{ "year": 2010,
+ "race" : "API",
+ "rate" : 69.2,
+ "geography" : "Sweetwater"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 97.2,
+ "geography" : "San Diego County (Actual Rate)"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 122.4,
+ "geography" : "Central Region"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 290,
+ "geography" : "Central San Diego"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 134.5,
+ "geography" : "Mid‐City"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 68.5,
+ "geography" : "Southeastern San Diego"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 94.3,
+ "geography" : "East Region"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 381.7,
+ "geography" : "Coastal"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 124.5,
+ "geography" : "Harbison Crest/El Cajon"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 86.1,
+ "geography" : "North Central Region"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 75.3,
+ "geography" : "Del Mar‐Mira Mesa"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 124,
+ "geography" : "Kearny Mesa"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 60,
+ "geography" : "University"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 96.9,
+ "geography" : "North Coastal Region"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 131.6,
+ "geography" : "Carlsbad"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 80.599999999999994,
+ "geography" : "Oceanside"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 189.3,
+ "geography" : "Vista"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 92.5,
+ "geography" : "North Inland Region"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 96.4,
+ "geography" : "Escondido"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 87.5,
+ "geography" : "North San Diego"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 89.3,
+ "geography" : "Poway"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 67.5,
+ "geography" : "San Marcos"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 96.7,
+ "geography" : "South Region"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 346.4,
+ "geography" : "Chula Vista"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 66.2,
+ "geography" : "National City"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 114.8,
+ "geography" : "South Bay"
+}
+{ "year": 2011,
+ "race" : "API",
+ "rate" : 44.3,
+ "geography" : "Sweetwater"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 85.4,
+ "geography" : "San Diego County (Actual Rate)"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 90.3,
+ "geography" : "Central Region"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 205.1,
+ "geography" : "Central San Diego"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 95,
+ "geography" : "Mid‐City"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 55.6,
+ "geography" : "Southeastern San Diego"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 124.8,
+ "geography" : "East Region"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 151.19999999999999,
+ "geography" : "El Cajon"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 228.3,
+ "geography" : "Coastal"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 204,
+ "geography" : "Harbison Crest/El Cajon"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 83.3,
+ "geography" : "North Central Region"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 66.8,
+ "geography" : "Del Mar‐Mira Mesa"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 131.80000000000001,
+ "geography" : "Kearny Mesa"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 75.900000000000006,
+ "geography" : "University"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 101.1,
+ "geography" : "North Coastal Region"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 92.7,
+ "geography" : "Carlsbad"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 119.3,
+ "geography" : "Oceanside"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 139.4,
+ "geography" : "Vista"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 81.599999999999994,
+ "geography" : "North Inland Region"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 113.7,
+ "geography" : "Escondido"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 98.2,
+ "geography" : "North San Diego"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 43.6,
+ "geography" : "Poway"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 65.8,
+ "geography" : "San Marcos"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 65.900000000000006,
+ "geography" : "South Region"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 180.7,
+ "geography" : "Chula Vista"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 123,
+ "geography" : "National City"
+}
+{ "year": 2012,
+ "race" : "API",
+ "rate" : 43.2,
+ "geography" : "Sweetwater"
+}
+]
