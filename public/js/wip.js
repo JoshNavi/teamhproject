@@ -1,7 +1,7 @@
 (function(d3) {
   "use strict";
 
-  d3.json("/moodbyrace/race", function(err, data) {
+  d3.json("/mood/race/black", function(err, data) {
     if (err) {
       console.log(err);
       return;
@@ -57,7 +57,10 @@ getColor = function(d) {
   return c20(8);
 }
 
-/*********** STACKED BAR CHART ***********/
+/*
+ * This function creates the stacked bar chart (chart1)
+ *
+ */
 
 makeRaceGeographyChart = function(data) {
 
@@ -93,7 +96,6 @@ makeRaceGeographyChart = function(data) {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-/* messing around with data */
   var csvData = [];
   var areaDict = {};
   data.map(function (elem) {
@@ -201,7 +203,9 @@ makeRaceGeographyChart = function(data) {
 
     }
 
-/*********** MOOD BAR CHART ***********/
+/* MOOD BAR CHART:
+ * This fucntion creates the grouped bar chart (chart2)
+*/
 
 
 makeRaceChart = function(data) {
@@ -227,7 +231,8 @@ makeRaceChart = function(data) {
       .orient("left")
       .ticks(10, "%");
 
-  var svg = d3.select(".chart2").append("svg")
+  var svg = d3.select("#chart2")
+      .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -467,6 +472,12 @@ makeHospitalizationArc = function(data) {
 
 }
 
+/*
+ * When this function is called, a particular pie chart will appear that
+ * corresponds to the selected mental disorder (schizophrenia, mood disorder,
+ * anxiety disorder)
+ */
+
 expandGraph = function(d, i) {
 
   if(d.data.label == "Anxiety Disorders")
@@ -502,6 +513,10 @@ expandGraph = function(d, i) {
     });
   }
 }
+
+
+
+
 
 makeMoodPie = function(data) {
     // console.log("ArchExpand blah blah blah");
@@ -586,7 +601,7 @@ makeMoodPie = function(data) {
       .remove("svg");
 
     var w = 1000;
-    var h = 300;
+    var h = 100;
 
     var lsvg = d3.select("#line1")
       .append("svg")
@@ -653,7 +668,7 @@ makeMoodPie = function(data) {
     arcs.append("path")
       .attr('d', arc)
       .style('fill', function(d, i){ return colors(i); })
-        .on("click", function(d, i) { return expandRaceA(d) });
+        .on("click", function(d, i) { return makeRaceChart(d) });
 
 
 
@@ -716,18 +731,123 @@ makeMoodPie = function(data) {
 
   }
 
+/*
+ * When this functino is called, the grouped bar graph will appear depending
+ * on which race on the pie graph is clicked
+ */
 
-  expandRaceA = function(d, i) {
+  expand_makeRaceChart = function(d, i) {
 
     console.log(d.data.race);
-    if(d.data.label == "Anxiety Disorders")
+
+    if(d.data.label == "")
     {
-      d3.json("/anxiety/race", function(err, data) {
+      d3.json("/mood/race/black", function(err, data) {
         if (err) {
           console.log(err);
           return;
         }
-        makeAnxietyPie(data);
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "")
+    {
+      d3.json("/mood/race/white", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "")
+    {
+      d3.json("/mood/race/hispanic", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "")
+    {
+      d3.json("/anxiety/race/api", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "")
+    {
+      d3.json("/anxiety/race/other", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+
+    if(d.data.label == "")
+    {
+      d3.json("/anxiety/race/black", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "")
+    {
+      d3.json("/anxiety/race/white", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "")
+    {
+      d3.json("/anxiety/race/hispanic", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "")
+    {
+      d3.json("/anxiety/race/api", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
+      });
+    }
+
+    if(d.data.label == "")
+    {
+      d3.json("/anxiety/race/other", function(err, data) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        makeRaceChart(data);
       });
     }
 

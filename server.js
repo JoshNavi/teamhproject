@@ -157,7 +157,7 @@ app.get('/mood/race', function(req, res){
 
 
 /************* BLACK MOOD DISORDER ****************/
-app.get('/moodbyrace/race', function(req, res){
+app.get('/mood/race/black', function(req, res){
   pg.connect(conString, function(err, client, done) {
 
     if(err) {
@@ -187,7 +187,7 @@ app.get('/moodbyrace/race', function(req, res){
 
 /************* WHITE MOOD DISORDER ****************/
 
-app.get('/moodbyrace/race', function(req, res){
+app.get('/mood/race/white', function(req, res){
   pg.connect(conString, function(err, client, done) {
 
     if(err) {
@@ -215,7 +215,7 @@ app.get('/moodbyrace/race', function(req, res){
 
 /************* HISPANIC MOOD DISORDER ****************/
 
-app.get('/moodbyrace/race', function(req, res){
+app.get('/mood/race/hispanic', function(req, res){
   pg.connect(conString, function(err, client, done) {
 
     if(err) {
@@ -243,7 +243,7 @@ app.get('/moodbyrace/race', function(req, res){
 
 /************* API MOOD DISORDER ****************/
 
-app.get('/moodbyrace/race', function(req, res){
+app.get('/mood/race/api', function(req, res){
   pg.connect(conString, function(err, client, done) {
 
     if(err) {
@@ -271,7 +271,7 @@ app.get('/moodbyrace/race', function(req, res){
 
 /************* OTHER MOOD DISORDER ****************/
 
-app.get('/moodbyrace/race', function(req, res){
+app.get('/mood/race/other', function(req, res){
   pg.connect(conString, function(err, client, done) {
 
     if(err) {
@@ -316,7 +316,7 @@ app.get('/moodbyrace/race', function(req, res){
 
 /************* BLACK ANXIETY DISORDERS ****************/
 
-app.get('/moodbyrace/race', function(req, res){
+app.get('/anxiety/race/black', function(req, res){
   pg.connect(conString, function(err, client, done) {
 
     if(err) {
@@ -344,7 +344,7 @@ app.get('/moodbyrace/race', function(req, res){
 
 /************* WHITE ANXIETY DISORDERS ****************/
 
-app.get('/moodbyrace/race', function(req, res){
+app.get('/anxiety/race/white', function(req, res){
   pg.connect(conString, function(err, client, done) {
 
     if(err) {
@@ -373,7 +373,7 @@ app.get('/moodbyrace/race', function(req, res){
 
 /************* HISPANIC ANXIETY DISORDERS ****************/
 
-app.get('/moodbyrace/race', function(req, res){
+app.get('/anxiety/race/hispanic', function(req, res){
   pg.connect(conString, function(err, client, done) {
 
     if(err) {
@@ -402,7 +402,7 @@ app.get('/moodbyrace/race', function(req, res){
 
 /************* ASIAN/PACIFIC ISLANDER ANXIETY DISORDERS ****************/
 
-app.get('/moodbyrace/race', function(req, res){
+app.get('/anxiety/race/api', function(req, res){
   pg.connect(conString, function(err, client, done) {
 
     if(err) {
@@ -431,7 +431,7 @@ app.get('/moodbyrace/race', function(req, res){
 
 /************* OTHER ANXIETY DISORDERS ****************/
 
-app.get('/moodbyrace/race', function(req, res){
+app.get('/anxiety/race/other', function(req, res){
   pg.connect(conString, function(err, client, done) {
 
     if(err) {
