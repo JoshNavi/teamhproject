@@ -123,9 +123,6 @@ makeRaceGeographyChart = function(data) {
     csvData.push(row);
   }
 
-  //console.log(csvData);
-
-
   color.domain(d3.keys(csvData[0]).filter(function(key) { return key !== "Area"; }));
   csvData.forEach(function(d) {
     var y0 = 0;
@@ -155,18 +152,36 @@ makeRaceGeographyChart = function(data) {
       .attr("dy", ".71em")
       .style("text-anchor", "end")
       .text("Population");
+
   var state = svg.selectAll(".state")
       .data(csvData)
     .enter().append("g")
       .attr("class", "g")
       .attr("transform", function(d) { return "translate(" + x(d.Area) + ",0)"; });
+
+  var tooltip = d3.select("body")
+      .append("div")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden");
+
   state.selectAll("rect")
       .data(function(d) { return d.races; })
     .enter().append("rect")
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.y1); })
       .attr("height", function(d) { return y(d.y0) - y(d.y1); })
-      .style("fill", function(d) { return color(d.name); });
+      .style("fill", function(d) { return color(d.name); })
+      .on('mouseover', function(d) {
+        return tooltip.style("visibility", "visible").text("Number");
+      })
+      .on('mouseout', function() {
+        return tooltip.style("visibility", "hidden");
+      });
+
+//+ (Number(d.y1).toFixed(2))
+
+
   var legend = svg.selectAll(".legend")
       .data(color.domain().slice().reverse())
     .enter().append("g")
@@ -184,51 +199,7 @@ makeRaceGeographyChart = function(data) {
       .style("text-anchor", "end")
       .text(function(d) { return d; });
 
-
-
-
-/* correct */
-  //
-  // x.domain(data.map(function(d) { return d.area; }));
-  // y.domain([0, d3.max(data, function(d) { return d.population/1; })]);
-  //
-  // svg.append("g")
-  //     .attr("class", "x axis")
-  //     .attr("transform", "translate(0," + height + ")")
-  //     .call(xAxis)
-  //     .selectAll("text")
-  //         .style("text-anchor", "end")
-  //         .attr("dx", "-.8em")
-  //         .attr("dy", ".15em")
-  //         .attr("transform", function(d) {
-  //             return "rotate(-65)"
-  //             });
-  //
-  // svg.append("g")
-  //     .attr("class", "y axis")
-  //     .call(yAxis)
-  //     .append("text")
-  //     .attr("transform", "rotate(-90)")
-  //     .attr("y", 6)
-  //     .attr("dy", ".71em")
-  //     .style("text-anchor", "end")
-  //     .text("Population");
-  //
-  // svg.selectAll(".bar")
-  //     .data(data)
-  //     .enter().append("rect")
-  //     .attr("class", "bar")
-  //     .attr("x", function(d) {return x(d.area); })
-  //     .attr("width", x.rangeBand())
-  //     .attr("y", function(d) { return y(d.population/1); })
-  //     .attr("height", function(d) {return height - y(d.population/1); })
-  //     .style("fill", function(d) { return getColor(d); });
-}
-
-/*********************************************/
-
-
-
+    }
 
 /*********** MOOD BAR CHART ***********/
 

@@ -27,7 +27,7 @@ app.use(session({ secret: 'keyboard cat', saveUninitialized: true, resave: true}
 //set environment ports and start application
 app.set('port', process.env.PORT || 3000);
 
-//routes
+//routess
 app.get('/', function(req, res){
   res.render('wip');
 });
@@ -183,18 +183,279 @@ app.get('/moodbyrace/race', function(req, res){
   return { delphidata: "No data found" };
 });
 
+
+
 /************* WHITE MOOD DISORDER ****************/
+
+app.get('/moodbyrace/race', function(req, res){
+  pg.connect(conString, function(err, client, done) {
+
+    if(err) {
+    return console.error('error fetching client from pool', err);
+    }
+
+    var q = 'SELECT "Year" AS year, "Race" AS race, "Hospitalization Rate" AS rate, "Geography" as geography \
+              FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' AND "Geography" <> \'Unknown\' AND "Race" LIKE \'White\'';
+
+    client.query( q, function(err, result) {
+    //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      res.json(result.rows);
+      client.end();
+      return { delphidata: result };
+    });
+  });
+  return { delphidata: "No data found" };
+});
 
 /************* HISPANIC MOOD DISORDER ****************/
 
+app.get('/moodbyrace/race', function(req, res){
+  pg.connect(conString, function(err, client, done) {
+
+    if(err) {
+    return console.error('error fetching client from pool', err);
+    }
+
+    var q = 'SELECT "Year" AS year, "Race" AS race, "Hospitalization Rate" AS rate, "Geography" as geography \
+              FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' AND "Geography" <> \'Unknown\' AND "Race" LIKE \'Hispanic\'';
+
+    client.query( q, function(err, result) {
+    //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      res.json(result.rows);
+      client.end();
+      return { delphidata: result };
+    });
+  });
+  return { delphidata: "No data found" };
+});
+
 /************* API MOOD DISORDER ****************/
+
+app.get('/moodbyrace/race', function(req, res){
+  pg.connect(conString, function(err, client, done) {
+
+    if(err) {
+    return console.error('error fetching client from pool', err);
+    }
+
+    var q = 'SELECT "Year" AS year, "Race" AS race, "Hospitalization Rate" AS rate, "Geography" as geography \
+              FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' AND "Geography" <> \'Unknown\' AND "Race" LIKE \'Asian\'';
+
+    client.query( q, function(err, result) {
+    //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      res.json(result.rows);
+      client.end();
+      return { delphidata: result };
+    });
+  });
+  return { delphidata: "No data found" };
+});
 
 /************* OTHER MOOD DISORDER ****************/
 
+app.get('/moodbyrace/race', function(req, res){
+  pg.connect(conString, function(err, client, done) {
+
+    if(err) {
+    return console.error('error fetching client from pool', err);
+    }
+
+    var q = 'SELECT "Year" AS year, "Race" AS race, "Hospitalization Rate" AS rate, "Geography" as geography \
+              FROM cogs121_16_raw.hhsa_mood_disorders_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' AND "Geography" <> \'Unknown\' AND "Race" LIKE \'Other\'';
+
+    client.query( q, function(err, result) {
+    //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      res.json(result.rows);
+      client.end();
+      return { delphidata: result };
+    });
+  });
+  return { delphidata: "No data found" };
+});
 
 
 
 
+/************* BLACK SCHIZOPHERNIA ****************/
+
+
+
+/************* WHITE SCHIZOPHERNIA ****************/
+
+/************* HISPANIC SCHIZOPHERNIA ****************/
+
+/************* ASIAN/PACIFIC ISLANDER SCHIZOPHERNIA ****************/
+
+/************* OTHER SCHIZOPHERNIA ****************/
+
+
+
+/************* BLACK ANXIETY DISORDERS ****************/
+
+app.get('/moodbyrace/race', function(req, res){
+  pg.connect(conString, function(err, client, done) {
+
+    if(err) {
+    return console.error('error fetching client from pool', err);
+    }
+
+    var q = 'SELECT "Year" AS year, "Race" AS race, "Hospitalization Rate" AS rate, "Geography" as geography \
+              FROM cogs121_16_raw.hhsa_anxiety_disorder_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' AND "Geography" <> \'Unknown\' AND "Race" LIKE \'Black\'';
+
+    client.query( q, function(err, result) {
+    //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      res.json(result.rows);
+      client.end();
+      return { delphidata: result };
+    });
+  });
+  return { delphidata: "No data found" };
+});
+
+/************* WHITE ANXIETY DISORDERS ****************/
+
+app.get('/moodbyrace/race', function(req, res){
+  pg.connect(conString, function(err, client, done) {
+
+    if(err) {
+    return console.error('error fetching client from pool', err);
+    }
+
+    var q = 'SELECT "Year" AS year, "Race" AS race, "Hospitalization Rate" AS rate, "Geography" as geography \
+              FROM cogs121_16_raw.hhsa_anxiety_disorder_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' AND "Geography" <> \'Unknown\' AND "Race" LIKE \'White\'';
+
+    client.query( q, function(err, result) {
+    //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      res.json(result.rows);
+      client.end();
+      return { delphidata: result };
+    });
+  });
+  return { delphidata: "No data found" };
+});
+
+
+/************* HISPANIC ANXIETY DISORDERS ****************/
+
+app.get('/moodbyrace/race', function(req, res){
+  pg.connect(conString, function(err, client, done) {
+
+    if(err) {
+    return console.error('error fetching client from pool', err);
+    }
+
+    var q = 'SELECT "Year" AS year, "Race" AS race, "Hospitalization Rate" AS rate, "Geography" as geography \
+              FROM cogs121_16_raw.hhsa_anxiety_disorder_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' AND "Geography" <> \'Unknown\' AND "Race" LIKE \'Hispanic\'';
+
+    client.query( q, function(err, result) {
+    //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      res.json(result.rows);
+      client.end();
+      return { delphidata: result };
+    });
+  });
+  return { delphidata: "No data found" };
+});
+
+
+/************* ASIAN/PACIFIC ISLANDER ANXIETY DISORDERS ****************/
+
+app.get('/moodbyrace/race', function(req, res){
+  pg.connect(conString, function(err, client, done) {
+
+    if(err) {
+    return console.error('error fetching client from pool', err);
+    }
+
+    var q = 'SELECT "Year" AS year, "Race" AS race, "Hospitalization Rate" AS rate, "Geography" as geography \
+              FROM cogs121_16_raw.hhsa_anxiety_disorder_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' AND "Geography" <> \'Unknown\' AND "Race" LIKE \'Asian\'';
+
+    client.query( q, function(err, result) {
+    //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      res.json(result.rows);
+      client.end();
+      return { delphidata: result };
+    });
+  });
+  return { delphidata: "No data found" };
+});
+
+
+/************* OTHER ANXIETY DISORDERS ****************/
+
+app.get('/moodbyrace/race', function(req, res){
+  pg.connect(conString, function(err, client, done) {
+
+    if(err) {
+    return console.error('error fetching client from pool', err);
+    }
+
+    var q = 'SELECT "Year" AS year, "Race" AS race, "Hospitalization Rate" AS rate, "Geography" as geography \
+              FROM cogs121_16_raw.hhsa_anxiety_disorder_by_race_2010_2012 \
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' AND "Geography" <> \'Unknown\' AND "Race" LIKE \'Other\'';
+
+    client.query( q, function(err, result) {
+    //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      res.json(result.rows);
+      client.end();
+      return { delphidata: result };
+    });
+  });
+  return { delphidata: "No data found" };
+});
 
 
 
