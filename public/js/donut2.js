@@ -1,5 +1,5 @@
 var dataset = {things: [98.9, 1.1],};
-var width = 403.66;
+var width = 250.66;
 var height = 198.66;
 var radius = Math.min(width, height) / 1.2;
 var color = d3.scale.category20();
@@ -22,14 +22,14 @@ var path = svg.selectAll("path")
     .attr("d", arc);
 
 function getColors (i) {
-  var colorArray = ['#3B6064','#ffffff'];
+  var colorArray = ['#F1F2F3','#27598c'];
   return colorArray[i];
 }
 
 svg.append("svg:text")
     .attr("dy", ".35em")
     .attr("text-anchor", "middle")
-    .attr("style","font-family: 'Dosis', sans-serif")
+      .attr("style","font-family: 'Open Sans Condensed', sans-serif")
     .attr("font-size","40")
-    .attr("fill","#ffffff")
+    .attr("fill","#52524c")
     .text("1.1%");

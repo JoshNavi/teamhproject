@@ -411,7 +411,7 @@ app.get('/anxiety/race/api', function(req, res){
 
     var q = 'SELECT "Year" AS year, "Race" AS race, "Hospitalization Rate" AS rate, "Geography" as geography \
               FROM cogs121_16_raw.hhsa_anxiety_disorder_by_race_2010_2012 \
-              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' AND "Geography" <> \'Unknown\' AND "Race" LIKE \'Asian\'';
+              WHERE "Hospitalization Rate" NOT LIKE \'§\' AND "Hospitalization Rate" NOT LIKE \'‐‐‐\' AND "Geography" <> \'Unknown\' AND "Race" LIKE \'API\'';
 
     client.query( q, function(err, result) {
     //call `done()` to release the client back to the pool
