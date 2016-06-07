@@ -202,7 +202,7 @@ makeRaceGeographyChart = function(data) {
 
 
 makeRaceChart = function(data) {
-/*
+
    var line1 = d3.select("#line2")
      .select("svg")
      .remove("svg");
@@ -229,7 +229,7 @@ makeRaceChart = function(data) {
        .duration(3000)
        .ease("linear")
        .attr("stroke-dashoffset", 0);
-*/
+
 console.log("whatup");
 
   var svg = d3.select("#chart2")
