@@ -203,8 +203,6 @@ makeRaceGeographyChart = function(data) {
 
 makeRaceChart = function(data) {
 
-  console.log(data);
-
    var line1 = d3.select("#line2")
      .select("svg")
      .remove("svg");
@@ -233,9 +231,6 @@ makeRaceChart = function(data) {
        .attr("stroke-linecap", "round")
        .attr("stroke-dasharray", "1, 15")
 
-       line1
-
-console.log("whatup");
 
   var svg = d3.select("#chart2")
      .select("svg")
@@ -683,12 +678,14 @@ expandGraph = function(d, i) {
    width = window.innerWidth - margin.left - margin.right,
    height = 500 - margin.top - margin.bottom;
 
-   var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
-   var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
+   var max = d3.max( pieData.map(function(d, i){ return pieData[i].value; }) );
+   var sum = d3.sum( pieData.map(function(d, i){ return pieData[i].value; }) );
+
 
    var pie = d3.layout.pie()
      .value(function(d) {
-       return d.value;
+       console.log(parseInt(d.value/sum * 100));
+       return parseInt(d.value/sum * 100);
      });
 
    var colors = d3.scale.category20c();
@@ -702,11 +699,6 @@ expandGraph = function(d, i) {
 
    var arc = d3.svg.arc()
      .outerRadius(200);
-
-   var pie = d3.layout.pie()
-     .value(function(d) {
-       return d.value;
-     });
 
    var arcs = chart.selectAll('g.slice').data(pie(pieData))
        .enter().append('g')
@@ -739,7 +731,7 @@ expandGraph = function(d, i) {
       .style("fill", "Black")
       .style("font", " 25px Open Sans Condensed")
       .text(function(d, i){
-       return pieData[i].value; });
+       return d.value + "%" });
 
 
 
@@ -891,13 +883,14 @@ expandGraph = function(d, i) {
    width = window.innerWidth - margin.left - margin.right,
    height = 500 - margin.top - margin.bottom;
 
-   var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
-   var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
+   var max = d3.max( pieData.map(function(d, i){ return pieData[i].value; }) );
+   var sum = d3.sum( pieData.map(function(d, i){ return pieData[i].value; }) );
 
    var pie = d3.layout.pie()
-     .value(function(d) {
-       return d.value;
-     });
+   .value(function(d) {
+     console.log(parseInt(d.value/sum * 100));
+     return parseInt(d.value/sum * 100);
+   });
 
    var arc = d3.svg.arc()
      .outerRadius(200);
@@ -913,11 +906,6 @@ expandGraph = function(d, i) {
 
    var arc = d3.svg.arc()
      .outerRadius(200);
-
-   var pie = d3.layout.pie()
-     .value(function(d) {
-       return d.value;
-     });
 
    var arcs = chart.selectAll('g.slice').data(pie(pieData))
        .enter().append('g')
@@ -948,8 +936,8 @@ expandGraph = function(d, i) {
       .attr("text-anchor", "middle") //center the text on it's origin
       .style("fill", "Black")
           .style("font", " 25px Open Sans Condensed")
-      .text(function(d, i){
-       return pieData[i].value; });
+          .text(function(d, i){
+           return d.value + "%" });
 
 
 
@@ -995,7 +983,6 @@ expandGraph = function(d, i) {
  }
 
 makeSchizPie = function(data) {
-  // console.log(data);
 
   var totalRace = {
     API: 0,
@@ -1032,8 +1019,6 @@ makeSchizPie = function(data) {
       totalRace.Other += data[i].total;
     }
   }
-
-  // console.log(totalRace);
 
   var pieData = [
     {
@@ -1101,13 +1086,14 @@ makeSchizPie = function(data) {
   width = window.innerWidth - margin.left - margin.right,
   height = 500 - margin.top - margin.bottom;
 
-  var max = d3.max( data.map(function(d){ return parseInt(d.total); }) );
-  var sum = d3.sum( data.map(function(d){ return parseInt(d.total); }) );
+  var max = d3.max( pieData.map(function(d, i){ return pieData[i].value; }) );
+  var sum = d3.sum( pieData.map(function(d, i){ return pieData[i].value; }) );
 
   var pie = d3.layout.pie()
-    .value(function(d) {
-      return d.value;
-    });
+  .value(function(d) {
+    console.log(parseInt(d.value/sum * 100));
+    return parseInt(d.value/sum * 100);
+  });
 
   var arc = d3.svg.arc()
     .outerRadius(200);
@@ -1123,11 +1109,6 @@ makeSchizPie = function(data) {
 
   var arc = d3.svg.arc()
     .outerRadius(200);
-
-  var pie = d3.layout.pie()
-    .value(function(d) {
-      return d.value;
-    });
 
   var arcs = chart.selectAll('g.slice').data(pie(pieData))
       .enter().append('g')
@@ -1160,8 +1141,8 @@ makeSchizPie = function(data) {
      .attr("text-anchor", "middle") //center the text on it's origin
      .style("fill", "Black")
          .style("font", " 25px Open Sans Condensed")
-     .text(function(d, i){
-      return pieData[i].value; });
+         .text(function(d, i){
+          return d.value + "%" });
 
 
   // Computes the angle of an arc, converting from radians to degrees.
@@ -1208,7 +1189,6 @@ makeSchizPie = function(data) {
 
   expand_makeAnxietyRaceChart = function(d, i) {
 
-    console.log(d.data.race);
 
     if(d.data.race == "Black")
     {
@@ -1332,7 +1312,6 @@ makeSchizPie = function(data) {
 
   expand_makeMoodRaceChart = function(d, i) {
 
-    console.log(d.data.race);
 
     if(d.data.race == "Black")
     {
