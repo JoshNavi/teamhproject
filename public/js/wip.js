@@ -1078,7 +1078,7 @@ expandGraph = function(d, i) {
                   .text(' bipolar disorder), and SAD (seasonal affective disorder).')
                   .style("font", "15px Open Sans Condensed")
                  .attr('x', -600)
-                                            .attr('y', 40)
+                                            .attr('y', 0)
                                             .attr('fill', '#52524c')
 
 
