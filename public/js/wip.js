@@ -525,17 +525,6 @@ expandGraph = function(d, i) {
 }
 
 
-expandPie = function(d, i) {
-  // if (d.name == "API") {
-    // d3.json("/anxiety/")
-    console.log("this D is " + d);
-  // }
-}
-makeMoodPie = function(data) {
-    // console.log("ArchExpand blah blah blah");
-    // console.log(data);
-
-
 
 
 
@@ -663,7 +652,6 @@ makeMoodPie = function(data) {
         return d.value;
       });
 
-
     var arc = d3.svg.arc()
       .outerRadius(250);
 
@@ -674,20 +662,10 @@ makeMoodPie = function(data) {
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      .attr("transform", "translate(" + width / 2 + ", " + height / 5 + ")")
-      .on("click", function(d,i){return expandPie(d); });
+      .attr("transform", "translate(" + width / 2 + ", " + height / 4 + ")");
 
-    var g = chart.selectAll('path').data(pie(pieData))
-        .enter()
-        .append('path')
-        .attr('fill', function(d, i){ return colors(i); })
-        .attr('d', arc)
-        
-// =======
-//     var arc = d3.svg.arc()
-//       .outerRadius(250);
-// >>>>>>> 84c295e3155467c27185173ce7780b491e96bc44
-
+    var arc = d3.svg.arc()
+      .outerRadius(250);
 
     var pie = d3.layout.pie()
       .value(function(d) {
